@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main  # Triggers the workflow on any push to the 'main' branch
-    paths-ignore:  # Prevents the workflow from running if only these files are changed
-      - deploy.lock  # Replace with your specific lock file or other files you want to ignore
+    paths-ignore:
+      - deploy.lock  # Prevents the workflow from running if only these files are changed
 
 jobs:
   build:
@@ -42,31 +42,34 @@ jobs:
             ssh -o StrictHostKeyChecking=no root@66.179.189.159 << 'EOF'
             set -e  # Exit immediately if a command exits with a non-zero status
             PROJECT_DIR="/hobohippie"
+            LOCK_FILE="$PROJECT_DIR/deploy.lock"
 
             # Check if deployment is already in progress
-            if [ -f "$PROJECT_DIR/deploy.lock" ]; then
+            if [ -f "$LOCK_FILE" ]; then
               echo "Deployment is already in progress. Exiting."
               exit 1
             fi
             
             # Create lock file
-            touch "$PROJECT_DIR/deploy.lock"
+            touch "$LOCK_FILE"
             echo "Lock file created."
 
+            # Function to clean up lock file on exit
+            cleanup() {
+              rm -f "$LOCK_FILE"
+              echo "Lock file removed."
+            }
+            trap cleanup EXIT  # Ensure cleanup runs on exit
+
             # Navigate to the project directory
-            cd "$PROJECT_DIR/client" || exit
+            cd "$PROJECT_DIR/client" || exit 1
 
             # Fetch the latest code from the repository
-            git fetch origin main
-            git reset --hard origin/main
+            git fetch origin main && git reset --hard origin/main
 
-            # Only run the build if necessary (optional, based on your setup)
-            npm run build --verbose
+            # Install dependencies and run the build
+            npm install --verbose && npm run build --verbose
 
             # Restart the application using PM2
             pm2 restart hobohippie
-
-            # Remove lock file
-            rm "$PROJECT_DIR/deploy.lock"
-            echo "Lock file removed."
             EOF

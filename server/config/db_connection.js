@@ -1,21 +1,25 @@
-const mongoose = require('mongoose')
-const connectionString = "mongodb+srv://freeclements:Lilo3723542@cluster0.iw6qi1g.mongodb.net/?retryWrites=true&w=majority"
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-mongoose.set('strictQuery', false)
+const connectionString = process.env.MONGODB_URI;
+
+mongoose.set('strictQuery', false);
 
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+  useUnifiedTopology: true,
+});
 
 mongoose.connection.on("connected", () => {
-  console.log(`Mongoose connected to ${connectionString}`)
-})
+  console.log(`Mongoose connected to the database`);
+});
 
 mongoose.connection.on("error", (err) => {
-  console.log(`Mongoose connected error ${err}`)
-})
+  console.log(`Mongoose connection error: ${err}`);
+});
 
 mongoose.connection.on("disconnected", () => {
-  console.log("Mongoose disconnected")
-})
+  console.log("Mongoose disconnected");
+});
+
+module.exports = mongoose;
