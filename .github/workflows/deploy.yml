@@ -34,13 +34,29 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    # Deploy via SSH
       - name: Deploy to Server
         run: |
             ssh -o StrictHostKeyChecking=no root@66.179.189.159 << 'EOF'
-            cd ../hobohippie/client
-            git pull origin main
-            npm install --verbose  # Install dependencies
-            npm run build --verbose  # Build the project
+            PROJECT_DIR="/hobohippie"
+
+            if [ -f "$PROJECT_DIR/deploy.lock" ]; then
+              echo "Deployment is already in progress. Exiting."
+              exit 1
+            fi
+
+            touch "$PROJECT_DIR/deploy.lock"
+            echo "Lock file created."
+
+            cd "$PROJECT_DIR/client"
+
+            git fetch origin main
+            git reset --hard origin/main
+
+            npm install --verbose
+            npm run build --verbose
+
             pm2 restart hobohippie
+
+            rm "$PROJECT_DIR/deploy.lock"
+            echo "Lock file removed."
             EOF
