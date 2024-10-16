@@ -1,0 +1,31 @@
+{
+    "name": "HoboHippie",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "NODE_ENV=test nodemon --exec 'mocha --recursive -R min'",
+        "start": "nodemon server.js",
+        "client": "npm start --prefix ../client",
+        "seed": "mongo na --eval 'printjson(db.dropDatabase())' && mongoimport --db=na --collection=members --file=db_seed/members.json && mongoimport --db=na --collection=meetings --file=db_seed/meetings.json && mongoimport --db=na --collection=activities --file=db_seed/activities.json",
+        "app": "concurrently npm \"npm start\" \"npm run client\" "
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^5.1.1",
+        "concurrently": "^6.5.1",
+        "connect-mongodb-session": "^5.0.0",
+        "cors": "^2.8.5",
+        "express": "^4.21.0",
+        "express-session": "^1.18.0",
+        "mocha": "^10.1.0",
+        "mongoose": "^7.8.2",
+        "multer": "^1.4.5-lts.1",
+        "supertest": "^6.3.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.12"
+    }
+}

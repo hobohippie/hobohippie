@@ -1,0 +1,12 @@
+form {/*creates a box for contact-us form*/
+    width: 60%;
+    min-width: 350px;
+    border: solid;
+    box-shadow: 20px 10px 10px  black;
+    padding: 20px;
+    margin: auto;
+  }
+
+.feedback {
+    color: red;
+}

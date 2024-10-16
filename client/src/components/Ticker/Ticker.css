@@ -1,0 +1,31 @@
+.ticker-container {
+    width: 100%;
+    background-color: #c7b010; /* Basil green */
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    padding: 10px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+  
+  /* Ticker Text */
+  .ticker-text {
+    display: inline-block;
+    padding-left: 100%; /* Start far outside the viewable area */
+    animation: ticker 70s linear infinite; /* Make sure animation repeats infinitely */
+  }
+  
+  /* Ticker Animation */
+  @keyframes ticker {
+    0% {
+      transform: translateX(100%); /* Start fully off the right side */
+    }
+    100% {
+      transform: translateX(-100%); /* End fully off the left side */
+    }
+  }
+  

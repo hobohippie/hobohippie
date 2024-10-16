@@ -1,0 +1,12 @@
+.profile-image {
+    border: 3px solid #8CB460; /* Basil green border */
+  }
+  
+  .card {
+    transition: transform 0.2s;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  

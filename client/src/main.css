@@ -1,0 +1,85 @@
+/* Ensure the body and html take full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif; /* Default font for a clean look */
+  background-color: #ffffff; /* Set a clean white background for the whole site */
+  color: #333; /* Dark gray for text for better readability */
+}
+
+/* Flexbox layout for app container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full viewport height */
+}
+
+/* The content wrapper will grow to take available space */
+.content-wrap {
+  flex: 1;
+  padding: 30px; /* Add more padding for a spacious feel */
+  background-color: #f9f9f9; /* Light gray for content background */
+  border-radius: 10px; /* Rounded corners for a softer look */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+/* Footer styling */
+footer {
+  background-color: #f1f1f1; /* Light gray for footer */
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid #e0e0e0; /* Slightly darker border for contrast */
+}
+
+/* Global link styles */
+a {
+  color: #00b300; /* Bright green for links */
+  text-decoration: none; /* Remove underline for cleaner look */
+  transition: color 0.2s ease; /* Smooth color transition */
+}
+
+a:hover {
+  color: #009900; /* Darker green on hover */
+  text-decoration: underline; /* Underline on hover for interaction */
+}
+
+/* Card hover effect */
+.card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.clickable-card {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.clickable-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Adding a global class for buttons */
+.button {
+  background-color: #00b300; /* Bright green button */
+  color: white; /* White text on buttons */
+  border: none; /* No border for a clean look */
+  padding: 10px 20px; /* Padding for better touch target */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor for interaction */
+  transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+.button:hover {
+  background-color: #009900; /* Darker green on hover */
+}
+
+/* Utility class for spacing */
+.mt-20 {
+  margin-top: 20px; /* Utility class for consistent spacing */
+}
+
+.mb-20 {
+  margin-bottom: 20px; /* Utility class for consistent spacing */
+}
