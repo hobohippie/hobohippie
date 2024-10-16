@@ -37,4 +37,4 @@ jobs:
       # Deploy via SSH
       - name: Deploy to Server
         run: |
-          ssh -o StrictHostKeyChecking=no root@66.179.189.159 'cd /hobohippie && git pull origin main && npm install && npm run build && pm2 restart hobohippie'
+          ssh -o StrictHostKeyChecking=no root@66.179.189.159 'cd ../hobohippie/client && git pull origin main && npm install && npm run build && pm2 restart hobohippie'

@@ -1,12 +1,16 @@
 server {
     listen 80;
     server_name www.hobohippie.com;
+
+    # Redirect HTTP to HTTPS
     return 301 https://$host$request_uri;
 }
 
 server {
     listen 80;
     server_name hobohippie.com;
+
+    # Redirect HTTP to HTTPS
     return 301 https://$host$request_uri;
 }
 
@@ -20,15 +24,9 @@ server {
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5;
 
-    # Serve static files from the React build directory
+    # Proxy requests to the backend on port 3000
     location / {
-        root /hobohippie/client/build; 
-        try_files $uri /index.html;  # Fallback to index.html for client-side routing
-    }
-
-    # Proxy requests to the backend API
-    location /api {  # Assuming your API endpoints start with /api
-        proxy_pass http://127.0.0.1:3000;  # Update if your backend is on a different port
+        proxy_pass http://127.0.0.1:3000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -38,8 +36,6 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
     }
-
-    client_max_body_size 50M;
 }
 
 server {
@@ -52,15 +48,9 @@ server {
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5;
 
-    # Serve static files from the React build directory
+    # Proxy requests to the backend on port 3000
     location / {
-        root /hobohippie/client/build; 
-        try_files $uri /index.html;  # Fallback to index.html for client-side routing
-    }
-
-    # Proxy requests to the backend API
-    location /api {  
-        proxy_pass http://127.0.0.1:3000; 
+        proxy_pass http://127.0.0.1:3000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -70,6 +60,5 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
     }
-
     client_max_body_size 50M;
 }
