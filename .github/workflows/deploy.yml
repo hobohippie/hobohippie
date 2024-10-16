@@ -34,7 +34,13 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # Deploy via SSH
+    # Deploy via SSH
       - name: Deploy to Server
         run: |
-          ssh -o StrictHostKeyChecking=no root@66.179.189.159 'cd /hobohippie/client && git pull origin main && npm install && npm run build && pm2 restart hobohippie'
+            ssh -o StrictHostKeyChecking=no root@66.179.189.159 << 'EOF'
+            cd ../hobohippie/client
+            git pull origin main
+            npm install --verbose  # Install dependencies
+            npm run build --verbose  # Build the project
+            pm2 restart hobohippie
+            EOF
