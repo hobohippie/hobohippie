@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main  # Triggers the workflow on any push to the 'main' branch
+    paths-ignore:  # Prevents the workflow from running if only these files are changed
+      - deploy.lock  # Replace with your specific lock file or other files you want to ignore
 
 jobs:
   build:
@@ -34,29 +36,38 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      # Deploy to Server
       - name: Deploy to Server
         run: |
             ssh -o StrictHostKeyChecking=no root@66.179.189.159 << 'EOF'
+            set -e  # Exit immediately if a command exits with a non-zero status
             PROJECT_DIR="/hobohippie"
 
+            # Check if deployment is already in progress
             if [ -f "$PROJECT_DIR/deploy.lock" ]; then
               echo "Deployment is already in progress. Exiting."
               exit 1
             fi
-
+            
+            # Create lock file
             touch "$PROJECT_DIR/deploy.lock"
             echo "Lock file created."
 
-            cd "$PROJECT_DIR/client"
+            # Navigate to the project directory
+            cd "$PROJECT_DIR/client" || exit
 
+            # Fetch the latest code from the repository
             git fetch origin main
             git reset --hard origin/main
 
+            # Install dependencies and build the project
             npm install --verbose
             npm run build --verbose
 
+            # Restart the application using PM2
             pm2 restart hobohippie
 
+            # Remove lock file
             rm "$PROJECT_DIR/deploy.lock"
             echo "Lock file removed."
             EOF
