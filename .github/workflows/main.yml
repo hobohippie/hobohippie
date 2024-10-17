@@ -41,7 +41,7 @@ jobs:
             set -e  # Exit immediately if a command exits with a non-zero status
 
             # Define the project directory
-            PROJECT_DIR="/hobohippie"
+            PROJECT_DIR="/"
 
             # Navigate to the project directory
             cd "$PROJECT_DIR/client" || exit 1
