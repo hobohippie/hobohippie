@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main  # Triggers the workflow on any push to the 'main' branch
+      - main
 
 jobs:
   build:
@@ -18,15 +18,17 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Specify your Node version
+          node-version: '16'
 
-      # Install dependencies
+      # Change to the client directory before installing dependencies and building
       - name: Install dependencies
         run: npm install
+        working-directory: ./client  # Adjust if your package.json is in a subdirectory
 
-      # Run the build script locally
+      # Run the build script
       - name: Run build
         run: npm run build
+        working-directory: ./client
 
       # Add SSH key to the agent for deployment
       - name: Add SSH key
@@ -38,10 +40,10 @@ jobs:
       - name: Deploy to Server
         run: |
             ssh -o StrictHostKeyChecking=no root@66.179.189.159 << 'EOF'
-            set -e  # Exit immediately if a command exits with a non-zero status
+            set -e
 
             # Define the project directory
-            PROJECT_DIR="/"
+            PROJECT_DIR="/hobohippie"
 
             # Navigate to the project directory
             cd "$PROJECT_DIR/client" || exit 1
@@ -53,5 +55,3 @@ jobs:
             npm install --verbose && npm run build --verbose
 
             # Restart the application using PM2
-            pm2 restart hobohippie
-            EOF
