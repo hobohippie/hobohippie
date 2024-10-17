@@ -1,27 +1,21 @@
+# Redirect all HTTP traffic to HTTPS for both www and non-www
 server {
     listen 80;
-    server_name www.hobohippie.com;
+    server_name www.hobohippie.com hobohippie.com;
 
     return 301 https://$host$request_uri;
 }
 
+# SSL configuration for www.hobohippie.com
 server {
-    listen 80;
-    server_name hobohippie.com;
-
-    return 301 https://$host$request_uri;
-}
-
-server {
-    listen 443 ssl;
+    listen 443 ssl http2;  # Added http2 for better performance
     server_name www.hobohippie.com;
 
-    # SSL configuration
     ssl_certificate /etc/letsencrypt/live/www.hobohippie.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/www.hobohippie.com/privkey.pem;
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5;
-
+    
     # Serve static files from the React build directory
     location / {
         root /hobohippie/client/build; 
@@ -29,38 +23,7 @@ server {
     }
 
     # Proxy requests to the backend API
-    location /api {  # Assuming your API endpoints start with /api
-        proxy_pass http://127.0.0.1:3000;  # Update if your backend is on a different port
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_cache_bypass $http_upgrade;
-    }
-    client_max_body_size 50M;
-}
-
-server {
-    listen 443 ssl;
-    server_name hobohippie.com;
-
-    # SSL configuration
-    ssl_certificate /etc/letsencrypt/live/www.hobohippie.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/www.hobohippie.com/privkey.pem;
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers HIGH:!aNULL:!MD5;
-
-    # Serve static files from the React build directory
-    location / {
-        root /hobohippie/client/build; 
-        try_files $uri /index.html;  # Fallback to index.html for client-side routing
-    }
-
-    # Proxy requests to the backend API
-    location /api {  
+    location /api {
         proxy_pass http://127.0.0.1:3000; 
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
@@ -71,5 +34,38 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
     }
+
+    client_max_body_size 50M;
+}
+
+# SSL configuration for hobohippie.com
+server {
+    listen 443 ssl http2;  # Added http2 for better performance
+    server_name hobohippie.com;
+
+    ssl_certificate /etc/letsencrypt/live/www.hobohippie.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/www.hobohippie.com/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    # Serve static files from the React build directory
+    location / {
+        root /hobohippie/client/build; 
+        try_files $uri /index.html;  # Fallback to index.html for client-side routing
+    }
+
+    # Proxy requests to the backend API
+    location /api {
+        proxy_pass http://127.0.0.1:3000; 
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+
     client_max_body_size 50M;
 }
