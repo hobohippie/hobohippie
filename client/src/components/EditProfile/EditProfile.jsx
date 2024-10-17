@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 
@@ -84,7 +83,6 @@ const EditAccountForm = () => {
                     onChange={handleChange}
                 />
             </Form.Group>
-            <h2 className="feedback"></h2>
             <Button variant="primary" type="submit">Update</Button>
         </Form>
     );

@@ -8,7 +8,6 @@ import './header.css';
 
 const NavBar = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [isAdminDropdownOpen, setAdminDropdownOpen] = useState(false); // New state for admin dropdown
   const { cartItems, wishlistItems, openModal } = useCart();
   const { isAuthenticated, isAdmin } = useAuth(); // Access isAdmin here
 
@@ -21,10 +20,6 @@ const NavBar = () => {
 
   const toggleCartModal = () => {
     openModal();
-  };
-
-  const toggleAdminDropdown = () => {
-    setAdminDropdownOpen(!isAdminDropdownOpen);
   };
 
   return (

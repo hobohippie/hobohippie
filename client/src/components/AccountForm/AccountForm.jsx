@@ -77,7 +77,6 @@ const CreateAccountForm = () => {
             <p id="alreadyMember">
                 Already a member? <span><Link to="/login">Login Here</Link></span>
             </p>
-            <h2 className="feedback"></h2>
             <Button variant="primary" type="submit">Join</Button>
         </Form>
     );

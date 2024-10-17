@@ -200,8 +200,7 @@ const CreateProductForm = () => {
                 <Form.Label>Discount End Date</Form.Label>
                 <Form.Control type="date" name="discount.endDate" value={product.discount.endDate} onChange={handleChange} />
             </Form.Group>
-
-            <h2 className="feedback"></h2>
+            
             <Button variant="primary" type="submit">Create Product</Button>
             <p id="backToProducts">
                 Back to product list? <span><Link to="/products">View Products</Link></span>
