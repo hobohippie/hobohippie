@@ -1,7 +1,7 @@
 # Configuration for your main server
-Host your-server
+Host hobohippie
   HostName 66.179.189.159
-  User your_username
+  User hobohippie
   IdentityFile ~/.ssh/id_rsa
   IdentitiesOnly yes
 

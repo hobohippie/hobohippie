@@ -2,7 +2,7 @@
     apps: [
       {
         name: 'hobohippie',
-        script: './server/server.js',
+        script: './server.js',
         instances: 'max',
         exec_mode: 'cluster', 
         watch: process.env.NODE_ENV !== 'production',
