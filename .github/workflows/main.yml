@@ -10,48 +10,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Check out the repository code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Node.js environment
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
 
-      # Change to the client directory before installing dependencies and building
       - name: Install dependencies
         run: npm install
-        working-directory: ./client  # Adjust if your package.json is in a subdirectory
+        working-directory: ./client  
 
-      # Run the build script
       - name: Run build
         run: npm run build
         working-directory: ./client
 
-      # Add SSH key to the agent for deployment
       - name: Add SSH key
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # Deploy to Server
       - name: Deploy to Server
         run: |
-            ssh -o StrictHostKeyChecking=no root@66.179.189.159 << 'EOF'
+            ssh -o StrictHostKeyChecking=no deployer@66.179.189.159 << 'EOF'
             set -e
-
-            # Define the project directory
             PROJECT_DIR="/hobohippie"
-
-            # Navigate to the project directory
             cd "$PROJECT_DIR/client" || exit 1
-
-            # Fetch the latest code from the repository
             git fetch origin main && git reset --hard origin/main
-
-            # Install dependencies and run the build
             npm install --verbose && npm run build --verbose
-
-            # Restart the application using PM2
+            pm2 restart your-app-name  # Replace with your PM2 app name
+            EOF
