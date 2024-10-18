@@ -44,6 +44,6 @@ jobs:
         run: |
             ssh -o StrictHostKeyChecking=no deployer@66.179.189.159 << 'EOF'
             set -e
-            cd /hobohippie/server || exit 1  # Navigate to the server directory
-            pm2 restart ecosystem.config.js  # Restart the PM2 process
+            cd /hobohippie/server || exit 1  # Navigate to the server directory.
+            pm2 restart ecosystem.config.js  # Restart the PM2 process.
             EOF
