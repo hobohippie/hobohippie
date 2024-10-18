@@ -39,5 +39,5 @@ jobs:
             cd "$PROJECT_DIR/client" || exit 1
             git fetch origin main && git reset --hard origin/main
             npm install --verbose && npm run build --verbose
-            pm2 restart your-app-name  # Replace with your PM2 app name
+            pm2 restart hobohippie
             EOF
