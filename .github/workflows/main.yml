@@ -18,6 +18,15 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Fetch Latest Code on Server
+        run: |
+          ssh -o StrictHostKeyChecking=no deployer@66.179.189.159 << 'EOF'
+          set -e
+          PROJECT_DIR="/hobohippie"
+          cd "$PROJECT_DIR" || exit 1  # Navigate to the project root directory
+          git fetch origin main && git reset --hard origin/main  # Ensure the latest code is pulled
+          EOF
+
       - name: Install dependencies
         run: npm install
         working-directory: ./client  
@@ -35,8 +44,6 @@ jobs:
         run: |
             ssh -o StrictHostKeyChecking=no deployer@66.179.189.159 << 'EOF'
             set -e
-            PROJECT_DIR="/hobohippie"
-            cd "$PROJECT_DIR/client" || exit 1
-            git fetch origin main && git reset --hard origin/main
-            pm2 restart ecosystem.config.js
+            cd /hobohippie/server || exit 1  # Navigate to the server directory
+            pm2 restart ecosystem.config.js  # Restart the PM2 process
             EOF
