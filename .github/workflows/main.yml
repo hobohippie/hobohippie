@@ -24,7 +24,7 @@ jobs:
           set -e
           PROJECT_DIR="/hobohippie"
           cd "$PROJECT_DIR" || exit 1  # Navigate to the project root directory
-          git fetch origin main && git reset --hard origin/main  # Ensure the latest code is pulled
+          git fetch origin main && git reset --hard origin/main
           EOF
 
       - name: Install dependencies
