@@ -18,6 +18,11 @@ jobs:
         with:
           node-version: '16'
 
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Fetch Latest Code on Server
         run: |
           ssh -o StrictHostKeyChecking=no deployer@66.179.189.159 << 'EOF'
@@ -27,23 +32,26 @@ jobs:
           git fetch origin main && git reset --hard origin/main
           EOF
 
-      - name: Install dependencies
+      - name: Install dependencies (Client)
         run: npm install
         working-directory: ./client  
 
-      - name: Run build
+      - name: Run build (Client)
         run: npm run build
         working-directory: ./client
 
-      - name: Add SSH key
-        uses: webfactory/ssh-agent@v0.7.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Install dependencies (Server)
+        run: |
+          ssh -o StrictHostKeyChecking=no deployer@66.179.189.159 << 'EOF'
+          set -e
+          cd /hobohippie/server || exit 1  # Navigate to the server directory.
+          npm install  # Install server dependencies.
+          EOF
 
       - name: Deploy to Server
         run: |
-            ssh -o StrictHostKeyChecking=no deployer@66.179.189.159 << 'EOF'
-            set -e
-            cd /hobohippie/server || exit 1  # Navigate to the server directory.
-            pm2 restart ecosystem.config.js  # Restart the PM2 process.
-            EOF
+          ssh -o StrictHostKeyChecking=no deployer@66.179.189.159 << 'EOF'
+          set -e
+          cd /hobohippie/server || exit 1  # Navigate to the server directory.
+          pm2 restart ecosystem.config.js  # Restart the PM2 process.
+          EOF
