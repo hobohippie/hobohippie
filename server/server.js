@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config(); // Load environment variables
+
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -5,8 +8,6 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const mongoose = require('mongoose');
 const routes = require('./routes/routes');
-const dotenv = require('dotenv');
-dotenv.config(); // Load environment variables
 
 const app = express();
 const allowedOrigins = [
