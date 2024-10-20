@@ -3,7 +3,7 @@
       {
         name: 'hobohippie',
         script: './server.js',
-        instances: 'max',
+        instances: '1',
         exec_mode: 'cluster', 
         watch: process.env.NODE_ENV !== 'production',
         env: {
