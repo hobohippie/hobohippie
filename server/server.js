@@ -6,29 +6,17 @@ const cors = require('cors');
 const path = require('path');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-const mongoose = require('mongoose');
-const routes = require('./routes/routes');
-
+const dbConnection = require('./db_connection'); // Import the db_connection file to handle the database connection
 
 const app = express();
 const allowedOrigins = [
-    'https://66.179.189.159', 'https://hobohippie.com', 'https://www.hobohippie.com',
-    'https://localhost:3000', 'http://66.179.189.159', 'http://hobohippie.com',
+    'https://66.179.241.155', 'https://hobohippie.com', 'https://www.hobohippie.com',
+    'https://localhost:3000', 'http://66.179.241.155', 'http://hobohippie.com',
     'http://www.hobohippie.com', 'http://localhost:3000'
 ];
 const PORT = process.env.PORT || 3000; // Port from env or default to 3000
 
-// MongoDB connection
-mongoose.set('strictQuery', false);
-
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => console.log(`MongoDB connected`))
-.catch(err => console.error('MongoDB connection error:', err));
-
-// Session store using MongoDB
+// Session store using MongoDB, but no connection is established here. dbConnection handles it.
 const store = new MongoDBStore({
     uri: process.env.MONGODB_URI, // Use the MongoDB URI from the .env file
     collection: 'sessions' // Collection to store session data
@@ -66,6 +54,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Routes setup
+const routes = require('./routes/routes');
 routes(app);
 
 // Handle all other routes and serve the React app
@@ -75,7 +65,7 @@ app.get('*', (req, res) => {
 
 // Start the server
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server up and running on https://localhost:${PORT}`);
+    console.log(`Server up and running on https://66.179.241.155:${PORT}`);
 });
 
 module.exports = app;
