@@ -65,7 +65,7 @@ app.get('*', (req, res) => {
 
 // Start the server
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server up and running on https://66.179.241.155:${PORT}`);
+    console.log(`Hobohippie backend up and running on port ${PORT}.`);
 });
 
 module.exports = app;
