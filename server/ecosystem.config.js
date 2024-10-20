@@ -1,7 +1,7 @@
   module.exports = {
     apps: [
       {
-        name: 'hobohippie',
+        name: 'Hobohippie-Backend',
         script: './server.js',
         instances: '1',
         exec_mode: 'cluster', 
