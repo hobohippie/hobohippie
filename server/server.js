@@ -9,6 +9,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const mongoose = require('mongoose');
 const routes = require('./routes/routes');
 
+
 const app = express();
 const allowedOrigins = [
     'https://66.179.189.159', 'https://hobohippie.com', 'https://www.hobohippie.com',
