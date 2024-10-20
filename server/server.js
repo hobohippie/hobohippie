@@ -6,7 +6,7 @@ const cors = require('cors');
 const path = require('path');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-const dbConnection = require('./db_connection'); // Import the db_connection file to handle the database connection
+const dbConnection = require('./config/db_connection'); // Import the db_connection file to handle the database connection
 
 const app = express();
 const allowedOrigins = [
