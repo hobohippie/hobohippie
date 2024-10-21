@@ -4,8 +4,7 @@ dotenv.config(); // Load environment variables
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const session = require('express-session');
-const dbConnection = require('./config/db_connection'); // Import the db_connection file to handle the database connection
+require('./config/db_connection'); // Import the db_connection file to handle the database connection
 
 const app = express();
 const allowedOrigins = [
