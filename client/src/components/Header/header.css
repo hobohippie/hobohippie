@@ -1,8 +1,8 @@
 /* Top Banner */
 .top-banner {
-    height: 50px; /* Adjust height as needed */
+    height: 50px;
     background-color: #000;
-    color: #fff;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,13 +14,17 @@
     transition: transform 0.3s ease; /* Smooth transition */
 }
 
-.top-banner.hide {
-    transform: translateY(-100%);
+.top-hide {
+    transform: translateY(-100%); 
+}
+
+.top-show {
+    transform: translateY(0);
 }
 
 /* Main Navbar */
 .navbar {
-    height: 65px;
+    height: 60px;
     background-color: white;
     display: flex;
     align-items: center;
@@ -34,14 +38,14 @@
     transition: transform 0.3s ease; /* Smooth transition */
 }
 
-/* Hide class for scrolling down */
-.hide {
-    transform: translateY(-100%); /* Move out of view */
+.nav-hide {
+    transform: translateY(-100%); 
+    top: -80px;
 }
 
-/* Show class for scrolling up */
-.show {
-    transform: translateY(0); /* Reset position */
+.nav-show {
+    transform: translateY(0);
+    top: 50px;
 }
 
 .shop-button {

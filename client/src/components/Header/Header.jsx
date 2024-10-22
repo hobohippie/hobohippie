@@ -36,12 +36,12 @@ const NavBar = () => {
     return (
         <>
             {/* Top Black Banner */}
-            <div className={`top-banner ${isVisible ? 'show' : 'hide'}`}>
+            <div className={`top-banner ${isVisible ? 'top-show' : 'top-hide'}`}>
                 <p className="banner-text">FREE SHIPPING ON ALL ORDERS OVER $50*</p>
             </div>
 
             {/* Main Navbar */}
-            <header className={`navbar ${isVisible ? 'show' : 'hide'}`}>
+            <header className={`navbar ${isVisible ? 'nav-show' : 'nav-hide'}`}>
                 {/* Left: SHOP button */}
                 <div className="navbar-section">
                     <button className="shop-button">SHOP</button>
