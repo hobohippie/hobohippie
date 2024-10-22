@@ -37,13 +37,11 @@
 /* Hide class for scrolling down */
 .hide {
     transform: translateY(-100%); /* Move out of view */
-    top: -80px; /* Ensure it goes out of the viewport */
 }
 
 /* Show class for scrolling up */
 .show {
     transform: translateY(0); /* Reset position */
-    top: 50px; /* Place just below the top banner */
 }
 
 .shop-button {
