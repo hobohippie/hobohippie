@@ -17,7 +17,6 @@ const CreateProductForm = () => {
             lowStockThreshold: ''
         },
         supplier: '',
-        images: [], // Adjusted to handle URLs and alt text
         tags: [],
         featured: false,
         discount: {
@@ -61,17 +60,6 @@ const CreateProductForm = () => {
         }
     };
 
-    const handleFileChange = (e) => {
-        const files = Array.from(e.target.files);
-        setProduct((prevValues) => ({ ...prevValues, images: [...prevValues.images, ...files] }));
-    };
-
-    const removeImageField = (index) => {
-        const newImages = [...product.images];
-        newImages.splice(index, 1);
-        setProduct((prevValues) => ({ ...prevValues, images: newImages }));
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         addProduct();
@@ -92,11 +80,6 @@ const CreateProductForm = () => {
         formData.append('discount[percentage]', product.discount.percentage);
         formData.append('discount[startDate]', product.discount.startDate);
         formData.append('discount[endDate]', product.discount.endDate);
-
-        product.images.forEach((image, idx) => {
-            formData.append(`images[${idx}][url]`, image.url);
-            formData.append(`images[${idx}][altText]`, image.altText || '');
-        });
 
         axios.post('https://hobohippie.com/api/create-product', formData, {
             headers: {
@@ -162,18 +145,6 @@ const CreateProductForm = () => {
                         </option>
                     ))}
                 </Form.Control>
-            </Form.Group>
-
-            {/* Images */}
-            <Form.Group>
-                <Form.Label>Images</Form.Label>
-                <Form.Control type="file" multiple accept="image/*" onChange={handleFileChange} />
-                {product.images.length > 0 && product.images.map((image, index) => (
-                    <div key={index}>
-                        <span>{image.name}</span>
-                        <Button variant="danger" onClick={() => removeImageField(index)}>Remove</Button>
-                    </div>
-                ))}
             </Form.Group>
 
             {/* Tags */}

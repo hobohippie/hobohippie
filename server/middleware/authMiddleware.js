@@ -12,8 +12,8 @@ function verifyToken(req, res, next) {
       return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
     }
     
-    req.userId = decoded.id; // Attach decoded user ID to the request object
-    next(); // Proceed to the next middleware or route handler
+    req.userId = decoded.id; 
+    next();
   });
 }
 

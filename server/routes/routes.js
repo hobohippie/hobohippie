@@ -1,7 +1,6 @@
 const accountController = require('../controllers/accountController');
 const productController = require('../controllers/productController');
 const supplierController = require('../controllers/supplierController');
-const upload = require('../config/multer-config');
 
 module.exports = (app) => {
     // Account routes
@@ -16,7 +15,7 @@ module.exports = (app) => {
     app.delete('/api/suppliers/:id', supplierController.deleteSupplier);
 
     // Product routes
-    app.post('/api/create-product', upload.array('images', 5), productController.createProduct); // Allow multiple image uploads
+    app.post('/api/create-product', productController.createProduct); 
     app.get('/api/products', productController.getAllProducts);
     app.get('/api/products/:id', productController.getProductById);
     app.put('/api/products/:id', productController.updateProduct);

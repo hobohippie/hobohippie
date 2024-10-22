@@ -40,12 +40,6 @@ const ProductSchema = new mongoose.Schema({
         ref: 'Supplier',
         required: true
     },
-    images: [
-        {
-            url: { type: String, required: true },
-            altText: { type: String }
-        }
-    ],
     tags: [String],
     featured: {
         type: Boolean,

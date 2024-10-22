@@ -3,27 +3,20 @@ const Product = require('../models/product-model');
 module.exports = {
     async createProduct(req, res) {
         try {
-            // Construct an array of image URLs
-            const imageUrls = req.files ? req.files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file.filename}`) : [];
-    
-            // Validate req.body as necessary
             if (!req.body.name || !req.body.price) {
                 return res.status(400).json({ message: 'Name and price are required.' });
             }
-    
             const newProduct = new Product({
-                ...req.body,
-                images: imageUrls,  // Store the array of image URLs in the product object
+                ...req.body
             });
     
             const savedProduct = await newProduct.save();
             res.status(201).json({
                 message: 'Product created successfully',
-                product: savedProduct,
-                images: req.files
+                product: savedProduct
             });
         } catch (error) {
-            console.error(error); // Log the error for debugging
+            console.error(error);
             res.status(500).json({ message: 'Error creating product', error });
         }
     },
