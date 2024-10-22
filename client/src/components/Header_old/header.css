@@ -1,0 +1,128 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #ffffff; /* Off-white background */
+  color: #333; /* Dark grey text */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo-image {
+  height: 50px; 
+  width: auto; 
+}
+
+.navbar-small-links {
+  list-style: none;
+  display: flex;
+  justify-content: center; 
+  flex-grow: 1; 
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-small-links li {
+  margin: 0 10px; 
+}
+
+.navbar-small-links a {
+  color: #333; /* Dark grey text */
+  text-decoration: none;
+  font-size: 8pt; 
+  transition: color 0.3s ease;
+}
+
+.sale-link {
+  color: red; /* Keep red for sale links */
+}
+
+.search-and-icons {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.search-field {
+  padding: 0.4rem 1rem;
+  font-size: 9pt;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-right: 10px; 
+}
+
+.icon-container {
+  display: flex;
+  align-items: center; 
+}
+
+.nav-icon,
+.cart-icon-container {
+  color: black; /* Keep icons black */
+}
+
+.cart-badge, .wishlist-badge {
+  position: absolute;
+  top: -6px; 
+  right: -8px; 
+  background-color: red; /* Badge color */
+  color: white;
+  border-radius: 50%;
+  padding: 1px 2px;
+  font-size: 0.55rem;
+  font-weight: bold; 
+  min-width: 10px; 
+  height: 10px; 
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-icon-container, .nav-icon {
+  position: relative; 
+  margin-right: 15px; /* Space between icons */
+}
+
+.admin-badge {
+  background-color: #e0e0e0; /* Light grey for admin badge */
+  color: #333; /* Dark grey text */
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.admin-badge a {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Use inherited color */
+}
+
+.admin-badge:hover {
+  background-color: #ccc; /* Darker grey on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .navbar-small-links {
+    display: none; 
+  }
+
+  .navbar-small-links.open {
+    display: block; 
+    position: absolute; 
+    top: 60px; 
+    left: 0;
+    right: 0;
+    background-color: #ffffff; /* Keep dropdown background white */
+    padding: 1rem; 
+    z-index: 999; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  }
+}

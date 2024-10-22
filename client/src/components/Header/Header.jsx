@@ -1,89 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaShoppingCart, FaUser, FaHeart } from 'react-icons/fa';
+import { FaShoppingCart } from 'react-icons/fa'; // Removed unnecessary icons
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import CartModal from '../CartModal/CartModal';
 import './header.css';
 
 const NavBar = () => {
-  const [isMenuOpen, setMenuOpen] = useState(false);
-  const { cartItems, wishlistItems, openModal } = useCart();
-  const { isAuthenticated, isAdmin } = useAuth(); // Access isAdmin here
+  const [isScrollingUp, setScrollingUp] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
+  const { cartItems, openModal } = useCart();
+  const { isAuthenticated, isAdmin } = useAuth();
   const totalCartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
-  const totalWishlistQuantity = wishlistItems.length;
-
-  const toggleMenu = () => {
-    setMenuOpen(!isMenuOpen);
-  };
 
   const toggleCartModal = () => {
     openModal();
   };
 
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+    setScrollingUp(currentScrollY < lastScrollY || currentScrollY <= 0);
+    setLastScrollY(currentScrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
   return (
     <>
-      <header className="navbar">
-        <div className="navbar-logo">
+      {/* Top Black Banner */}
+      <div className={`top-banner ${isScrollingUp ? 'show' : 'hide'}`}>
+        <p className="banner-text">FREE SHIPPING ON ALL ORDERS OVER $50*</p>
+      </div>
+
+      {/* Main Navbar */}
+      <header className={`navbar ${isScrollingUp ? 'show' : 'hide'}`}>
+        <div className="navbar-section">
+          {/* Left: SHOP button */}
+          <button className="shop-button">SHOP</button>
+        </div>
+
+        {/* Middle: Logo */}
+        <div className="navbar-section navbar-logo">
           <Link to="/">
             <img
-              src="https://via.placeholder.com/150"
+              src="https://via.placeholder.com/100"
               alt="Hobo Hippie Logo"
               className="navbar-logo-image"
             />
           </Link>
         </div>
-        <nav className={`navbar-links ${isMenuOpen ? 'open' : ''}`}>
-          {isAdmin ?
-            <ul className="navbar-small-links">
-              <Link to="/create-product">Create Product</Link>
-              <Link to="/create-supplier">Create Supplier</Link>
-            </ul>
-            :
-            <ul className="navbar-small-links">
-              <li><Link to="/products">Herbs</Link></li>
-              <li><Link to="/products">Teas</Link></li>
-              <li><Link to="/products">Tinctures</Link></li>
-              <li><Link to="/products">Oils</Link></li>
-              <li><Link to="/products">Salves</Link></li>
-              <li><Link to="/products">Baths</Link></li>
-              <li><Link to="/products">Candles</Link></li>
-              <li><Link to="/featured">Featured</Link></li>
-              <li><Link to="/new-products">New Arrivals</Link></li>
-              <li><Link to="/products" className="sale-link">Sale</Link></li>
-            </ul>}
-        </nav>
 
-
-        <div className="search-and-icons">
-          <input type="text" className="search-field" placeholder="Search..." />
-          <div className="icon-container">
-            <div className="cart-icon-container" onClick={toggleCartModal}>
-              <FaShoppingCart className="nav-icon-size" />
-              {totalCartQuantity > 0 && (
-                <span className="cart-badge">{totalCartQuantity}</span>
-              )}
-            </div>
-            {/* Update user icon link based on authentication */}
-            <Link to={isAuthenticated ? "/user-profile" : "/login"} className="nav-icon">
-              <FaUser className="nav-icon-size" />
-            </Link>
-            <Link to="/wishlist" className="nav-icon">
-              <FaHeart className="nav-icon-size" />
-              {totalWishlistQuantity > 0 && (
-                <span className="wishlist-badge">{totalWishlistQuantity}</span>
-              )}
-            </Link>
+        {/* Right: Cart Icon */}
+        <div className="navbar-section">
+          <div className="cart-icon-container" onClick={toggleCartModal}>
+            <FaShoppingCart className="nav-icon-size" />
+            {totalCartQuantity > 0 && (
+              <span className="cart-badge">{totalCartQuantity}</span>
+            )}
           </div>
         </div>
-
-        <div className={`menu-toggle ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
       </header>
+
+      {/* Admin Links: Display as Dropdown or Icon */}
+      {isAdmin && (
+        <div className="admin-links">
+          <button className="admin-button">Admin</button>
+          <ul className="admin-menu">
+            <li><Link to="/create-product">Create Product</Link></li>
+            <li><Link to="/create-supplier">Create Supplier</Link></li>
+          </ul>
+        </div>
+      )}
 
       <CartModal />
     </>
