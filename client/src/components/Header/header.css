@@ -1,7 +1,7 @@
 /* Top Banner */
 .top-banner {
     height: 50px;
-    background-color: #000;
+    background-color: black;
     color: white;
     display: flex;
     align-items: center;
@@ -29,7 +29,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
+    padding: 0 30px;
     position: fixed;
     top: 50px; /* Adjust based on the top banner height */
     left: 0;
@@ -54,8 +54,9 @@
     padding: 3px 20px;
     background-color: transparent;
     color: black;
-    font-size: .8em;
+    font-size: .7em;
     font-weight: bold;
+    letter-spacing: 0.5px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
 }
