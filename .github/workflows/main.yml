@@ -1,0 +1,59 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set Up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: SSH into Server and Pull Latest Code
+      run: |
+        ssh deployer@66.179.241.155 << 'EOF'
+          cd ../../hobohippie
+          git pull
+        EOF
+
+    - name: Install Server Dependencies
+      run: |
+        ssh deployer@66.179.241.155 << 'EOF'
+          cd ../../hobohippie/server
+          npm install
+        EOF
+
+    - name: Install Client Dependencies
+      run: |
+        ssh deployer@66.179.241.155 << 'EOF'
+          cd ../../hobohippie/client
+          npm install
+        EOF
+
+    - name: Build Client
+      run: |
+        ssh deployer@66.179.241.155 << 'EOF'
+          cd ../../hobohippie/client
+          npm run build
+        EOF
+
+    - name: Restart PM2
+      run: |
+        ssh deployer@66.179.241.155 << 'EOF'
+          pm2 restart all
+        EOF
+
+    - name: Restart Nginx
+      run: |
+        ssh deployer@66.179.241.155 << 'EOF'
+          sudo systemctl restart nginx
+        EOF
