@@ -7,7 +7,7 @@ import CartModal from '../CartModal/CartModal';
 import './header.css';
 
 const NavBar = () => {
-    const [isScrollingUp, setScrollingUp] = useState(true);
+    const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
 
     const { cartItems, openModal } = useCart();
@@ -21,9 +21,9 @@ const NavBar = () => {
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
         if (currentScrollY > lastScrollY) {
-            setScrollingUp(false);
+            setIsVisible(false); // Scrolling down
         } else {
-            setScrollingUp(true);
+            setIsVisible(true); // Scrolling up
         }
         setLastScrollY(currentScrollY);
     };
@@ -35,19 +35,19 @@ const NavBar = () => {
 
     return (
         <>
-{/* Top Black Banner */}
-            <div className={`top-banner ${isScrollingUp ? 'show' : 'hide'}`}>
+            {/* Top Black Banner */}
+            <div className={`top-banner ${isVisible ? 'show' : 'hide'}`}>
                 <p className="banner-text">FREE SHIPPING ON ALL ORDERS OVER $50*</p>
             </div>
 
-{/* Main Navbar */}
-            <header className={`navbar ${isScrollingUp ? 'show' : 'hide'}`}>
-    {/* Left: SHOP button */}    
+            {/* Main Navbar */}
+            <header className={`navbar ${isVisible ? 'show' : 'hide'}`}>
+                {/* Left: SHOP button */}
                 <div className="navbar-section">
                     <button className="shop-button">SHOP</button>
                 </div>
 
-    {/* Middle: Logo */}
+                {/* Middle: Logo */}
                 <div className="navbar-section navbar-logo">
                     <Link to="/">
                         <img
@@ -58,7 +58,7 @@ const NavBar = () => {
                     </Link>
                 </div>
 
-    {/* Right: Cart Icon */}
+                {/* Right: Cart Icon */}
                 <div className="navbar-section">
                     <div className="cart-icon-container" onClick={toggleCartModal}>
                         <FaShoppingCart className="nav-icon-size" />
@@ -69,7 +69,7 @@ const NavBar = () => {
                 </div>
             </header>
 
-    {/* Admin Links */}
+            {/* Admin Links */}
             {isAdmin && (
                 <div className="admin-links">
                     <button className="admin-button">Admin</button>
@@ -79,7 +79,7 @@ const NavBar = () => {
                     </ul>
                 </div>
             )}
-            
+
             <CartModal />
         </>
     );

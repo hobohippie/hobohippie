@@ -1,15 +1,17 @@
 /* Top Banner */
 .top-banner {
-    height: 50px;
-    background-color: black;
-    color: white;
+    height: 50px; /* Adjust height as needed */
+    background-color: #000;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: sans-serif;
-    font-size: 1.2em; 
-    transition: transform 0.3s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
+    transition: transform 0.3s ease; /* Smooth transition */
 }
 
 .top-banner.hide {
@@ -18,27 +20,26 @@
 
 /* Main Navbar */
 .navbar {
-    height: 80px;
+    height: 80px; /* Adjust height as needed */
     background-color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
-    position: fixed; 
-    top: 0;
+    position: fixed;
+    top: 50px; /* Adjust based on the top banner height */
     left: 0;
     right: 0;
-    z-index: 1000;
-    transition: transform 0.3s ease;
     z-index: 999;
+    transition: transform 0.3s ease; /* Smooth transition */
 }
 
-.navbar.hide {
-    transform: translateY(-100%);
+.hide {
+    transform: translateY(-100%); /* Move out of view */
 }
 
-.logo-placeholder img {
-    height: 50px;
+.show {
+    transform: translateY(0); /* Reset position */
 }
 
 .shop-button {
