@@ -18,9 +18,14 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: SSH into Server and Pull Latest Code
+    - name: Add SSH Key to Known Hosts
+      run: |
+        ssh-keyscan -H 66.179.241.155 >> ~/.ssh/known_hosts
+
+    - name: SSH into Server and Set Up Environment
       run: |
         ssh deployer@66.179.241.155 << 'EOF'
+          source ~/.bashrc  # or ~/.bash_profile
           cd ../../hobohippie
           git pull
         EOF
@@ -28,6 +33,7 @@ jobs:
     - name: Install Server Dependencies
       run: |
         ssh deployer@66.179.241.155 << 'EOF'
+          source ~/.bashrc  # or ~/.bash_profile
           cd ../../hobohippie/server
           npm install
         EOF
@@ -35,6 +41,7 @@ jobs:
     - name: Install Client Dependencies
       run: |
         ssh deployer@66.179.241.155 << 'EOF'
+          source ~/.bashrc  # or ~/.bash_profile
           cd ../../hobohippie/client
           npm install
         EOF
@@ -42,6 +49,7 @@ jobs:
     - name: Build Client
       run: |
         ssh deployer@66.179.241.155 << 'EOF'
+          source ~/.bashrc  # or ~/.bash_profile
           cd ../../hobohippie/client
           npm run build
         EOF
@@ -49,11 +57,13 @@ jobs:
     - name: Restart PM2
       run: |
         ssh deployer@66.179.241.155 << 'EOF'
+          source ~/.bashrc  # or ~/.bash_profile
           pm2 restart all
         EOF
 
     - name: Restart Nginx
       run: |
         ssh deployer@66.179.241.155 << 'EOF'
+          source ~/.bashrc  # or ~/.bash_profile
           sudo systemctl restart nginx
         EOF
