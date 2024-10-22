@@ -43,7 +43,7 @@ jobs:
             npm install
           EOF
 
-      - name: Build Client
+      - name: Build App
         run: |
           ssh deployer@66.179.241.155 << 'EOF'
             cd ../../hobohippie/client
