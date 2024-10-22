@@ -10,54 +10,56 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+    - name: Checkout Code
+      uses: actions/checkout@v2
 
-      - name: Set Up SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Set Up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Add SSH Key to Known Hosts
-        run: |
-          ssh-keyscan -H 66.179.241.155 >> ~/.ssh/known_hosts
+    - name: SSH into Server and Set Up Environment
+      run: |
+        ssh deployer@66.179.241.155 << 'EOF'
+          source ~/.bashrc  # or ~/.bash_profile
+          cd ../../hobohippie
+          git pull
+        EOF
 
-      - name: SSH into Server and Pull Latest Code
-        run: |
-          ssh deployer@66.179.241.155 << 'EOF'
-            cd ../../hobohippie
-            git pull
-          EOF
+    - name: Install Server Dependencies
+      run: |
+        ssh deployer@66.179.241.155 << 'EOF'
+          source ~/.bashrc  # or ~/.bash_profile
+          cd ../../hobohippie/server
+          npm install
+        EOF
 
-      - name: Install Server Dependencies
-        run: |
-          ssh deployer@66.179.241.155 << 'EOF'
-            cd ../../hobohippie/server
-            npm install
-          EOF
+    - name: Install Client Dependencies
+      run: |
+        ssh deployer@66.179.241.155 << 'EOF'
+          source ~/.bashrc  # or ~/.bash_profile
+          cd ../../hobohippie/client
+          npm install
+        EOF
 
-      - name: Install Client Dependencies
-        run: |
-          ssh deployer@66.179.241.155 << 'EOF'
-            cd ../../hobohippie/client
-            npm install
-          EOF
+    - name: Build Client
+      run: |
+        ssh deployer@66.179.241.155 << 'EOF'
+          source ~/.bashrc  # or ~/.bash_profile
+          cd ../../hobohippie/client
+          npm run build
+        EOF
 
-      - name: Build App
-        run: |
-          ssh deployer@66.179.241.155 << 'EOF'
-            cd ../../hobohippie/client
-            npm run build
-          EOF
+    - name: Restart PM2
+      run: |
+        ssh deployer@66.179.241.155 << 'EOF'
+          source ~/.bashrc  # or ~/.bash_profile
+          pm2 restart all
+        EOF
 
-      - name: Restart PM2
-        run: |
-          ssh deployer@66.179.241.155 << 'EOF'
-            pm2 restart all
-          EOF
-
-      - name: Restart Nginx
-        run: |
-          ssh deployer@66.179.241.155 << 'EOF'
-            sudo systemctl restart nginx
-          EOF
+    - name: Restart Nginx
+      run: |
+        ssh deployer@66.179.241.155 << 'EOF'
+          source ~/.bashrc  # or ~/.bash_profile
+          sudo systemctl restart nginx
+        EOF
