@@ -1,18 +1,21 @@
-/* Top Banner */
 .top-banner {
-    height: 80px; /* Set the height of the top banner to a smaller size */
+    height: 50px;
     background-color: black;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: sans-serif;
-    font-size: 1.2em; /* Adjust font size as needed */
+    font-size: 1.2em; 
+    transition: transform 0.3s ease;
 }
 
-/* Bottom Banner */
+.top-banner.hide {
+    transform: translateY(-100%);
+}
+
 .bottom-banner {
-    height: 30px; /* Set the height of the bottom banner to be smaller */
+    height: 60px; 
     background-color: white;
     display: flex;
     align-items: center;
@@ -20,20 +23,47 @@
     padding: 0 20px; /* Optional: Add horizontal padding */
 }
 
-/* Logo Placeholder */
+/* Main Navbar */
+.navbar {
+    height: 80px; /* Adjust height */
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed; /* Fix the navbar at the top */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure it stays above other content */
+    transition: transform 0.3s ease;
+}
+
+.navbar.hide {
+    transform: translateY(-100%);
+}
+
 .logo-placeholder img {
     height: 50px; /* Adjust height as necessary */
 }
 
 /* Shop Button */
 .shop-button {
-    border: 2px solid black; /* Adjust border thickness */
-    border-radius: 20px; /* Rounded edges */
-    padding: 6px 30px; /* Make it slightly wider and shorter */
-    background-color: transparent; /* Optional: Make it transparent */
+    border: 2px solid #4CAF50; /* Use success green color for border */
+    border-radius: 10px; /* Rounded edges for a smaller button */
+    padding: 5px 15px; /* Reduced padding for a smaller size */
+    background-color: transparent; /* Make it transparent for a modern look */
+    color: #4CAF50; /* Match the text color with the border color */
+    font-size: 0.9em; /* Adjust font size to make it smaller */
     cursor: pointer; /* Pointer cursor for button */
-    font-size: 1em; /* Optional: Adjust font size for better appearance */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effect */
 }
+
+.shop-button:hover {
+    background-color: rgba(76, 175, 80, 0.1); /* Light green background on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
 
 /* Cart Icon */
 .cart-icon-container {
@@ -63,20 +93,24 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
+/* Admin Button */
 .admin-button {
-    border: 2px solid black; /* Same styling as the shop button */
+    border: 2px solid #4CAF50; /* Use success green color for border */
     border-radius: 20px; /* Rounded edges */
-    padding: 5px 20px; /* Adjust padding */
-    background-color: #007bff; /* Blue background for admin button */
+    padding: 8px 25px; /* Adjust padding for a more balanced look */
+    background-color: #4CAF50; /* Green background for admin button */
     color: white; /* White text */
     cursor: pointer; /* Pointer cursor for button */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effect */
+    font-weight: bold; /* Make the button text bold */
 }
 
 .admin-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #45a049; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
 }
 
+/* Admin Menu */
 .admin-menu {
     margin-left: 15px; /* Space between button and menu */
     list-style: none; /* Remove default list styling */
@@ -87,16 +121,21 @@
     display: block; /* Show menu on hover */
 }
 
+/* Admin Menu Items */
 .admin-menu li {
     margin: 5px 0; /* Space between items */
 }
 
+/* Admin Menu Links */
 .admin-menu li a {
     text-decoration: none; /* Remove underline */
-    color: #007bff; /* Link color */
+    color: #4CAF50; /* Link color matches the button */
     transition: color 0.3s; /* Smooth transition for hover effect */
+    padding: 5px; /* Add padding for a button-like feel */
+    border-radius: 5px; /* Rounded edges for menu items */
 }
 
 .admin-menu li a:hover {
-    color: #0056b3; /* Darker blue on hover */
+    color: #388E3C; /* Darker green on hover */
+    background-color: rgba(76, 175, 80, 0.1); /* Light green background on hover */
 }

@@ -20,7 +20,11 @@ const NavBar = () => {
 
   const handleScroll = () => {
     const currentScrollY = window.scrollY;
-    setScrollingUp(currentScrollY < lastScrollY || currentScrollY <= 0);
+    if (currentScrollY > lastScrollY) {
+      setScrollingUp(false);
+    } else {
+      setScrollingUp(true);
+    }
     setLastScrollY(currentScrollY);
   };
 
@@ -47,7 +51,7 @@ const NavBar = () => {
         <div className="navbar-section navbar-logo">
           <Link to="/">
             <img
-              src="https://via.placeholder.com/100"
+              src="https://via.placeholder.com/50"
               alt="Hobo Hippie Logo"
               className="navbar-logo-image"
             />
