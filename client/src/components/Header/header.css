@@ -49,10 +49,9 @@
 }
 
 .shop-button {
-    width: 90px;
-    border: 2px solid black; 
+    border: 1px solid black; 
     border-radius: 20px;
-    padding: 8px 6px;
+    padding: 6px 3px;
     background-color: transparent;
     color: black;
     font-size: .8em;
