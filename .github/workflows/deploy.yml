@@ -18,48 +18,31 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: SSH into Server and Set Up Environment
+    - name: Add SSH Key to Known Hosts
       run: |
-        ssh deployer@66.179.241.155 << 'EOF'
-          source ~/.bashrc
-          cd ../../hobohippie
-          git pull
-        EOF
+        mkdir -p ~/.ssh
+        ssh-keyscan -H 66.179.241.155 >> ~/.ssh/known_hosts
+
+    - name: SSH into Server and Pull Latest Code
+      run: |
+        ssh deployer@66.179.241.155 'cd ../../hobohippie && git pull'
 
     - name: Install Server Dependencies
       run: |
-        ssh deployer@66.179.241.155 << 'EOF'
-          source ~/.bashrc
-          cd ../../hobohippie/server
-          npm install
-        EOF
+        ssh deployer@66.179.241.155 'cd ../../hobohippie/server && npm install'
 
     - name: Install Client Dependencies
       run: |
-        ssh deployer@66.179.241.155 << 'EOF'
-          source ~/.bashrc
-          cd ../../hobohippie/client
-          npm install
-        EOF
+        ssh deployer@66.179.241.155 'cd ../../hobohippie/client && npm install'
 
     - name: Build Client
       run: |
-        ssh deployer@66.179.241.155 << 'EOF'
-          source ~/.bashrc
-          cd ../../hobohippie/client
-          npm run build
-        EOF
+        ssh deployer@66.179.241.155 'cd ../../hobohippie/client && npm run build'
 
     - name: Restart PM2
       run: |
-        ssh deployer@66.179.241.155 << 'EOF'
-          source ~/.bashrc
-          pm2 restart all
-        EOF
+        ssh deployer@66.179.241.155 'pm2 restart all'
 
     - name: Restart Nginx
       run: |
-        ssh deployer@66.179.241.155 << 'EOF'
-          source ~/.bashrc
-          sudo systemctl restart nginx
-        EOF
+        ssh deployer@66.179.241.155 'sudo systemctl restart nginx'
