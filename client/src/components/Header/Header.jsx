@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FaShoppingCart } from 'react-icons/fa'; // Removed unnecessary icons
+import { FaShoppingCart } from 'react-icons/fa';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import CartModal from '../CartModal/CartModal';
@@ -65,7 +65,7 @@ const NavBar = () => {
         </div>
       </header>
 
-      {/* Admin Links: Display as Dropdown or Icon */}
+      {/* Admin Links */}
       {isAdmin && (
         <div className="admin-links">
           <button className="admin-button">Admin</button>

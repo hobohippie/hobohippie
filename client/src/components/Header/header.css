@@ -3,8 +3,8 @@
     background-color: black;
     color: white;
     text-align: center;
-    padding: 20px;
-    font-size: 16px;
+    padding: 12px; /* Reduced height by about 35% */
+    font-size: 14px;
     font-family: sans-serif;
     position: fixed;
     top: 0;
@@ -20,14 +20,15 @@
     top: 0;
   }
   
+  /* Main Navbar */
   .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: white;
-    padding: 10px 20px;
+    padding: 15px 20px; /* Adjusted padding */
     position: fixed;
-    top: 100px; /* After the banner */
+    top: 40px; /* Directly under the top banner */
     width: 100%;
     transition: top 0.3s;
     z-index: 10;
@@ -38,7 +39,7 @@
   }
   
   .navbar.show {
-    top: 100px;
+    top: 40px; /* Adjusted to sit just below the top banner */
   }
   
   .navbar-section {
@@ -48,6 +49,7 @@
     align-items: center;
   }
   
+  /* Shop Button */
   .shop-button {
     border: 3px solid black;
     padding: 10px 20px;
@@ -58,6 +60,7 @@
     font-weight: bold;
   }
   
+  /* Cart Icon */
   .nav-icon-size {
     font-size: 30px;
   }
@@ -73,6 +76,7 @@
     font-size: 12px;
   }
   
+  /* Admin Button */
   .admin-button {
     position: fixed;
     bottom: 20px;
