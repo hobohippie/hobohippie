@@ -7,82 +7,82 @@ import CartModal from '../CartModal/CartModal';
 import './header.css';
 
 const NavBar = () => {
-  const [isScrollingUp, setScrollingUp] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+    const [isScrollingUp, setScrollingUp] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
 
-  const { cartItems, openModal } = useCart();
-  const { isAuthenticated, isAdmin } = useAuth();
-  const totalCartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
+    const { cartItems, openModal } = useCart();
+    const { isAuthenticated, isAdmin } = useAuth();
+    const totalCartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-  const toggleCartModal = () => {
-    openModal();
-  };
+    const toggleCartModal = () => {
+        openModal();
+    };
 
-  const handleScroll = () => {
-    const currentScrollY = window.scrollY;
-    if (currentScrollY > lastScrollY) {
-      setScrollingUp(false);
-    } else {
-      setScrollingUp(true);
-    }
-    setLastScrollY(currentScrollY);
-  };
+    const handleScroll = () => {
+        const currentScrollY = window.scrollY;
+        if (currentScrollY > lastScrollY) {
+            setScrollingUp(false);
+        } else {
+            setScrollingUp(true);
+        }
+        setLastScrollY(currentScrollY);
+    };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [lastScrollY]);
 
-  return (
-    <>
-      {/* Top Black Banner */}
-      <div className={`top-banner ${isScrollingUp ? 'show' : 'hide'}`}>
-        <p className="banner-text">FREE SHIPPING ON ALL ORDERS OVER $50*</p>
-      </div>
+    return (
+        <>
+{/* Top Black Banner */}
+            <div className={`top-banner ${isScrollingUp ? 'show' : 'hide'}`}>
+                <p className="banner-text">FREE SHIPPING ON ALL ORDERS OVER $50*</p>
+            </div>
 
-      {/* Main Navbar */}
-      <header className={`navbar ${isScrollingUp ? 'show' : 'hide'}`}>
-        <div className="navbar-section">
-          {/* Left: SHOP button */}
-          <button className="shop-button">SHOP</button>
-        </div>
+{/* Main Navbar */}
+            <header className={`navbar ${isScrollingUp ? 'show' : 'hide'}`}>
+    {/* Left: SHOP button */}    
+                <div className="navbar-section">
+                    <button className="shop-button">SHOP</button>
+                </div>
 
-        {/* Middle: Logo */}
-        <div className="navbar-section navbar-logo">
-          <Link to="/">
-            <img
-              src="https://via.placeholder.com/50"
-              alt="Hobo Hippie Logo"
-              className="navbar-logo-image"
-            />
-          </Link>
-        </div>
+    {/* Middle: Logo */}
+                <div className="navbar-section navbar-logo">
+                    <Link to="/">
+                        <img
+                            src="https://via.placeholder.com/50"
+                            alt="Hobo Hippie Logo"
+                            className="navbar-logo-image"
+                        />
+                    </Link>
+                </div>
 
-        {/* Right: Cart Icon */}
-        <div className="navbar-section">
-          <div className="cart-icon-container" onClick={toggleCartModal}>
-            <FaShoppingCart className="nav-icon-size" />
-            {totalCartQuantity > 0 && (
-              <span className="cart-badge">{totalCartQuantity}</span>
+    {/* Right: Cart Icon */}
+                <div className="navbar-section">
+                    <div className="cart-icon-container" onClick={toggleCartModal}>
+                        <FaShoppingCart className="nav-icon-size" />
+                        {totalCartQuantity > 0 && (
+                            <span className="cart-badge">{totalCartQuantity}</span>
+                        )}
+                    </div>
+                </div>
+            </header>
+
+    {/* Admin Links */}
+            {isAdmin && (
+                <div className="admin-links">
+                    <button className="admin-button">Admin</button>
+                    <ul className="admin-menu">
+                        <li><Link to="/create-product">Create Product</Link></li>
+                        <li><Link to="/create-supplier">Create Supplier</Link></li>
+                    </ul>
+                </div>
             )}
-          </div>
-        </div>
-      </header>
-
-      {/* Admin Links */}
-      {isAdmin && (
-        <div className="admin-links">
-          <button className="admin-button">Admin</button>
-          <ul className="admin-menu">
-            <li><Link to="/create-product">Create Product</Link></li>
-            <li><Link to="/create-supplier">Create Supplier</Link></li>
-          </ul>
-        </div>
-      )}
-
-      <CartModal />
-    </>
-  );
+            
+            <CartModal />
+        </>
+    );
 };
 
 export default NavBar;
