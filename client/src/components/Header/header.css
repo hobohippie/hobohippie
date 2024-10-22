@@ -1,19 +1,4 @@
-.navbar {
-    height: 80px; /* Adjust height */
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    position: fixed; /* Fix the navbar at the top */
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000; /* Ensure it stays above other content */
-    transition: transform 0.3s ease;
-    z-index: 999;
-}
-
+/* Top Banner */
 .top-banner {
     height: 50px;
     background-color: black;
@@ -31,61 +16,64 @@
     transform: translateY(-100%);
 }
 
-.bottom-banner {
-    height: 70px; 
+/* Main Navbar */
+.navbar {
+    height: 80px;
     background-color: white;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Spread items evenly */
-    padding: 0 40px; /* Optional: Add horizontal padding */
-    font-size: 1.1em; /* Adjust text size slightly larger */
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed; 
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    z-index: 999;
 }
 
-/* Main Navbar */
 .navbar.hide {
     transform: translateY(-100%);
 }
 
 .logo-placeholder img {
-    height: 50px; /* Adjust height as necessary */
+    height: 50px;
 }
 
-/* Shop Button */
 .shop-button {
-    border: 3px solid #4CAF50; /* Use success green color for border */
-    border-radius: 10px; /* Rounded edges for a smaller button */
-    padding: 5px 15px; /* Reduced padding for a smaller size */
-    background-color: transparent; /* Make it transparent for a modern look */
-    color: #4CAF50; /* Match the text color with the border color */
-    font-size: 1.1em; /* Adjust font size to make it smaller */
-    cursor: pointer; /* Pointer cursor for button */
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effect */
+    border: 3px solid #4CAF50; 
+    border-radius: 10px;
+    padding: 5px 15px;
+    background-color: transparent;
+    color: #4CAF50;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .shop-button:hover {
-    background-color: rgba(76, 175, 80, 0.1); /* Light green background on hover */
-    transform: scale(1.05); /* Slightly enlarge button on hover */
+    background-color: rgba(76, 175, 80, 0.1); 
+    transform: scale(1.05); 
 }
 
-
-/* Cart Icon */
 .cart-icon-container {
-    position: relative; /* To position the badge */
-    font-size: 1.5em; /* Set a comfortable size for the cart icon */
+    position: relative;
+    font-size: 1.5em; 
 }
 
 .cart-badge {
     position: absolute;
     top: -10px; /* Adjust position for better alignment */
     right: -10px; /* Adjust position for better alignment */
-    background-color: red; /* Badge color */
-    color: white; /* Badge text color */
-    border-radius: 50%; /* Circular badge */
-    padding: 2px 6px; /* Padding for the badge */
-    font-size: 12px; /* Badge font size */
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
 }
 
-/* Admin Links */
+/* Admin */
 .admin-links {
     display: flex; /* Use flexbox for layout */
     align-items: center; /* Center items vertically */
@@ -96,7 +84,6 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
-/* Admin Button */
 .admin-button {
     border: 2px solid #4CAF50; /* Use success green color for border */
     border-radius: 20px; /* Rounded edges */
@@ -113,7 +100,6 @@
     transform: scale(1.05); /* Slightly enlarge button on hover */
 }
 
-/* Admin Menu */
 .admin-menu {
     margin-left: 15px; /* Space between button and menu */
     list-style: none; /* Remove default list styling */
@@ -124,12 +110,10 @@
     display: block; /* Show menu on hover */
 }
 
-/* Admin Menu Items */
 .admin-menu li {
     margin: 5px 0; /* Space between items */
 }
 
-/* Admin Menu Links */
 .admin-menu li a {
     text-decoration: none; /* Remove underline */
     color: #4CAF50; /* Link color matches the button */
