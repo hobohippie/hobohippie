@@ -51,7 +51,7 @@ const NavBar = () => {
                 <div className="navbar-section navbar-logo">
                     <Link to="/">
                         <img
-                            src="https://via.placeholder.com/50"
+                            src="client/src/components/images/HoboHippie.png"
                             alt="Hobo Hippie Logo"
                             className="navbar-logo-image"
                         />
