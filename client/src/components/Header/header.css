@@ -1,6 +1,6 @@
 /* Top Banner */
 .top-banner {
-    height: 140px; /* Increased height of the top banner by 20px */
+    height: 80px; /* Set the height of the top banner to a smaller size */
     background-color: black;
     color: white;
     display: flex;
@@ -12,7 +12,7 @@
 
 /* Bottom Banner */
 .bottom-banner {
-    height: 90px; /* Set height to about 1.5 times the previous height */
+    height: 30px; /* Set the height of the bottom banner to be smaller */
     background-color: white;
     display: flex;
     align-items: center;
@@ -29,7 +29,7 @@
 .shop-button {
     border: 2px solid black; /* Adjust border thickness */
     border-radius: 20px; /* Rounded edges */
-    padding: 6px 40px; /* Made it slightly wider and shorter */
+    padding: 6px 30px; /* Make it slightly wider and shorter */
     background-color: transparent; /* Optional: Make it transparent */
     cursor: pointer; /* Pointer cursor for button */
     font-size: 1em; /* Optional: Adjust font size for better appearance */
@@ -38,15 +38,65 @@
 /* Cart Icon */
 .cart-icon-container {
     position: relative; /* To position the badge */
+    font-size: 1.5em; /* Set a comfortable size for the cart icon */
 }
 
 .cart-badge {
     position: absolute;
-    top: -8px; /* Adjust position for better alignment */
-    right: -8px; /* Adjust position for better alignment */
+    top: -10px; /* Adjust position for better alignment */
+    right: -10px; /* Adjust position for better alignment */
     background-color: red; /* Badge color */
     color: white; /* Badge text color */
     border-radius: 50%; /* Circular badge */
     padding: 2px 6px; /* Padding for the badge */
     font-size: 12px; /* Badge font size */
+}
+
+/* Admin Links */
+.admin-links {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    padding: 10px; /* Add some padding */
+    background-color: #f9f9f9; /* Light background for visibility */
+    border: 1px solid #ccc; /* Light border for separation */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.admin-button {
+    border: 2px solid black; /* Same styling as the shop button */
+    border-radius: 20px; /* Rounded edges */
+    padding: 5px 20px; /* Adjust padding */
+    background-color: #007bff; /* Blue background for admin button */
+    color: white; /* White text */
+    cursor: pointer; /* Pointer cursor for button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.admin-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.admin-menu {
+    margin-left: 15px; /* Space between button and menu */
+    list-style: none; /* Remove default list styling */
+    display: none; /* Initially hidden */
+}
+
+.admin-links:hover .admin-menu {
+    display: block; /* Show menu on hover */
+}
+
+.admin-menu li {
+    margin: 5px 0; /* Space between items */
+}
+
+.admin-menu li a {
+    text-decoration: none; /* Remove underline */
+    color: #007bff; /* Link color */
+    transition: color 0.3s; /* Smooth transition for hover effect */
+}
+
+.admin-menu li a:hover {
+    color: #0056b3; /* Darker blue on hover */
 }
