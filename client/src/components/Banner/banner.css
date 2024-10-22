@@ -1,6 +1,6 @@
-/* .content {
-    padding-top: 20px; /* Add enough space to avoid overlap 
-  } */
+.content {
+    padding-top: 110px; /* Add enough space to avoid overlap */
+  }
 
 .banner {
     height: 40px;
