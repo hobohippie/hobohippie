@@ -5,7 +5,7 @@ html, body {
   padding: 0;
   font-family: 'Arial', sans-serif; /* Default font for a clean look */
   background-color: #ffffff; /* Set a clean white background for the whole site */
-  color: #333; /* Dark gray for text for better readability */
+  /*color: #333; /* Dark gray for text for better readability */
 }
 
 /* Flexbox layout for app container */
