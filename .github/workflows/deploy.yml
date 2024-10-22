@@ -29,19 +29,19 @@ jobs:
 
     - name: Install Server Dependencies
       run: |
-        ssh deployer@66.179.241.155 'cd ../../hobohippie/server && npm install'
+        ssh deployer@66.179.241.155 'source ~/.nvm/nvm.sh && cd ../../hobohippie/server && npm install'
 
     - name: Install Client Dependencies
       run: |
-        ssh deployer@66.179.241.155 'cd ../../hobohippie/client && npm install'
+        ssh deployer@66.179.241.155 'source ~/.nvm/nvm.sh && cd ../../hobohippie/client && npm install'
 
     - name: Build Client
       run: |
-        ssh deployer@66.179.241.155 'cd ../../hobohippie/client && npm run build'
+        ssh deployer@66.179.241.155 'source ~/.nvm/nvm.sh && cd ../../hobohippie/client && npm run build'
 
     - name: Restart PM2
       run: |
-        ssh deployer@66.179.241.155 'pm2 restart all'
+        ssh deployer@66.179.241.155 'source ~/.nvm/nvm.sh && pm2 restart all'
 
     - name: Restart Nginx
       run: |
