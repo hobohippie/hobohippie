@@ -72,7 +72,7 @@ const NavBar = () => {
             {/* Admin Links */}
             {isAdmin && (
                 <div className="admin-links">
-                    <button className="admin-button">Admin</button>
+                    <button className="admin-button" onClick={logout}>Logout</button>
                     <ul className="admin-menu">
                         <li><Link to="/create-product">Create Product</Link></li>
                         <li><Link to="/create-supplier">Create Supplier</Link></li>
