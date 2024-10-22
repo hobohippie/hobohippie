@@ -28,28 +28,27 @@ jobs:
     - name: Install Server Dependencies
       run: |
         ssh deployer@66.179.241.155 << 'EOF'
-          cd /path/to/your/app
+          cd ../../hobohippie/server
           npm install
         EOF
 
     - name: Install Client Dependencies
       run: |
         ssh deployer@66.179.241.155 << 'EOF'
-          cd /path/to/your/app/client  # Change this if your client directory is different
+          cd ../../hobohippie/client
           npm install
         EOF
 
     - name: Build Client
       run: |
         ssh deployer@66.179.241.155 << 'EOF'
-          cd /path/to/your/app/client  # Adjust this if necessary
+          cd ../../hobohippie/client
           npm run build
         EOF
 
     - name: Replace Old Build
       run: |
         ssh deployer@66.179.241.155 << 'EOF'
-          # Adjust the paths below according to your setup
           rm -rf /path/to/old/build/*  # Clear the old build
           cp -R /path/to/your/app/client/build/* /path/to/old/build/  # Copy the new build
         EOF
@@ -63,5 +62,5 @@ jobs:
     - name: Restart PM2
       run: |
         ssh deployer@66.179.241.155 << 'EOF'
-          pm2 restart all  # You can specify your app name if needed
+          pm2 restart all
         EOF
