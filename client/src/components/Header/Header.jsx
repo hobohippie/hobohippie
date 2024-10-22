@@ -11,7 +11,7 @@ const NavBar = () => {
     const [lastScrollY, setLastScrollY] = useState(0);
 
     const { cartItems, openModal } = useCart();
-    const { isAuthenticated, isAdmin } = useAuth();
+    const { isAuthenticated, isAdmin, logout } = useAuth();
     const totalCartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
     const toggleCartModal = () => {
