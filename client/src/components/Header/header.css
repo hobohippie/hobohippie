@@ -29,7 +29,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 40px;
     position: fixed;
     top: 50px; /* Adjust based on the top banner height */
     left: 0;
@@ -49,6 +49,7 @@
 }
 
 .shop-button {
+    width: 120px;
     border: 2px solid black; 
     border-radius: 20px;
     padding: 10px 8px;
@@ -61,7 +62,8 @@
 }
 
 .shop-button:hover {
-    background-color: rgba(76, 175, 80, 0.1); 
+    background-color: black;
+    color: white;
     transform: scale(1.05); 
 }
 
