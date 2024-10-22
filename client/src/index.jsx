@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css';
 
 import Header from './components/Header/Header';
+import Banner from './components/Banner/Banner'
 import Footer from './components/Footer/Footer';
 import Home from './pages/home';
 import About from './pages/about';
@@ -47,6 +48,7 @@ const App = () => {
         <CartProvider>
           <Router>
             <Header />
+            <Banner />
             <div className="content-wrap">
               <Routes>
                 <Route path="/" element={<Home />} />
