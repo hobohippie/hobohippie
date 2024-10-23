@@ -31,7 +31,7 @@
 
 /* Main Navbar */
 .navbar {
-    height: 120px;
+    height: 60px;
     background-color: rgb(52, 79, 228);
     display: flex;
     align-items:center;

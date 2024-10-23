@@ -36,7 +36,7 @@ const Banner = () => {
                             </Link>
                         </div>
                         <p className="login-prompt">
-                            Already a member? <Link to="/login" className="login-link">Log In</Link>
+                            <span className="login-p">Already a member? </span><Link to="/login" className="login-link">Log In</Link>
                         </p>
                     </div>
                 </div>
