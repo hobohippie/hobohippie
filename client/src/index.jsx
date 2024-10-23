@@ -32,14 +32,14 @@ import Terms from './pages/terms';
 import Privacy from './pages/privacy';
 import Account from './pages/create-account';
 import Login from './pages/login';
-import CreateProduct from './pages/create-product'; // Import your CreateProduct page
+import CreateProduct from './pages/create-product'; 
 import CreateAccount from './pages/create-account';
 import EditProfile from './components/EditProfile/EditProfile';
 import CreateSupplier from './components/SupplierForm/SupplierForm'
-// Import your context providers
+
 import { CartProvider } from './context/CartContext';
-import { AuthProvider } from './context/AuthContext'; // Adjust the path as needed
-import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'; // Adjust the path as needed
+import { AuthProvider } from './context/AuthContext'; 
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 const App = () => {
   return (

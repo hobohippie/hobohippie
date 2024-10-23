@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user');
   };
 
-  const isAdmin = useMemo(() => user && user.account.isAdmin === true, [user]);
+  const isAdmin = useMemo(() => user && user.account ? user.account.isAdmin === true : false, [user]);
   const isAuthenticated = useMemo(() => user !== null, [user]);
 
   useEffect(() => {
@@ -32,7 +32,6 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Create the useAuth hook
 export const useAuth = () => {
   return useContext(AuthContext);
 };
