@@ -1,10 +1,11 @@
 const dotenv = require('dotenv');
-dotenv.config(); // Load environment variables
+dotenv.config();
 
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-require('./config/db_connection'); // Import the db_connection file to handle the database connection
+const upload = require('./config/multerConfig'); 
+require('./config/db_connection'); 
 
 const app = express();
 const allowedOrigins = [

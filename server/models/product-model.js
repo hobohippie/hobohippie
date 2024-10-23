@@ -24,6 +24,10 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    image: { 
+        type: String,
+        required: false,
+    },
     pricingHistory: [
         {
             price: { type: Number, required: true },

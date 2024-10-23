@@ -3,13 +3,17 @@ const Product = require('../models/product-model');
 module.exports = {
     async createProduct(req, res) {
         try {
+            // Validate required fields
             if (!req.body.name || !req.body.price) {
                 return res.status(400).json({ message: 'Name and price are required.' });
             }
+
+            // Create new product with uploaded image path
             const newProduct = new Product({
-                ...req.body
+                ...req.body,
+                image: req.file.path // Add the image path from multer
             });
-    
+
             const savedProduct = await newProduct.save();
             res.status(201).json({
                 message: 'Product created successfully',

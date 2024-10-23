@@ -32,14 +32,16 @@ import Terms from './pages/terms';
 import Privacy from './pages/privacy';
 import Account from './pages/create-account';
 import Login from './pages/login';
-import CreateProduct from './pages/create-product'; 
+import CreateProduct from './pages/create-product';
 import CreateAccount from './pages/create-account';
 import EditProfile from './components/EditProfile/EditProfile';
 import CreateSupplier from './components/SupplierForm/SupplierForm'
 
 import { CartProvider } from './context/CartContext';
-import { AuthProvider } from './context/AuthContext'; 
+import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
 const App = () => {
   return (
@@ -47,6 +49,7 @@ const App = () => {
       <AuthProvider>
         <CartProvider>
           <Router>
+            <ScrollToTop />
             <Header />
             <Banner />
             <div className="content-wrap">
