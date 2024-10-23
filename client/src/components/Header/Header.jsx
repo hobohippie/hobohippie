@@ -11,24 +11,26 @@ const NavBar = () => {
     const [lastScrollY, setLastScrollY] = useState(0);
 
     const { cartItems, openModal } = useCart();
-    const { isAuthenticated, isAdmin, logout } = useAuth();
+    const { isAdmin, logout } = useAuth();
     const totalCartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
     const toggleCartModal = () => {
         openModal();
     };
 
-    const handleScroll = () => {
-        const currentScrollY = window.scrollY;
-        if (currentScrollY > lastScrollY) {
-            setIsVisible(false); // Scrolling down
-        } else {
-            setIsVisible(true); // Scrolling up
-        }
-        setLastScrollY(currentScrollY);
-    };
+
 
     useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > lastScrollY) {
+                setIsVisible(false); // Scrolling down
+            } else {
+                setIsVisible(true); // Scrolling up
+            }
+            setLastScrollY(currentScrollY);
+        };
+
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [lastScrollY]);
