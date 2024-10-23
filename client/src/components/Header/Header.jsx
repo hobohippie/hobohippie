@@ -47,7 +47,7 @@ const NavBar = () => {
                 
                 {/* Left: SHOP button */}
                 <div className="navbar-section">
-                    <button className="shop-button">DONNIE</button>
+                    <button className="shop-button">SHOP</button>
                 </div>
 
                 {/* Middle: Logo */}
