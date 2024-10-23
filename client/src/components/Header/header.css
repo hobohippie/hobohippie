@@ -31,21 +31,27 @@
 
 /* Main Navbar */
 .navbar {
-    height: 60px;
-    background-color: white;
+    height: 120px;
+    background-color: rgb(52, 79, 228);
     display: flex;
-    align-items: center;
+    align-items:center;
     justify-content: space-between;
-    padding: 0 30px;
+    padding: 0 50px;
     position: fixed;
-    top: 50px; /* Adjust based on the top banner height */
+    top: 30px; /* Adjust based on the top banner height */
     left: 0;
     right: 0;
     z-index: 999;
     transition: transform 0.3s ease; /* Smooth transition */
 }
 
+.navbar-logo {
+   img{
+    width: 180px;
+    }
+}
 .nav-hide {
+    background-color: blue;
     transform: translateY(-100%); 
     top: -80px;
 }
@@ -56,6 +62,8 @@
 }
 
 .shop-button {
+    position:absolute;
+    top: 10px;
     border: 1px solid black; 
     border-radius: 20px;
     padding: 6px 20px;
@@ -71,11 +79,12 @@
 .shop-button:hover {
     background-color: black;
     color: white;
-    transform: scale(1.05); 
+    transform: scale(1.05);
 }
 
 .cart-icon-container {
-    position: relative;
+    position:absolute;
+    top: 10px;
     font-size: 1.5em; 
 }
 

@@ -4,6 +4,7 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import CartModal from '../CartModal/CartModal';
+import logo from '../images/HoboHippie.png'
 import './header.css';
 
 const NavBar = () => {
@@ -54,7 +55,7 @@ const NavBar = () => {
                 <div className="navbar-section navbar-logo">
                     <Link to="/">
                         <img
-                            src="/images/HoboHippie.png"
+                            src={logo}
                             alt="Hobo Hippie Logo"
                             className="navbar-logo-image"
                         />
