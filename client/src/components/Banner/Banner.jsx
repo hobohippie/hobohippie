@@ -9,14 +9,21 @@ const Banner = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
+    const closeDropdown = () => {
+        setIsDropdownOpen(false);
+    };
+
     return (
         <>
             <div className="banner" onClick={toggleDropdown}>
-                <p>Hobo Hippie Rewards</p>
+                <p>~Hobo Hippie Rewards</p>
             </div>
             {isDropdownOpen && (
                 <div className="banner-dropdown">
                     <div className="banner-content">
+                        <button className="close-button" onClick={closeDropdown}>
+                            ✖️
+                        </button>
                         <p>
                             <span role="img" aria-label="coin">
                                 💰
@@ -24,19 +31,22 @@ const Banner = () => {
                             <span className="dropdown-text-top">Earn 1 point for every $1 you spend</span>
                         </p>
                         <div className="join-box">
-                            <Link to="/create-account" className="join-link">
+                            <Link to="/create-account" className="join-link" onClick={closeDropdown}>
                                 <div className="join-now">
                                     <span className="join-text">
                                         Join Now
                                         <br />
                                         <small>Earn 100 points</small>
                                     </span>
-                                    <span className="arrow">➡️</span>
+                                    <span className="arrow">&gt;</span>
                                 </div>
                             </Link>
                         </div>
-                        <p className="login-prompt">
-                            <span className="login-p">Already a member? </span><Link to="/login" className="login-link">Log In</Link>
+                        <p>
+                            <span className="login-prompt">Already a member? </span>
+                            <Link to="/login" className="login-link" onClick={closeDropdown}>
+                                Log In
+                            </Link>
                         </p>
                     </div>
                 </div>

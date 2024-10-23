@@ -1,98 +1,110 @@
 .content {
-    padding-top: 110px; /* Add enough space to avoid overlap */
-  }
+  padding-top: 110px; /* Add enough space to avoid overlap */
+}
 
 .banner {
-    height: 40px;
-    background-color: black;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    cursor: pointer;
-    position: relative;
-    z-index: 100;
-    margin-top: 110px;
-  }
-  
-  .banner p {
-    margin: 0;
-    padding: 0;
-  }
-  
-  .banner-dropdown {
-    width: 100%;
-    height: 200px;
-    background-color: white;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-    position: absolute;
-    top: 40px;
-    left: 0;
-    z-index: 90;
-    margin-top: 110px;
-    padding: 60px 250px;
-  }
-  
-  .banner-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-  
-  .banner-content p {
-    font-size: 16px;
+  height: 40px;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  position: relative;
+  z-index: 100;
+  margin-top: 110px;
+}
+
+.banner p {
+  margin: 0;
+  padding: 0;
+}
+
+.banner-dropdown {
+  width: 100%;
+  height: 215px;
+  background-color: white;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  top: 40px;
+  left: 0;
+  z-index: 90;
+  margin-top: -40px;
+  padding: 60px 180px;
+  border-radius: 15px;
+}
+
+.banner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* .banner-content p {
+    font-size: 14px;
+    letter-spacing: 1px;
     margin-bottom: 20px;
     text-align: center;
-  }
-  
-  .join-box {
-    width: 80%;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .join-now {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .join-text {
-    font-weight: bold;
-  }
-  
-  .join-text small {
-    font-weight: normal;
-  }
-  
-  .arrow {
-    font-size: 24px;
-  }
-  
-  .login-prompt {
-    color: gray;
-    margin-top: 15px;
-    font-size: 12px;
-    letter-spacing: .7px;
-  }
-  
-  .login-link {
-    font-weight: bold;
-    text-decoration: underline;
-    color: black;
-  }
-  
-  .login-link:hover {
-    text-decoration: underline;
-  }
-  
-  .join-link {
-    text-decoration: none;
-    color: black;
-  }
-  
+  } */
+
+.close-button {
+  position: absolute; 
+  top: 10px; 
+  right: 10px; 
+  background: none; 
+  border: none; 
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.join-box {
+  width: 80%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.join-now {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.join-text {
+  font-weight: bold;
+}
+
+.join-text small {
+  font-weight: normal;
+}
+
+.arrow {
+  font-size: 24px;
+}
+
+.login-prompt {
+  color: gray;
+  margin-top: 15px;
+  font-size: 14px;
+  letter-spacing: 0.7px;
+}
+
+.login-link {
+  font-weight: bold;
+  text-decoration: underline;
+  color: black;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+.join-link {
+  text-decoration: none;
+  color: black;
+}
