@@ -44,9 +44,10 @@ const NavBar = () => {
 
             {/* Main Navbar */}
             <header className={`navbar ${isVisible ? 'nav-show' : 'nav-hide'}`}>
+                
                 {/* Left: SHOP button */}
                 <div className="navbar-section">
-                    <button className="shop-button">SHOP</button>
+                    <button className="shop-button">DONNIE</button>
                 </div>
 
                 {/* Middle: Logo */}
