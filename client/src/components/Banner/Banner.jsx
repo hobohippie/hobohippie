@@ -21,7 +21,7 @@ const Banner = () => {
                             <span role="img" aria-label="coin">
                                 💰
                             </span>{' '}
-                            Earn 1 point for every $1 you spend
+                            <span className="dropdown-text-top">Earn 1 point for every $1 you spend</span>
                         </p>
                         <div className="join-box">
                             <Link to="/create-account" className="join-link">
