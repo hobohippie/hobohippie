@@ -6,7 +6,7 @@ const connectionString = 'mongodb+srv://free:7130TulipTrail3723542@hobohippie.rd
 
 mongoose.set('strictQuery', false);
 
-mongoose.connect(connectionString, {
+mongoose.connect('mongodb+srv://free:7130TulipTrail3723542@hobohippie.rdv1r.mongodb.net/?retryWrites=true&w=majority&appNçame=HoboHippie', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
