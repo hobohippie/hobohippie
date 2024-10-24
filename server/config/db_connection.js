@@ -1,7 +1,9 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 
-const connectionString = process.env.MONGODB_URI;
+// const connectionString = process.env.MONGODB_URI;
+const connectionString = 'mongodb+srv://free:7130TulipTrail3723542@hobohippie.rdv1r.mongodb.net/?retryWrites=true&w=majority&appN>';
+
 mongoose.set('strictQuery', false);
 
 mongoose.connect(connectionString, {
