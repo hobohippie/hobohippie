@@ -6,6 +6,7 @@ import './main.css';
 
 import Header from './components/Header/Header';
 import Banner from './components/Banner/Banner'
+import LoginBanner from './components/LoginBanner/LoginBanner'
 import Footer from './components/Footer/Footer';
 import Home from './pages/home';
 import About from './pages/about';
@@ -52,6 +53,7 @@ const App = () => {
             <ScrollToTop />
             <Header />
             <Banner />
+            <LoginBanner/>
             <div className="content-wrap">
               <Routes>
                 <Route path="/" element={<Home />} />
