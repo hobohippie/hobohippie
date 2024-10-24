@@ -4,7 +4,7 @@ dotenv.config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const upload = require('./config/multerConfig'); 
+const upload = require('./config/multer_config'); 
 require('./config/db_connection'); 
 
 const app = express();
