@@ -31,16 +31,13 @@ const CreateProductForm = () => {
     const [imagePreview, setImagePreview] = useState('');
 
     useEffect(() => {
-        // Fetch suppliers
-        axios.get('/api/suppliers')
+        axios.get('https://hobohippie.com/api/suppliers')
             .then(response => setSuppliers(response.data))
             .catch(error => console.error("Error fetching suppliers:", error));
-
-        // Fetch existing tags
-        axios.get('/api/tags')
+            
+        axios.get('https://hobohippie.com/api/tags')
             .then(response => setTags(response.data))
             .catch(error => console.error("Error fetching tags:", error));
-        console.log(tags)
     }, []);
 
     const handleChange = (e) => {
