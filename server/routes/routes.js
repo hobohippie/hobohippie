@@ -26,5 +26,5 @@ module.exports = (app) => {
     // Tags
     app.get('/api/tags', tagController.getAllTags)
     app.post('/api/tags', tagController.createTag)
-    app.delete('/api/tags/:id', tagController.deleteTag)
+    app.delete('/api/tags/:name', tagController.deleteTag)
 };

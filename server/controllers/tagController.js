@@ -35,7 +35,7 @@ const tagController = {
           if (!tag) {
               return res.status(404).json({ message: 'Tag not found.' });
           }
-          res.status(204).send(); // No content to send back
+          res.status(204).send(); 
       } catch (error) {
           console.error('Error deleting tag:', error);
           res.status(500).json({ message: 'Server error while deleting tag.' });
