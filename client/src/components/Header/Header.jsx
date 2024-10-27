@@ -18,10 +18,6 @@ const NavBar = () => {
         openModal();
     };
 
-    const handleLogout = () => {
-        logout();
-      };
-
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
@@ -65,7 +61,6 @@ const NavBar = () => {
 
                 {/* Right: Cart Icon */}
                 <div className="navbar-section">
-                <button onClick={handleLogout}>Logout</button>
                     <div className="cart-icon-container" onClick={toggleCartModal}>
                         <FaShoppingCart className="nav-icon-size" />
                         {totalCartQuantity > 0 && (
