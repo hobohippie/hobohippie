@@ -139,6 +139,15 @@ const CreateProductForm = () => {
             .catch(error => console.error("Error deleting tag:", error));
     };
 
+    const handleTagClick = (tag) => {
+        if (!product.tags.includes(tag)) {
+            setProduct(prev => ({
+                ...prev,
+                tags: [...prev.tags, tag]
+            }));
+        }
+    };
+
     return (
         <Form onSubmit={handleSubmit} className="create-product-form">
             {/* Product Details */}
