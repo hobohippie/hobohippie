@@ -3,17 +3,20 @@ const Product = require('../models/product-model');
 module.exports = {
     async createProduct(req, res) {
         try {
-            // Validate required fields
             if (!req.body.name || !req.body.price) {
                 return res.status(400).json({ message: 'Name and price are required.' });
             }
-
-            // Create new product with uploaded image path
+            if (req.body.category && !mongoose.Types.ObjectId.isValid(req.body.category)) {
+                return res.status(400).json({ message: 'Invalid category ID.' });
+            }
+            if (!req.file) {
+                return res.status(400).json({ message: 'Image file is required.' });
+            }
             const newProduct = new Product({
                 ...req.body,
-                image: req.file.path // Add the image path from multer
+                image: req.file.path
             });
-
+    
             const savedProduct = await newProduct.save();
             res.status(201).json({
                 message: 'Product created successfully',
@@ -21,9 +24,13 @@ module.exports = {
             });
         } catch (error) {
             console.error(error);
+            if (error.name === 'ValidationError') {
+                return res.status(400).json({ message: 'Product validation failed', error });
+            }
             res.status(500).json({ message: 'Error creating product', error });
         }
     },
+    
     
     async getAllProducts(req, res) {
         try {
