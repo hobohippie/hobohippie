@@ -29,7 +29,6 @@ const CreateProductForm = () => {
     const [newTag, setNewTag] = useState('');
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
-    const [selectedTags, setSelectedTags] = useState([]);
 
     useEffect(() => {
         // Fetch suppliers
@@ -129,27 +128,12 @@ const CreateProductForm = () => {
         }
     };
 
-    const handleDeleteTags = () => {
-        const deletePromises = selectedTags.map(tag =>
+    const handleDeleteTag = (tag) => {
             axios.delete(`https://hobohippie.com/api/tags/${tag}`)
-        );
-
-        Promise.all(deletePromises)
             .then(() => {
                 setTags(prev => prev.filter(t => !selectedTags.includes(t)));
-                setProduct(prev => ({
-                    ...prev,
-                    tags: prev.tags.filter(t => !selectedTags.includes(t))
-                }));
-                setSelectedTags([]);
             })
             .catch(error => console.error("Error deleting tags:", error));
-    };
-
-    const handleTagCheckboxChange = (tag) => {
-        setSelectedTags(prev =>
-            prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
-        );
     };
 
     const handleTagClick = (tag) => {
@@ -274,6 +258,32 @@ const CreateProductForm = () => {
 
             {/* Tags Management */}
             <Form.Group>
+                <ListGroup>
+                    {product.tags ? product.tags.map((tag, i) => (
+                        <ListGroup.Item key={i} className="tag-display">
+                            {tag.name}
+                        </ListGroup.Item>
+                    )) : ''}
+                </ListGroup>
+                <div>
+                    <h5>Available Tags:</h5>
+                    {tags ? tags.map((tag, i) => (
+                        <>
+                        <Button
+                            key={i}
+                            onClick={() => handleTagClick(tag.name)}
+                            className="tag-button"
+                        >
+                            {tag.name}
+                        </Button>
+                        <Button
+                         onClick={() => handleDeleteTag(tag.name)}
+                         className="tag-delete">
+                            X
+                        </Button>
+                        </>
+                    )) : ''}
+                </div>
                 <Form.Label>Tags</Form.Label>
                 <Form.Control
                     type="text"
@@ -283,26 +293,6 @@ const CreateProductForm = () => {
                     className="form-input"
                 />
                 <Button type="button" onClick={handleAddTag}>Add Tag</Button>
-                <ListGroup>
-                    {product.tags ? product.tags.map((tag, i) => (
-                        <ListGroup.Item key={i} className="tag-button" onClick={() => handleDeleteTag(tag)}>
-                            {tag}
-                        </ListGroup.Item>
-                    )) : ''}
-                </ListGroup>
-                <div>
-                    <h5>Available Tags:</h5>
-                    {tags ? tags.map((tag, i) => (
-                        <Button
-                            key={i}
-                            onClick={() => handleTagClick(tag.name)}
-                            className="tag-button"
-                            style={{ margin: '5px' }}
-                        >
-                            {tag.name}
-                        </Button>
-                    )) : ''}
-                </div>
             </Form.Group>
 
 
