@@ -102,7 +102,7 @@ const CreateProductForm = () => {
             formData.append('image', imageFile);
         }
 
-        axios.post('https://hobohippie.com/api/create-product', formData, {
+        axios.post('/api/create-product', formData, {
             headers: { 'Content-Type': 'multipart/form-data' },
             withCredentials: true
         })
@@ -118,7 +118,7 @@ const CreateProductForm = () => {
 
     const handleAddTag = () => {
         if (newTag) {
-            axios.post('https://hobohippie.com/api/tags', { name: newTag })
+            axios.post('/api/tags', { name: newTag })
                 .then(response => {
                     setTags(prev => [...prev, response.data]);
                     setProduct(prev => ({ ...prev, tags: [...prev.tags, newTag] }));
@@ -129,7 +129,7 @@ const CreateProductForm = () => {
     };
 
     const handleDeleteTag = (tag) => {
-            axios.delete(`https://hobohippie.com/api/tags/${tag}`)
+            axios.delete(`/api/tags/${tag}`)
             .then(() => {
                 setTags(prev => prev.filter(t => !tags.includes(t)));
             })
