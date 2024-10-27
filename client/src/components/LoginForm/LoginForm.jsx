@@ -26,17 +26,21 @@ function LoginForm() {
 
     const loginUser = async (credentials) => {
         try {
-            // Updated to use HTTPS
             const response = await axios.post('https://hobohippie.com/api/login', credentials);
             if (response.data) {
-                login(response.data); // Call the login function from AuthContext with user data
+                const { account, token } = response.data; // Destructure account and token
+                login(account, token); // Call the login function from AuthContext with user data and token
                 setInputs({}); // Clear inputs on successful login
                 navigate('/'); // Redirect to the homepage or dashboard
             } else {
                 setFeedback("Invalid email or password!");
             }
         } catch (error) {
-            setFeedback("Login failed. Please try again.");
+            if (error.response && error.response.data) {
+                setFeedback(error.response.data.message || "Login failed. Please try again."); // Display specific error message if provided
+            } else {
+                setFeedback("Login failed. Please try again.");
+            }
             console.error('Login error:', error);
         }
     };
