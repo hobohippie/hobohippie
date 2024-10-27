@@ -1,13 +1,12 @@
-const dotenv = require('dotenv');
-dotenv.config();
-
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const upload = require('./config/multer_config'); 
+require('dotenv').config();
+require('./config/multer_config'); 
 require('./config/db_connection'); 
 
 const app = express();
+
 const allowedOrigins = [
     'https://66.179.241.155', 'https://hobohippie.com', 'https://www.hobohippie.com',
     'https://localhost:3000', 'http://66.179.241.155', 'http://hobohippie.com',
