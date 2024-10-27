@@ -32,27 +32,17 @@ const CreateProductForm = () => {
     const [imagePreview, setImagePreview] = useState('');
 
     useEffect(() => {
-        const fetchSuppliers = async () => {
-            try {
-                const response = await axios.get(API_ROUTES.GET_ALL_SUPPLIERS);
-                setSuppliers(response.data);
-                console.log(API_ROUTES.GET_ALL_SUPPLIERS)
-            } catch (error) {
-                console.error("Error fetching suppliers:", error);
-            }
-        };
-
-        const fetchTags = async () => {
-            try {
-                const response = await axios.get(API_ROUTES.GET_ALL_TAGS);
-                setTags(response.data);
-                console.log(API_ROUTES.GET_ALL_TAGS)
-            } catch (error) {
-                console.error("Error fetching tags:", error);
-            }
-        };
-        fetchSuppliers();
-        fetchTags();
+        axios.get(API_ROUTES.GET_ALL_SUPPLIERS)
+        .then(response => {
+            setSuppliers(response.data);
+        })
+        .catch(error => console.error("Error fetching suppliers:", error));
+    
+        axios.get(API_ROUTES.GET_ALL_TAGS)
+        .then(response => {
+            setTags(response.data);
+        })
+        .catch(error => console.error("Error fetching tags:", error));
     }, []);
 
     const handleChange = (e) => {
