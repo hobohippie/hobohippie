@@ -39,16 +39,16 @@ const UserProfile = () => {
               <h2>User Profile</h2>
             </Card.Header>
             <Card.Body>
-              <Card.Title className="font-weight-bold">{user.account.username || 'John Doe'}</Card.Title>
+              <Card.Title className="font-weight-bold">{user.username || 'John Doe'}</Card.Title>
               <Card.Text>
-                <strong>Email:</strong> {user.account.email || 'johndoe@example.com'} <br />
-                <strong>Location:</strong> {user.account.location || 'Your Location'}
+                <strong>Email:</strong> {user.email || 'johndoe@example.com'} <br />
+                <strong>Location:</strong> {user.location || 'Your Location'}
               </Card.Text>
               <Button variant="primary" className="mr-2" onClick={() => navigate('/edit-profile')}>Edit Profile</Button>
               <Button variant="secondary" onClick={handleLogout}>Log Out</Button> {/* Update to call handleLogout */}
             </Card.Body>
             <Card.Footer className="text-muted">
-            Member since: {user.account.createdAt ? new Date(user.account.createdAt).toLocaleDateString() : 'Unknown'}
+            Member since: {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Unknown'}
             </Card.Footer>
           </Card>
         </Col>
