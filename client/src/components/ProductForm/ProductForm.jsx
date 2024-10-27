@@ -126,6 +126,7 @@ const CreateProductForm = () => {
                     feedbackElement.innerText = "Error creating product. Please try again.";
                 }
             });
+        }
 
         const handleAddTag = () => {
             if (newTag) {
