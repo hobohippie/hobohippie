@@ -13,7 +13,7 @@ const allowedOrigins = [
     'http://www.hobohippie.com', 'http://localhost:3000'
 ];
 const PORT = process.env.PORT || 3000;
-console.log(process.env)
+
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
