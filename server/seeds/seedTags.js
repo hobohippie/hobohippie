@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const connectionString = process.env.MONGODB_URI
+const connectionString = process.env.MONGODB_URI;
+require('dotenv').config();
 const Tag = require('../models/tag-model'); 
 
 mongoose.connect(connectionString)
