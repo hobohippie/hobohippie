@@ -1,26 +1,15 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-
-// const connectionString = process.env.MONGODB_URI;
 const connectionString = 'mongodb+srv://free:7130TulipTrail3723542@hobohippie.rdv1r.mongodb.net/?retryWrites=true&w=majority&appName=HoboHippie';
 
 mongoose.set('strictQuery', false);
 
-mongoose.connect('mongodb+srv://free:7130TulipTrail3723542@hobohippie.rdv1r.mongodb.net/?retryWrites=true&w=majority&appName=HoboHippie', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(connectionString)
+  .then(() => console.log('Mongoose connected to the database'))
+  .catch((err) => console.log(`Mongoose connection error: ${err}`));
 
-mongoose.connection.on("connected", () => {
-  console.log(`Mongoose connected to the database`);
-});
-
-mongoose.connection.on("error", (err) => {
-  console.log(`Mongoose connection error: ${err}`);
-});
-
-mongoose.connection.on("disconnected", () => {
-  console.log("Mongoose disconnected");
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected');
 });
 
 module.exports = mongoose;
