@@ -4,7 +4,7 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import CartModal from '../CartModal/CartModal';
-import logo from '../../assets/images/HoboHippie.png'
+import logo from '../../assets/images/HoboHippie_logo.png'
 import './header.css';
 const NavBar = () => {
     const [isVisible, setIsVisible] = useState(true);
