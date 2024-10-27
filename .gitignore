@@ -49,4 +49,4 @@ build/
 *.so
 
 
-# /client/src/assets/uploads/
+/client/src/assets/uploads/

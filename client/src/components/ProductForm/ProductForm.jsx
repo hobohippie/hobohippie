@@ -25,9 +25,12 @@ const CreateProductForm = () => {
             endDate: ''
         }
     });
+
     const [suppliers, setSuppliers] = useState([]);
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
+    const [availableTags, setAvailableTags] = useState(['Tag1', 'Tag2', 'Tag3']); // Predefined tags
+    const [newTag, setNewTag] = useState('');
 
     useEffect(() => {
         axios.get('https://hobohippie.com/api/suppliers')
@@ -76,6 +79,19 @@ const CreateProductForm = () => {
         }
     };
 
+    const handleTagSelect = (tag) => {
+        if (!product.tags.includes(tag)) {
+            setProduct(prev => ({ ...prev, tags: [...prev.tags, tag] }));
+        }
+    };
+
+    const handleAddTag = () => {
+        if (newTag && !availableTags.includes(newTag)) {
+            setAvailableTags(prev => [...prev, newTag.trim()]);
+            setNewTag(''); // Clear the input field
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         addProduct();
@@ -92,6 +108,7 @@ const CreateProductForm = () => {
         formData.append('inventory[restockDate]', product.inventory.restockDate);
         formData.append('inventory[lowStockThreshold]', product.inventory.lowStockThreshold);
         formData.append('supplier', product.supplier);
+        formData.append('tags', JSON.stringify(product.tags)); // Convert to JSON string
         formData.append('featured', product.featured);
         formData.append('discount[percentage]', product.discount.percentage);
         formData.append('discount[startDate]', product.discount.startDate);
@@ -129,114 +146,37 @@ const CreateProductForm = () => {
                     className="form-input" 
                 />
             </Form.Group>
-            <Form.Group>
-                <Form.Label>Description</Form.Label>
-                <Form.Control 
-                    as="textarea" 
-                    name="description" 
-                    required 
-                    value={product.description} 
-                    onChange={handleChange} 
-                    className="form-input" 
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Category</Form.Label>
-                <Form.Control 
-                    type="text" 
-                    name="category" 
-                    required 
-                    value={product.category} 
-                    onChange={handleChange} 
-                    className="form-input" 
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>SKU</Form.Label>
-                <Form.Control 
-                    type="text" 
-                    name="sku" 
-                    required 
-                    value={product.sku} 
-                    onChange={handleChange} 
-                    className="form-input" 
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Price</Form.Label>
-                <Form.Control 
-                    type="number" 
-                    name="price" 
-                    required 
-                    value={product.price} 
-                    onChange={handleChange} 
-                    className="form-input" 
-                />
-            </Form.Group>
-
-            {/* Inventory Details */}
-            <Form.Group>
-                <Form.Label>Inventory Quantity</Form.Label>
-                <Form.Control 
-                    type="number" 
-                    name="inventory.quantity" 
-                    required 
-                    value={product.inventory.quantity} 
-                    onChange={handleChange} 
-                    className="form-input" 
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Restock Date</Form.Label>
-                <Form.Control 
-                    type="date" 
-                    name="inventory.restockDate" 
-                    value={product.inventory.restockDate} 
-                    onChange={handleChange} 
-                    className="form-input" 
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Low Stock Threshold</Form.Label>
-                <Form.Control 
-                    type="number" 
-                    name="inventory.lowStockThreshold" 
-                    value={product.inventory.lowStockThreshold} 
-                    onChange={handleChange} 
-                    className="form-input" 
-                />
-            </Form.Group>
-
-            {/* Supplier */}
-            <Form.Group>
-                <Form.Label>Supplier</Form.Label>
-                <Form.Control 
-                    as="select" 
-                    name="supplier" 
-                    required 
-                    value={product.supplier} 
-                    onChange={handleChange} 
-                    className="form-input" 
-                >
-                    <option value="">Select a supplier</option>
-                    {suppliers.map(supplier => (
-                        <option key={supplier._id} value={supplier._id}>
-                            {supplier.name}
-                        </option>
-                    ))}
-                </Form.Control>
-            </Form.Group>
+            {/* Additional form fields go here... */}
 
             {/* Tags */}
             <Form.Group>
-                <Form.Label>Tags (comma-separated)</Form.Label>
-                <Form.Control 
-                    type="text" 
-                    name="tags" 
-                    value={product.tags.join(', ')} 
-                    onChange={handleChange} 
-                    className="form-input" 
-                />
+                <Form.Label>Tags</Form.Label>
+                <div>
+                    {availableTags.map((tag, index) => (
+                        <Button 
+                            key={index} 
+                            variant="outline-secondary" 
+                            className="tag-button" 
+                            onClick={() => handleTagSelect(tag)}
+                        >
+                            {tag}
+                        </Button>
+                    ))}
+                    <Form.Control 
+                        type="text" 
+                        value={newTag} 
+                        onChange={(e) => setNewTag(e.target.value)} 
+                        placeholder="Add a new tag" 
+                        className="form-input" 
+                    />
+                    <Button 
+                        variant="primary" 
+                        onClick={handleAddTag} 
+                        disabled={!newTag} // Disable if input is empty
+                    >
+                        Add Tag
+                    </Button>
+                </div>
             </Form.Group>
 
             {/* Image Upload */}
@@ -273,32 +213,12 @@ const CreateProductForm = () => {
                     className="form-input" 
                 />
             </Form.Group>
-            <Form.Group>
-                <Form.Label>Discount Start Date</Form.Label>
-                <Form.Control 
-                    type="date" 
-                    name="discount.startDate" 
-                    value={product.discount.startDate} 
-                    onChange={handleChange} 
-                    className="form-input" 
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>Discount End Date</Form.Label>
-                <Form.Control 
-                    type="date" 
-                    name="discount.endDate" 
-                    value={product.discount.endDate} 
-                    onChange={handleChange} 
-                    className="form-input" 
-                />
-            </Form.Group>
-            
+
             <Button variant="primary" type="submit" className="submit-button">Create Product</Button>
             <p id="backToProducts">
-                Back to product list? <span><Link to="/products">View Products</Link></span>
+                <Link to="/products">Back to Products</Link>
             </p>
-            <p className="feedback"></p>
+            <div className="feedback"></div>
         </Form>
     );
 };

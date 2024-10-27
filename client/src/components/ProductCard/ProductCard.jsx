@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './productCard.css'; // Import the CSS for the product card
 
 const ProductCard = ({ product }) => {
-    // Use the first image if available, otherwise use a placeholder or default image
     const imageUrl = product.images && product.images.length > 0 
         ? product.images[0].url 
         : '/path/to/default/image.jpg'; 
