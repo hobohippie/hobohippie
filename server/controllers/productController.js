@@ -1,4 +1,5 @@
 const Product = require('../models/product-model');
+const mongoose = require('mongoose');
 
 module.exports = {
     async createProduct(req, res) {
