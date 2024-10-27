@@ -272,23 +272,23 @@ const CreateProductForm = () => {
                 />
                 <Button type="button" onClick={handleAddTag}>Add Tag</Button>
                 <ListGroup>
-                    {product.tags ? product.tags.map(tag => (
-                        <ListGroup.Item key={tag}>
-                            {tag}
-                            <Button variant="danger" onClick={() => handleDeleteTag(tag)}>Delete</Button>
+                    {product.tags ? product.tags.map((tag, i) => (
+                        <ListGroup.Item key={i}>
+                            {tag.name}
+                            <Button variant="danger" onClick={() => handleDeleteTag(tag.name)}>Delete</Button>
                         </ListGroup.Item>
                     )) : ''}
                 </ListGroup>
                 <div>
                     <h5>Available Tags:</h5>
-                    {tags ? tags.map(tag => (
+                    {tags ? tags.map((tag, i) => (
                         <Button
-                            key={tag}
-                            onClick={() => handleTagClick(tag)}
+                            key={i}
+                            onClick={() => handleTagClick(tag.name)}
                             className="tag-button"
                             style={{ margin: '5px' }}
                         >
-                            {tag}
+                            {tag.name}
                         </Button>
                     )) : ''}
                 </div>
