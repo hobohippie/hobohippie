@@ -6,9 +6,58 @@ import '../styles/home.css'; // Optional: Create a CSS file for custom styles
 const HomePage = () => {
   return (
     <div className="homepage">
+      
+      
+
+      <Row className="mb-4">
+        <Col md={4}>
+          <Link to="/products" className="card-link">
+            <Card className="clickable-card">
+              <Card.Img variant="top" src="https://via.placeholder.com/400x250?text=Other+stuff." /> {/* Temporary image */}
+              <Card.Body>
+                <Card.Title>other stuff</Card.Title>
+                <Card.Text>
+                  text for other stuff
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Link>
+        </Col>
+
+        <Col md={4}>
+          <Link to="/products" className="card-link">
+            <Card className="clickable-card">
+              <Card.Img variant="top" src="https://via.placeholder.com/400x250?text=Other+stuff." /> {/* Temporary image */}
+              <Card.Body>
+                <Card.Title>other stuff</Card.Title>
+                <Card.Text>
+                  text for other stuff
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Link>
+        </Col>
+
+        <Col md={4}>
+          <Link to="/products" className="card-link">
+            <Card className="clickable-card">
+              <Card.Img variant="top" src="https://via.placeholder.com/400x250?text=Other+stuff." /> {/* Temporary image */}
+              <Card.Body>
+                <Card.Title>other stuff</Card.Title>
+                <Card.Text>
+                  text for other stuff
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Link>
+        </Col>
+      </Row>
+
+      <hr />
+
       <Row className="mb-4">
         <Col md={6}>
-          <Link to="/products" className="card-link"> {/* Make the whole card clickable */}
+          <Link to="/products" className="card-link">
             <Card className="clickable-card">
               <Card.Img variant="top" src="https://via.placeholder.com/400x250?text=Incense+and+Essential+Oils" /> {/* Temporary image */}
               <Card.Body>
@@ -20,8 +69,9 @@ const HomePage = () => {
             </Card>
           </Link>
         </Col>
+        
         <Col md={6}>
-          <Link to="/products" className="card-link"> {/* Make the whole card clickable */}
+          <Link to="/products" className="card-link">
             <Card className="clickable-card">
               <Card.Img variant="top" src="https://via.placeholder.com/400x250?text=Apparel" /> {/* Temporary image */}
               <Card.Body>
@@ -32,51 +82,12 @@ const HomePage = () => {
               </Card.Body>
             </Card>
           </Link>
+        
         </Col>
       </Row>
+
       <hr />
-      <Row className="mb-4">
-        <Col md={4}>
-          <Link to="/products" className="card-link"> {/* Make the whole card clickable */}
-            <Card className="clickable-card">
-              <Card.Img variant="top" src="https://via.placeholder.com/400x250?text=Other+stuff." /> {/* Temporary image */}
-              <Card.Body>
-                <Card.Title>other stuff</Card.Title>
-                <Card.Text>
-                  text for other stuff
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Link>
-        </Col>
-        <Col md={4}>
-          <Link to="/products" className="card-link"> {/* Make the whole card clickable */}
-            <Card className="clickable-card">
-              <Card.Img variant="top" src="https://via.placeholder.com/400x250?text=Other+stuff." /> {/* Temporary image */}
-              <Card.Body>
-                <Card.Title>other stuff</Card.Title>
-                <Card.Text>
-                  text for other stuff
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Link>
-        </Col>
-        <Col md={4}>
-          <Link to="/products" className="card-link"> {/* Make the whole card clickable */}
-            <Card className="clickable-card">
-              <Card.Img variant="top" src="https://via.placeholder.com/400x250?text=Other+stuff." /> {/* Temporary image */}
-              <Card.Body>
-                <Card.Title>other stuff</Card.Title>
-                <Card.Text>
-                  text for other stuff
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Link>
-        </Col>
-      </Row>
-      <hr />
+
       <Carousel>
         <Carousel.Item>
           <img
