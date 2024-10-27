@@ -14,7 +14,6 @@ const allowedOrigins = [
 ];
 const PORT = process.env.PORT || 3000;
 
-// CORS setup
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
@@ -30,20 +29,16 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-// Routes setup
 const routes = require('./routes/routes');
 routes(app);
 
-// Handle all other routes and serve the React app
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
-// Start the server
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Hobohippie backend up and running on port ${PORT}.`);
 });

@@ -29,16 +29,26 @@ const CreateProductForm = () => {
     const [suppliers, setSuppliers] = useState([]);
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
-    const [availableTags, setAvailableTags] = useState(['Tag1', 'Tag2', 'Tag3']); // Predefined tags
+    const [availableTags, setAvailableTags] = useState([]); // Fetch tags from API
     const [newTag, setNewTag] = useState('');
 
     useEffect(() => {
+        // Fetch suppliers
         axios.get('https://hobohippie.com/api/suppliers')
             .then(response => {
                 setSuppliers(response.data);
             })
             .catch(error => {
                 console.error("Error fetching suppliers:", error);
+            });
+
+        // Fetch existing tags
+        axios.get('https://hobohippie.com/api/tags')
+            .then(response => {
+                setAvailableTags(response.data); // Set available tags
+            })
+            .catch(error => {
+                console.error("Error fetching tags:", error);
             });
     }, []);
 
@@ -86,10 +96,29 @@ const CreateProductForm = () => {
     };
 
     const handleAddTag = () => {
-        if (newTag && !availableTags.includes(newTag)) {
-            setAvailableTags(prev => [...prev, newTag.trim()]);
-            setNewTag(''); // Clear the input field
+        if (newTag) {
+            // Add the new tag to the backend
+            axios.post('https://hobohippie.com/api/tags', { name: newTag.trim() })
+                .then(response => {
+                    setAvailableTags(prev => [...prev, response.data]); // Assuming response contains the new tag
+                    setNewTag(''); // Clear the input field
+                })
+                .catch(error => {
+                    console.error("Error adding tag:", error);
+                });
         }
+    };
+
+    const handleDeleteTag = (tag) => {
+        // Remove the tag from the backend
+        axios.delete(`https://hobohippie.com/api/tags/${tag}`)
+            .then(() => {
+                setAvailableTags(prev => prev.filter(t => t !== tag));
+                setProduct(prev => ({ ...prev, tags: prev.tags.filter(t => t !== tag) }));
+            })
+            .catch(error => {
+                console.error("Error deleting tag:", error);
+            });
     };
 
     const handleSubmit = (e) => {
@@ -153,14 +182,22 @@ const CreateProductForm = () => {
                 <Form.Label>Tags</Form.Label>
                 <div>
                     {availableTags.map((tag, index) => (
-                        <Button 
-                            key={index} 
-                            variant="outline-secondary" 
-                            className="tag-button" 
-                            onClick={() => handleTagSelect(tag)}
-                        >
-                            {tag}
-                        </Button>
+                        <div key={index} className="tag-item">
+                            <Button 
+                                variant="outline-secondary" 
+                                className="tag-button" 
+                                onClick={() => handleTagSelect(tag)}
+                            >
+                                {tag}
+                            </Button>
+                            <Button 
+                                variant="danger" 
+                                onClick={() => handleDeleteTag(tag)}
+                                className="delete-tag-button"
+                            >
+                                X
+                            </Button>
+                        </div>
                     ))}
                     <Form.Control 
                         type="text" 

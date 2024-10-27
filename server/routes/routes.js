@@ -21,4 +21,9 @@ module.exports = (app) => {
     app.get('/api/products/:id', productController.getProductById);
     app.put('/api/products/:id', productController.updateProduct);
     app.delete('/api/products/:id', productController.deleteProduct);
+
+    // Tags
+    app.get('/api/tags', tagController.getAllTags)
+    app.post('/api/tags', tagController.createTag)
+    app.delete('/api/tags/:id', tagController.deleteTag)
 };
