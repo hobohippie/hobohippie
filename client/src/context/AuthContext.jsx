@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
   };
 
-  const isAdmin = useMemo(() => user && user.account ? user.account.isAdmin === true : false, [user]);
+  const isAdmin = useMemo(() => user && user.isAdmin === true, [user]);
   const isAuthenticated = useMemo(() => user !== null, [user]);
 
   useEffect(() => {
