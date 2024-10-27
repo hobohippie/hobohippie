@@ -1,16 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import './productCard.css'; // Import the CSS for the product card
+import { Link } from 'react-router-dom'; 
+import './productCard.css'; 
 
 const ProductCard = ({ product }) => {
-    const imageUrl = product.images && product.images.length > 0 
-        ? product.images[0].url 
+    const imageUrl = product.image ? product.image
         : '/path/to/default/image.jpg'; 
 
     // Function to render star rating based on product rating
     const renderStars = (rating) => {
-        const totalStars = 5; // Total number of stars
-        const filledStars = Math.round(rating); // Round rating to the nearest star
+        const totalStars = 5; 
+        const filledStars = Math.round(rating); 
         const stars = [];
 
         for (let i = 0; i < totalStars; i++) {
