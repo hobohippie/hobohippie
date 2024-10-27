@@ -118,7 +118,7 @@ const CreateProductForm = () => {
 
     const handleAddTag = () => {
         if (newTag) {
-            axios.post('https://hobohippie.com/api/tags', { tag: newTag })
+            axios.post('https://hobohippie.com/api/tags', { name: newTag })
                 .then(response => {
                     setTags(prev => [...prev, response.data]);
                     setProduct(prev => ({ ...prev, tags: [...prev.tags, newTag] }));
