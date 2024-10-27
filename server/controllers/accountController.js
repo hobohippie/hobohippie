@@ -57,7 +57,7 @@ module.exports = {
             );
 
             // Send the response with the token and account information
-            res.json({ message: 'Login successful', account: { id: account._id, email: account.email }, token });
+            res.json({ message: 'Login successful', account, token });
 
         } catch (err) {
             console.error(err);

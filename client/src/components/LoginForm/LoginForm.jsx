@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // Import useAuth to access AuthContext
+import { useAuth } from '../../context/AuthContext';
 
 function LoginForm() {
     const [inputs, setInputs] = useState({});
     const [feedback, setFeedback] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { login } = useAuth(); // Get login function from AuthContext
+    const { login } = useAuth(); 
 
     function handleChange(e) {
         const name = e.target.name;
@@ -20,7 +20,7 @@ function LoginForm() {
     async function handleSubmit(e) {
         e.preventDefault();
         setLoading(true);
-        await loginUser(inputs); // Call loginUser to handle the login process
+        await loginUser(inputs);
         setLoading(false);
     }
 
