@@ -4,6 +4,20 @@
   padding: 1rem;
 }
 
+.tag-button {
+  padding: 4px 8px; /* Adjust padding for small size */
+  border: 1px solid black; /* Black border */
+  border-radius: 20px; /* Oval shape */
+  background-color: white; /* White background */
+  color: green; /* Green text */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
+}
+
+.tag-button:hover {
+  background-color: green; /* Change background on hover */
+  color: white; /* Change text color on hover */
+}
+
 @media (max-width: 768px) {
   .create-product-form {
       max-width: 100%;
