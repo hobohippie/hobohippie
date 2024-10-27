@@ -1,6 +1,7 @@
 const accountController = require('../controllers/accountController');
 const productController = require('../controllers/productController');
 const supplierController = require('../controllers/supplierController');
+const tagController = require('../controllers/tagController');
 const upload = require('../config/multer_config'); // Import the upload middleware
 
 module.exports = (app) => {
