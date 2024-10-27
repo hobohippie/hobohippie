@@ -8,8 +8,8 @@ function authenticateToken(req, res, next) {
 
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) return res.status(403).json({ message: 'Invalid token' });
-        req.user = user; // Store the user information for later use
-        next(); // Call the next middleware or route handler
+        req.userId = user.id;
+        next(); 
     });
 }
 
