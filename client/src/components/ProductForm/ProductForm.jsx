@@ -281,7 +281,7 @@ const CreateProductForm = () => {
                 </ListGroup>
                 <div>
                     <h5>Available Tags:</h5>
-                    {tags.map(tag => (
+                    {tags ? tags.map(tag => (
                         <Button
                             key={tag}
                             onClick={() => handleTagClick(tag)}
@@ -290,7 +290,7 @@ const CreateProductForm = () => {
                         >
                             {tag}
                         </Button>
-                    ))}
+                    )) : ''}
                 </div>
             </Form.Group>
 
