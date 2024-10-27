@@ -36,6 +36,7 @@ const CreateProductForm = () => {
             try {
                 const response = await axios.get(API_ROUTES.GET_ALL_SUPPLIERS);
                 setSuppliers(response.data);
+                console.log(API_ROUTES.GET_ALL_SUPPLIERS)
             } catch (error) {
                 console.error("Error fetching suppliers:", error);
             }
@@ -45,6 +46,7 @@ const CreateProductForm = () => {
             try {
                 const response = await axios.get(API_ROUTES.GET_ALL_TAGS);
                 setTags(response.data);
+                console.log(API_ROUTES.GET_ALL_TAGS)
             } catch (error) {
                 console.error("Error fetching tags:", error);
             }
