@@ -1,30 +1,32 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const Account = require('../models/account-model');
 
+// Load environment variables from .env file
+require('dotenv').config();
+
 module.exports = {
+    // Account creation
     async createAccount(req, res) {
-        const { body } = req;
-        const { password, email } = body;
+        const { password, email } = req.body;
 
         try {
-            // Check if email already exists (you already have this in place with the unique constraint)
+            // Check if email already exists
             const existingAccount = await Account.findOne({ email });
             if (existingAccount) {
-                return res.json("e-mail error");
+                return res.status(409).json({ message: "Email is already in use" });
             }
 
-            // Hash the password before saving
-            const saltRounds = 10;
-            const hashedPassword = await bcrypt.hash(password, saltRounds);
+            // Hash the password
+            const hashedPassword = await bcrypt.hash(password, 10);
 
-            // Create a new account with the hashed password
+            // Create and save the new account
             const newAccount = new Account({
-                ...body,  // Spread all other fields
-                password: hashedPassword  // Overwrite the password with the hashed password
+                ...req.body,
+                password: hashedPassword
             });
-
             const savedAccount = await newAccount.save();
-            res.json(savedAccount);  // Send back the newly created account
+            res.status(201).json({ message: "Account created successfully", account: savedAccount });
 
         } catch (err) {
             console.error(err);
@@ -32,25 +34,32 @@ module.exports = {
         }
     },
     
+    // Login and JWT generation
     async login(req, res) {
         const { email, password } = req.body;
 
         try {
+            // Find the account by email
             const account = await Account.findOne({ email });
             if (!account) {
                 return res.status(400).json({ message: 'Invalid email or password' });
             }
 
-            // Compare the provided password with the stored hashed password
+            // Check if password is correct
             const isMatch = await bcrypt.compare(password, account.password);
             if (!isMatch) {
                 return res.status(400).json({ message: 'Invalid email or password' });
             }
 
-            // Set a session variable here or send back a JWT/token if using authentication tokens
-            req.session.userId = account._id; // Store the user's ID in session
+            // Generate a JWT
+            const token = jwt.sign(
+                { userId: account._id },
+                process.env.JWT_SECRET,
+                { expiresIn: '1h' }
+            );
 
-            res.json({ message: 'Login successful', account });
+            // Send back the JWT token
+            res.json({ message: 'Login successful', token });
 
         } catch (err) {
             console.error(err);
