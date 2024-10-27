@@ -35,11 +35,12 @@ const CreateProductForm = () => {
         axios.get('/api/suppliers')
             .then(response => setSuppliers(response.data))
             .catch(error => console.error("Error fetching suppliers:", error));
-        
+
         // Fetch existing tags
         axios.get('/api/tags')
             .then(response => setTags(response.data))
             .catch(error => console.error("Error fetching tags:", error));
+        console.log(tags)
     }, []);
 
     const handleChange = (e) => {
@@ -67,7 +68,7 @@ const CreateProductForm = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         setImageFile(file);
-        
+
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => setImagePreview(reader.result);
@@ -105,14 +106,14 @@ const CreateProductForm = () => {
             headers: { 'Content-Type': 'multipart/form-data' },
             withCredentials: true
         })
-        .then(response => {
-            console.log("Product created:", response.data);
-            // navigate elsewhere after successful creation
-        })
-        .catch(error => {
-            console.error("Error creating product:", error);
-            document.querySelector('.feedback').innerText = "Error creating product. Please try again.";
-        });
+            .then(response => {
+                console.log("Product created:", response.data);
+                // navigate elsewhere after successful creation
+            })
+            .catch(error => {
+                console.error("Error creating product:", error);
+                document.querySelector('.feedback').innerText = "Error creating product. Please try again.";
+            });
     };
 
     const handleAddTag = () => {
@@ -153,101 +154,101 @@ const CreateProductForm = () => {
             {/* Product Details */}
             <Form.Group>
                 <Form.Label>Product Name</Form.Label>
-                <Form.Control 
-                    type="text" 
-                    name="name" 
-                    required 
-                    value={product.name} 
-                    onChange={handleChange} 
-                    className="form-input" 
+                <Form.Control
+                    type="text"
+                    name="name"
+                    required
+                    value={product.name}
+                    onChange={handleChange}
+                    className="form-input"
                 />
             </Form.Group>
             <Form.Group>
                 <Form.Label>Description</Form.Label>
-                <Form.Control 
-                    as="textarea" 
-                    name="description" 
-                    required 
-                    value={product.description} 
-                    onChange={handleChange} 
-                    className="form-input" 
+                <Form.Control
+                    as="textarea"
+                    name="description"
+                    required
+                    value={product.description}
+                    onChange={handleChange}
+                    className="form-input"
                 />
             </Form.Group>
             <Form.Group>
                 <Form.Label>Category</Form.Label>
-                <Form.Control 
-                    type="text" 
-                    name="category" 
-                    required 
-                    value={product.category} 
-                    onChange={handleChange} 
-                    className="form-input" 
+                <Form.Control
+                    type="text"
+                    name="category"
+                    required
+                    value={product.category}
+                    onChange={handleChange}
+                    className="form-input"
                 />
             </Form.Group>
             <Form.Group>
                 <Form.Label>SKU</Form.Label>
-                <Form.Control 
-                    type="text" 
-                    name="sku" 
-                    required 
-                    value={product.sku} 
-                    onChange={handleChange} 
-                    className="form-input" 
+                <Form.Control
+                    type="text"
+                    name="sku"
+                    required
+                    value={product.sku}
+                    onChange={handleChange}
+                    className="form-input"
                 />
             </Form.Group>
             <Form.Group>
                 <Form.Label>Price</Form.Label>
-                <Form.Control 
-                    type="number" 
-                    name="price" 
-                    required 
-                    value={product.price} 
-                    onChange={handleChange} 
-                    className="form-input" 
+                <Form.Control
+                    type="number"
+                    name="price"
+                    required
+                    value={product.price}
+                    onChange={handleChange}
+                    className="form-input"
                 />
             </Form.Group>
 
             {/* Inventory Details */}
             <Form.Group>
                 <Form.Label>Inventory Quantity</Form.Label>
-                <Form.Control 
-                    type="number" 
-                    name="inventory.quantity" 
-                    required 
-                    value={product.inventory.quantity} 
-                    onChange={handleChange} 
-                    className="form-input" 
+                <Form.Control
+                    type="number"
+                    name="inventory.quantity"
+                    required
+                    value={product.inventory.quantity}
+                    onChange={handleChange}
+                    className="form-input"
                 />
             </Form.Group>
             <Form.Group>
                 <Form.Label>Restock Date</Form.Label>
-                <Form.Control 
-                    type="date" 
-                    name="inventory.restockDate" 
-                    value={product.inventory.restockDate} 
-                    onChange={handleChange} 
-                    className="form-input" 
+                <Form.Control
+                    type="date"
+                    name="inventory.restockDate"
+                    value={product.inventory.restockDate}
+                    onChange={handleChange}
+                    className="form-input"
                 />
             </Form.Group>
             <Form.Group>
                 <Form.Label>Low Stock Threshold</Form.Label>
-                <Form.Control 
-                    type="number" 
-                    name="inventory.lowStockThreshold" 
-                    value={product.inventory.lowStockThreshold} 
-                    onChange={handleChange} 
-                    className="form-input" 
+                <Form.Control
+                    type="number"
+                    name="inventory.lowStockThreshold"
+                    value={product.inventory.lowStockThreshold}
+                    onChange={handleChange}
+                    className="form-input"
                 />
             </Form.Group>
 
             {/* Supplier Selection */}
             <Form.Group>
                 <Form.Label>Supplier</Form.Label>
-                <Form.Control 
-                    as="select" 
-                    name="supplier" 
-                    value={product.supplier} 
-                    onChange={handleChange} 
+                <Form.Control
+                    as="select"
+                    name="supplier"
+                    value={product.supplier}
+                    onChange={handleChange}
                     className="form-input"
                 >
                     <option value="">Select a supplier</option>
@@ -259,31 +260,31 @@ const CreateProductForm = () => {
                 </Form.Control>
             </Form.Group>
 
-    {/* Tags Management */}
-    <Form.Group>
+            {/* Tags Management */}
+            <Form.Group>
                 <Form.Label>Tags</Form.Label>
-                <Form.Control 
-                    type="text" 
-                    value={newTag} 
-                    onChange={(e) => setNewTag(e.target.value)} 
-                    placeholder="Add new tag" 
-                    className="form-input" 
+                <Form.Control
+                    type="text"
+                    value={newTag}
+                    onChange={(e) => setNewTag(e.target.value)}
+                    placeholder="Add new tag"
+                    className="form-input"
                 />
                 <Button type="button" onClick={handleAddTag}>Add Tag</Button>
                 <ListGroup>
-                    {product.tags.map(tag => (
+                    {product.tags ? product.tags.map(tag => (
                         <ListGroup.Item key={tag}>
                             {tag}
                             <Button variant="danger" onClick={() => handleDeleteTag(tag)}>Delete</Button>
                         </ListGroup.Item>
-                    ))}
+                    )) : ''}
                 </ListGroup>
                 <div>
                     <h5>Available Tags:</h5>
                     {tags.map(tag => (
-                        <Button 
-                            key={tag} 
-                            onClick={() => handleTagClick(tag)} 
+                        <Button
+                            key={tag}
+                            onClick={() => handleTagClick(tag)}
                             className="tag-button"
                             style={{ margin: '5px' }}
                         >
@@ -295,21 +296,21 @@ const CreateProductForm = () => {
 
             {/* Featured Product */}
             <Form.Group>
-                <Form.Check 
-                    type="checkbox" 
-                    label="Featured Product" 
-                    checked={product.featured} 
-                    onChange={() => setProduct(prev => ({ ...prev, featured: !prev.featured }))} 
+                <Form.Check
+                    type="checkbox"
+                    label="Featured Product"
+                    checked={product.featured}
+                    onChange={() => setProduct(prev => ({ ...prev, featured: !prev.featured }))}
                 />
             </Form.Group>
 
             {/* Image Upload */}
             <Form.Group>
                 <Form.Label>Product Image</Form.Label>
-                <Form.Control 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={handleImageChange} 
+                <Form.Control
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
                 />
                 {imagePreview && <img src={imagePreview} alt="Preview" style={{ width: '100px' }} />}
             </Form.Group>
