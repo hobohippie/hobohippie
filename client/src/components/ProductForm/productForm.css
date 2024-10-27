@@ -18,6 +18,11 @@
   color: white; /* Change text color on hover */
 }
 
+.tag-display {
+  color:black;
+  font-size: 12px;
+}
+
 @media (max-width: 768px) {
   .create-product-form {
       max-width: 100%;

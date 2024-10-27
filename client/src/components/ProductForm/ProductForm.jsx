@@ -261,7 +261,7 @@ const CreateProductForm = () => {
                 <ListGroup>
                     {product.tags ? product.tags.map((tag, i) => (
                         <ListGroup.Item key={i} className="tag-display">
-                            {tag.name}
+                            {tag}
                         </ListGroup.Item>
                     )) : ''}
                 </ListGroup>
