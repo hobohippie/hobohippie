@@ -1,15 +1,13 @@
 const mongoose = require('mongoose');
-const Tag = require('../models/tag'); 
+const connectionString = process.env.MONGODB_URI
+const Tag = require('../models/tag-model'); 
 
-mongoose.connect('mongodb://localhost:27017/yourdbname', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => {
-    console.log('MongoDB connected');
-})
-.catch(err => {
-    console.error('MongoDB connection error:', err);
+mongoose.connect(connectionString)
+  .then(() => console.log('Mongoose connected to the database'))
+  .catch((err) => console.log(`Mongoose connection error: ${err}`));
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected');
 });
 
 const tags = [
