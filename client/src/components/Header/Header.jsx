@@ -4,9 +4,8 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { useCart } from '../../context/CartContext';
 import { useAuth } from '../../context/AuthContext';
 import CartModal from '../CartModal/CartModal';
-import logo from '../images/HoboHippie.png'
+import logo from '../../assets/images/HoboHippie.png'
 import './header.css';
-
 const NavBar = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
