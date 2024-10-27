@@ -131,7 +131,7 @@ const CreateProductForm = () => {
     const handleDeleteTag = (tag) => {
             axios.delete(`https://hobohippie.com/api/tags/${tag}`)
             .then(() => {
-                setTags(prev => prev.filter(t => !selectedTags.includes(t)));
+                setTags(prev => prev.filter(t => !tags.includes(t)));
             })
             .catch(error => console.error("Error deleting tags:", error));
     };
