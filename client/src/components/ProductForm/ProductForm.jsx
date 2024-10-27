@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Form, Button, ListGroup } from 'react-bootstrap';
 import axios from 'axios';
 import './productForm.css';
 
@@ -25,31 +24,22 @@ const CreateProductForm = () => {
             endDate: ''
         }
     });
-
     const [suppliers, setSuppliers] = useState([]);
+    const [tags, setTags] = useState([]);
+    const [newTag, setNewTag] = useState('');
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
-    const [availableTags, setAvailableTags] = useState([]); // Fetch tags from API
-    const [newTag, setNewTag] = useState('');
 
     useEffect(() => {
         // Fetch suppliers
         axios.get('https://hobohippie.com/api/suppliers')
-            .then(response => {
-                setSuppliers(response.data);
-            })
-            .catch(error => {
-                console.error("Error fetching suppliers:", error);
-            });
-
+            .then(response => setSuppliers(response.data))
+            .catch(error => console.error("Error fetching suppliers:", error));
+        
         // Fetch existing tags
         axios.get('https://hobohippie.com/api/tags')
-            .then(response => {
-                setAvailableTags(response.data); // Set available tags
-            })
-            .catch(error => {
-                console.error("Error fetching tags:", error);
-            });
+            .then(response => setTags(response.data))
+            .catch(error => console.error("Error fetching tags:", error));
     }, []);
 
     const handleChange = (e) => {
@@ -80,45 +70,11 @@ const CreateProductForm = () => {
         
         if (file) {
             const reader = new FileReader();
-            reader.onloadend = () => {
-                setImagePreview(reader.result);
-            };
+            reader.onloadend = () => setImagePreview(reader.result);
             reader.readAsDataURL(file);
         } else {
             setImagePreview('');
         }
-    };
-
-    const handleTagSelect = (tag) => {
-        if (!product.tags.includes(tag)) {
-            setProduct(prev => ({ ...prev, tags: [...prev.tags, tag] }));
-        }
-    };
-
-    const handleAddTag = () => {
-        if (newTag) {
-            // Add the new tag to the backend
-            axios.post('https://hobohippie.com/api/tags', { name: newTag.trim() })
-                .then(response => {
-                    setAvailableTags(prev => [...prev, response.data]); // Assuming response contains the new tag
-                    setNewTag(''); // Clear the input field
-                })
-                .catch(error => {
-                    console.error("Error adding tag:", error);
-                });
-        }
-    };
-
-    const handleDeleteTag = (tag) => {
-        // Remove the tag from the backend
-        axios.delete(`https://hobohippie.com/api/tags/${tag}`)
-            .then(() => {
-                setAvailableTags(prev => prev.filter(t => t !== tag));
-                setProduct(prev => ({ ...prev, tags: prev.tags.filter(t => t !== tag) }));
-            })
-            .catch(error => {
-                console.error("Error deleting tag:", error);
-            });
     };
 
     const handleSubmit = (e) => {
@@ -137,7 +93,6 @@ const CreateProductForm = () => {
         formData.append('inventory[restockDate]', product.inventory.restockDate);
         formData.append('inventory[lowStockThreshold]', product.inventory.lowStockThreshold);
         formData.append('supplier', product.supplier);
-        formData.append('tags', JSON.stringify(product.tags)); // Convert to JSON string
         formData.append('featured', product.featured);
         formData.append('discount[percentage]', product.discount.percentage);
         formData.append('discount[startDate]', product.discount.startDate);
@@ -147,18 +102,41 @@ const CreateProductForm = () => {
         }
 
         axios.post('https://hobohippie.com/api/create-product', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
+            headers: { 'Content-Type': 'multipart/form-data' },
             withCredentials: true
         })
         .then(response => {
             console.log("Product created:", response.data);
+            // navigate elsewhere after successful creation
         })
         .catch(error => {
             console.error("Error creating product:", error);
             document.querySelector('.feedback').innerText = "Error creating product. Please try again.";
         });
+    };
+
+    const handleAddTag = () => {
+        if (newTag) {
+            axios.post('https://hobohippie.com/api/tags', { tag: newTag })
+                .then(response => {
+                    setTags(prev => [...prev, response.data]);
+                    setProduct(prev => ({ ...prev, tags: [...prev.tags, newTag] }));
+                    setNewTag('');
+                })
+                .catch(error => console.error("Error adding tag:", error));
+        }
+    };
+
+    const handleDeleteTag = (tag) => {
+        axios.delete(`https://hobohippie.com/api/tags/${tag}`)
+            .then(() => {
+                setTags(prev => prev.filter(t => t.tag !== tag));
+                setProduct(prev => ({
+                    ...prev,
+                    tags: prev.tags.filter(t => t !== tag)
+                }));
+            })
+            .catch(error => console.error("Error deleting tag:", error));
     };
 
     return (
@@ -175,45 +153,145 @@ const CreateProductForm = () => {
                     className="form-input" 
                 />
             </Form.Group>
-            {/* Additional form fields go here... */}
-
-            {/* Tags */}
             <Form.Group>
-                <Form.Label>Tags</Form.Label>
-                <div>
-                    {availableTags.map((tag, index) => (
-                        <div key={index} className="tag-item">
-                            <Button 
-                                variant="outline-secondary" 
-                                className="tag-button" 
-                                onClick={() => handleTagSelect(tag)}
-                            >
-                                {tag}
-                            </Button>
-                            <Button 
-                                variant="danger" 
-                                onClick={() => handleDeleteTag(tag)}
-                                className="delete-tag-button"
-                            >
-                                X
-                            </Button>
-                        </div>
+                <Form.Label>Description</Form.Label>
+                <Form.Control 
+                    as="textarea" 
+                    name="description" 
+                    required 
+                    value={product.description} 
+                    onChange={handleChange} 
+                    className="form-input" 
+                />
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Category</Form.Label>
+                <Form.Control 
+                    type="text" 
+                    name="category" 
+                    required 
+                    value={product.category} 
+                    onChange={handleChange} 
+                    className="form-input" 
+                />
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>SKU</Form.Label>
+                <Form.Control 
+                    type="text" 
+                    name="sku" 
+                    required 
+                    value={product.sku} 
+                    onChange={handleChange} 
+                    className="form-input" 
+                />
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Price</Form.Label>
+                <Form.Control 
+                    type="number" 
+                    name="price" 
+                    required 
+                    value={product.price} 
+                    onChange={handleChange} 
+                    className="form-input" 
+                />
+            </Form.Group>
+
+            {/* Inventory Details */}
+            <Form.Group>
+                <Form.Label>Inventory Quantity</Form.Label>
+                <Form.Control 
+                    type="number" 
+                    name="inventory.quantity" 
+                    required 
+                    value={product.inventory.quantity} 
+                    onChange={handleChange} 
+                    className="form-input" 
+                />
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Restock Date</Form.Label>
+                <Form.Control 
+                    type="date" 
+                    name="inventory.restockDate" 
+                    value={product.inventory.restockDate} 
+                    onChange={handleChange} 
+                    className="form-input" 
+                />
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Low Stock Threshold</Form.Label>
+                <Form.Control 
+                    type="number" 
+                    name="inventory.lowStockThreshold" 
+                    value={product.inventory.lowStockThreshold} 
+                    onChange={handleChange} 
+                    className="form-input" 
+                />
+            </Form.Group>
+
+            {/* Supplier Selection */}
+            <Form.Group>
+                <Form.Label>Supplier</Form.Label>
+                <Form.Control 
+                    as="select" 
+                    name="supplier" 
+                    value={product.supplier} 
+                    onChange={handleChange} 
+                    className="form-input"
+                >
+                    <option value="">Select a supplier</option>
+                    {suppliers.map(supplier => (
+                        <option key={supplier.id} value={supplier.id}>
+                            {supplier.name}
+                        </option>
                     ))}
-                    <Form.Control 
-                        type="text" 
-                        value={newTag} 
-                        onChange={(e) => setNewTag(e.target.value)} 
-                        placeholder="Add a new tag" 
-                        className="form-input" 
-                    />
-                    <Button 
-                        variant="primary" 
-                        onClick={handleAddTag} 
-                        disabled={!newTag} // Disable if input is empty
-                    >
-                        Add Tag
-                    </Button>
+                </Form.Control>
+            </Form.Group>
+
+    {/* Tags Management */}
+    <Form.Group>
+                <Form.Label>Tags</Form.Label>
+                <Form.Control 
+                    type="text" 
+                    value={newTag} 
+                    onChange={(e) => setNewTag(e.target.value)} 
+                    placeholder="Add new tag" 
+                    className="form-input" 
+                />
+                <Button type="button" onClick={handleAddTag}>Add Tag</Button>
+                <ListGroup>
+                    {product.tags.map(tag => (
+                        <ListGroup.Item key={tag}>
+                            {tag}
+                            <Button variant="danger" onClick={() => handleDeleteTag(tag)}>Delete</Button>
+                        </ListGroup.Item>
+                    ))}
+                </ListGroup>
+                <div>
+                    <h5>Available Tags:</h5>
+                    {tags.map(tag => (
+                        <Button 
+                            key={tag} 
+                            onClick={() => handleTagClick(tag)} 
+                            className="tag-button"
+                            style={{ margin: '5px' }}
+                        >
+                            {tag}
+                        </Button>
+                    ))}
                 </div>
+            </Form.Group>
+
+            {/* Featured Product */}
+            <Form.Group>
+                <Form.Check 
+                    type="checkbox" 
+                    label="Featured Product" 
+                    checked={product.featured} 
+                    onChange={() => setProduct(prev => ({ ...prev, featured: !prev.featured }))} 
+                />
             </Form.Group>
 
             {/* Image Upload */}
@@ -223,38 +301,12 @@ const CreateProductForm = () => {
                     type="file" 
                     accept="image/*" 
                     onChange={handleImageChange} 
-                    className="form-input" 
                 />
-                {imagePreview && <img src={imagePreview} alt="Product Preview" className="image-preview" />}
+                {imagePreview && <img src={imagePreview} alt="Preview" style={{ width: '100px' }} />}
             </Form.Group>
 
-            {/* Featured Product */}
-            <Form.Group>
-                <Form.Check 
-                    type="checkbox" 
-                    label="Featured Product" 
-                    name="featured" 
-                    checked={product.featured} 
-                    onChange={(e) => setProduct(prev => ({ ...prev, featured: e.target.checked }))} 
-                />
-            </Form.Group>
-
-            {/* Discount */}
-            <Form.Group>
-                <Form.Label>Discount Percentage</Form.Label>
-                <Form.Control 
-                    type="number" 
-                    name="discount.percentage" 
-                    value={product.discount.percentage} 
-                    onChange={handleChange} 
-                    className="form-input" 
-                />
-            </Form.Group>
-
-            <Button variant="primary" type="submit" className="submit-button">Create Product</Button>
-            <p id="backToProducts">
-                <Link to="/products">Back to Products</Link>
-            </p>
+            {/* Submit Button */}
+            <Button type="submit">Create Product</Button>
             <div className="feedback"></div>
         </Form>
     );
