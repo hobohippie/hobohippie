@@ -95,6 +95,12 @@ const CreateProductForm = () => {
         addProduct();
     };
 
+    const logFormData = (formData) => {
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+    };
+
     const addProduct = async () => {
         const formData = new FormData();
         formData.append('name', product.name);
@@ -123,7 +129,7 @@ const CreateProductForm = () => {
             console.error("Error creating product:", error.message);
             setFeedback("Error creating product. Please try again.");
         }
-        console.group(formData)
+        logFormData(formData);
     };
 
     const handleAddTag = async () => {
