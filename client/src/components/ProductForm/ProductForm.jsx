@@ -372,7 +372,7 @@ const CreateProductForm = () => {
                     type="checkbox"
                     name="featured"
                     label="Featured Product"
-                    checked={product.featured}
+                    checked={product.featured || false}
                     onChange={handleChange}
                 />
             </Form.Group>
