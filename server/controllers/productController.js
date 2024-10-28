@@ -12,7 +12,7 @@ module.exports = {
                 return res.status(400).json({ message: 'Image file is required.' });
             }
     
-            const imageUrl = `uploads/${req.file.filename}`;
+            const imageUrl = `/uploads/${req.file.filename}`;
     
             const newProduct = new Product({
                 ...req.body,
