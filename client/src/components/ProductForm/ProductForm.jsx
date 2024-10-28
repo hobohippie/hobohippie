@@ -56,10 +56,15 @@ const CreateProductForm = () => {
     }, []);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, type, value, checked } = e.target;
         const nameParts = name.split('.');
-
-        if (nameParts.length > 1) {
+    
+        if (type === 'checkbox') {
+            setProduct((prevValues) => ({
+                ...prevValues,
+                [name]: checked
+            }));
+        } else if (nameParts.length > 1) {
             setProduct((prevValues) => ({
                 ...prevValues,
                 [nameParts[0]]: {
@@ -76,6 +81,7 @@ const CreateProductForm = () => {
             setProduct((prevValues) => ({ ...prevValues, [name]: value }));
         }
     };
+    
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
