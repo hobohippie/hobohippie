@@ -6,8 +6,6 @@ const upload = multer({ dest: 'uploads/' });
 
 module.exports = {
     async createProduct(req, res) {
-        console.log('Request Body:', req.body);
-        console.log('Uploaded File:', req.file);
         try {
             if (!req.body.name || !req.body.price) {
                 return res.status(400).json({ message: 'Name and price are required.' });
