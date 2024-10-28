@@ -8,8 +8,8 @@ const ProductCard = ({ product }) => {
     
     const imageUrl = product.image 
         ? `${baseURL}/${product.image}` 
-        : '/path/to/default/image.jpg'; //add default image path
-
+        : 'https://via.placeholder.com/250x250?text=Sorry,No Picture Available';
+        
     const renderStars = (rating) => {
         const totalStars = 5; 
         const filledStars = Math.round(rating); 
