@@ -9,8 +9,9 @@ const app = express();
 
 const allowedOrigins = [
     'https://66.179.241.155', 'https://hobohippie.com', 'https://www.hobohippie.com',
-    'https://localhost:3000', 'http://66.179.241.155', 'http://hobohippie.com',
-    'http://www.hobohippie.com', 'http://localhost:3000'
+    'http://66.179.241.155', 'http://hobohippie.com', 'http://www.hobohippie.com',
+    'https://localhost:3000','http://localhost:3000','https://localhost:3001',
+    'http://localhost:3001'
 ];
 const PORT = process.env.PORT || 3000;
 
