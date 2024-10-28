@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
+import { API_ROUTES } from '../../api_router'; 
 import './productCard.css'; 
 
 const ProductCard = ({ product }) => {
-    const baseURL = process.env.REACT_APP_BASE_URL || 'http://localhost:3000';
+    const baseURL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000';
     
     const imageUrl = product.image 
         ? `${baseURL}/${product.image}` 
