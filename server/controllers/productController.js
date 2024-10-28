@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 module.exports = {
     async createProduct(req, res) {
-        console.log(res.body)
+        console.log(req.body)
         try {
             if (!req.body.name || !req.body.price) {
                 return res.status(400).json({ message: 'Name and price are required.'});
