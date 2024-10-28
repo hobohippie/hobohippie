@@ -36,6 +36,16 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 const routes = require('./routes/routes');
 routes(app);
 
+app.get('/test-image', (req, res) => {
+    const imagePath = path.join(__dirname, 'uploads', 'c021f12a4117739f1fb0057c5849dd6d');
+    res.sendFile(imagePath, (err) => {
+        if (err) {
+            res.status(err.status).end();
+        }
+    });
+});
+
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
