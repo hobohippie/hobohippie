@@ -9,7 +9,10 @@ module.exports = {
         console.log(res.body)
         try {
             if (!req.body.name || !req.body.price) {
-                return res.status(400).json({ message: 'Name and ppppprice are required.' });
+                return res.status(400).json({ 
+                    message: 'Name and ppppprice are required.', 
+                    response: res
+                });
             }
             if (!req.file) {
                 return res.status(400).json({ message: 'Image file is required.' });
