@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, ListGroup } from 'react-bootstrap';
-import { API_ROUTES } from '../../../../server/apiConfig';
+import { API_ROUTES } from '../../api_router';
 import axios from 'axios';
 import './productForm.css';
 
