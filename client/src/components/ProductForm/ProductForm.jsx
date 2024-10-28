@@ -114,7 +114,6 @@ const CreateProductForm = () => {
             formData.append('image', imageFile);
         }
         try {
-            logFormData(formData);
             const response = await axios.post(API_ROUTES.CREATE_PRODUCT, formData, {
                 withCredentials: true
             });
