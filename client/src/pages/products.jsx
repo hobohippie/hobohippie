@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ProductCard from '../components/ProductCard/ProductCard'; // Assuming you have a ProductCard component
-
+import ProductCard from '../components/ProductCard/ProductCard'; 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,7 +11,7 @@ const ProductList = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get('/api/products');
-        setProducts(response.data); // Assuming your API returns an array of products
+        setProducts(response.data);
         setLoading(false);
       } catch (err) {
         console.error('Error fetching products:', err);
@@ -22,7 +21,7 @@ const ProductList = () => {
     };
 
     fetchProducts();
-  }, []); // Empty dependency array to run the effect only once
+  }, []);
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>{error}</p>;

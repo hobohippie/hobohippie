@@ -30,7 +30,7 @@ const CreateProductForm = () => {
     const [newTag, setNewTag] = useState('');
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
-    const [feedback, setFeedback] = useState(''); // Added feedback state
+    const [feedback, setFeedback] = useState('');
 
     useEffect(() => {
         const fetchSuppliers = async () => {
@@ -86,7 +86,6 @@ const CreateProductForm = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         setImageFile(file);
-
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => setImagePreview(reader.result);

@@ -3,20 +3,22 @@ const mongoose = require('mongoose');
 
 module.exports = {
     async createProduct(req, res) {
-        console.log(req.body, req.file)
+        console.log(req.body, req.file);
         try {
             if (!req.body.name || !req.body.price) {
-                return res.status(400).json({ message: 'Name and price are required.'});
+                return res.status(400).json({ message: 'Name and price are required.' });
             }
             if (!req.file) {
                 return res.status(400).json({ message: 'Image file is required.' });
             }
-
+    
+            const imageUrl = `https://hobohippie.com/uploads/${req.file.filename}`;
+    
             const newProduct = new Product({
                 ...req.body,
-                image: req.file.path
+                image: imageUrl 
             });
-
+    
             const savedProduct = await newProduct.save();
             res.status(201).json({
                 message: 'Product created successfully',
@@ -30,6 +32,7 @@ module.exports = {
             res.status(500).json({ message: 'Error creating product', error });
         }
     },
+    
 
     async getAllProducts(req, res) {
         try {
