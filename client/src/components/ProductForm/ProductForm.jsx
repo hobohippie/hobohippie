@@ -98,6 +98,7 @@ const CreateProductForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(product)
         addProduct();
     };
 
@@ -164,7 +165,6 @@ const CreateProductForm = () => {
                 tags: [...prev.tags, tag]
             }));
         }
-        console.log(product)
     };
 
     return (
@@ -372,7 +372,7 @@ const CreateProductForm = () => {
                     type="checkbox"
                     name="featured"
                     label="Featured Product"
-                    checked={product.featured || false}
+                    checked={product.featured}
                     onChange={handleChange}
                 />
             </Form.Group>
