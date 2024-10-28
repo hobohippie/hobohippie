@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
     const baseURL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000';
     
     const imageUrl = product.image 
-        ? `/${product.image}` 
+        ? `${baseURL}/${product.image}` 
         : '/path/to/default/image.jpg'; //add default image path
 
     const renderStars = (rating) => {
