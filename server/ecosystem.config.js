@@ -2,18 +2,19 @@ module.exports = {
   apps: [
     {
       name: 'Hobohippie-Backend',
-      script: './server.js', // Entry point for your backend application
-      instances: '1', // Number of instances to run
-      exec_mode: 'cluster', // Cluster mode for load balancing
-      watch: process.env.NODE_ENV !== 'production', // Enable watch mode in development
+      script: './server.js', 
+      instances: 'max',
+      exec_mode: 'cluster',
+      watch: process.env.NODE_ENV !== 'production',
+      ignore_watch: ['uploads', 'package-lock.json', 'node_modules'],
       env: {
-        NODE_ENV: 'development', // Environment variable for development
-        PORT: 3000, // Port for development
+        NODE_ENV: 'development', 
+        PORT: 3000, 
         MONGODB_URI: 'mongodb+srv://free:7130TulipTrail3723542@hobohippie.rdv1r.mongodb.net/?retryWrites=true&w=majority&appName=HoboHippie', // Development MongoDB URI
       },
       env_production: {
-        NODE_ENV: 'production', // Environment variable for production
-        PORT: 3000, // Port for production
+        NODE_ENV: 'production',
+        PORT: 3000,
         MONGODB_URI: 'mongodb+srv://free:7130TulipTrail3723542@hobohippie.rdv1r.mongodb.net/?retryWrites=true&w=majority&appName=HoboHippie', // Production MongoDB URI
       },
     },
