@@ -169,7 +169,8 @@ const CreateProductForm = () => {
 
     return (
         <Form onSubmit={handleSubmit} className="create-product-form">
-            {feedback && <div className="feedback">{feedback}</div>} {/* Display feedback */}
+            {feedback && <div className="feedback">{feedback}</div>}
+            
             {/* Product Details */}
             <Form.Group>
                 <Form.Label>Product Name</Form.Label>
