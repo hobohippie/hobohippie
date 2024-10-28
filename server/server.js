@@ -33,6 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 const uploadsPath = '/hobohippie/server/uploads';
 
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use('/uploads', express.static(path.join(uploadsPath)));
 app.use(express.static(path.join(__dirname, 'client/build')));
 console.log(__dirname);

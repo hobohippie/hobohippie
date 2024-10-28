@@ -12,12 +12,8 @@ module.exports = {
                 return res.status(400).json({ message: 'Image file is required.' });
             }
     
-<<<<<<< HEAD
-            const imageUrl = `hobohippie/server/uploads/${req.file.filename}`;
-=======
 
             const imageUrl = `uploads/${req.file.filename}`;
->>>>>>> ec16c91cd6c3b8319771da1ea40b4080a0150134
     
             const newProduct = new Product({
                 ...req.body,
