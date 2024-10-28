@@ -1,4 +1,5 @@
 export const API_BASE = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000';
+console.log("API Base URL:", API_BASE);
 
 export const API_ROUTES = {
     // Account Routes
