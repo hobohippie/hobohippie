@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import './productCard.css'; 
 
 const ProductCard = ({ product }) => {
-    const imageUrl = product.image ? product.image
-        : '/path/to/default/image.jpg'; 
+    const baseURL = process.env.REACT_APP_BASE_URL || 'http://localhost:3000';
+    
+    const imageUrl = product.image 
+        ? `${baseURL}/uploads/${product.image}` 
+        : '/path/to/default/image.jpg'; //add default image path
 
-    // Function to render star rating based on product rating
     const renderStars = (rating) => {
         const totalStars = 5; 
         const filledStars = Math.round(rating); 
