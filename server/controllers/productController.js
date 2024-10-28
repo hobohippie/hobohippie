@@ -10,11 +10,6 @@ module.exports = {
             if (!req.body.name || !req.body.price) {
                 return res.status(400).json({ message: 'Name and price are required.' });
             }
-
-            if (typeof req.body.price !== 'number') {
-                return res.status(400).json({ message: 'Price must be a number.' });
-            }
-
             if (!req.file) {
                 return res.status(400).json({ message: 'Image file is required.' });
             }
