@@ -101,9 +101,9 @@ const routes = require('./routes/routes');
 routes(app);
 
 // Ensure the catch-all route is at the end
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+// });
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Hobohippie backend up and running on port ${PORT}.`);
