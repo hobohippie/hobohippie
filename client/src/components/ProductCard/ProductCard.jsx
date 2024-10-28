@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './productCard.css'; 
+import './productCard.css';
 
 const ProductCard = ({ product }) => {
     const baseURL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000';
     
     const imageUrl = product.image 
         ? `${baseURL}/${product.image}` 
-        : 'https://via.placeholder.com/250x250?text=Sorry,No Picture Available';
+        : 'https://via.placeholder.com/250x250?text=Sorry,No+Picture+Available';
         
     const renderStars = (rating) => {
-        const totalStars = 5; 
-        const filledStars = Math.round(rating); 
+        const totalStars = 5;
+        const filledStars = Math.round(rating);
         const stars = [];
 
         for (let i = 0; i < totalStars; i++) {
@@ -21,7 +21,6 @@ const ProductCard = ({ product }) => {
                 </span>
             );
         }
-
         return stars;
     };
 
@@ -33,7 +32,7 @@ const ProductCard = ({ product }) => {
                 <p className="product-description">{product.description}</p>
                 <p className="product-price">${product.price.toFixed(2)}</p>
                 <div className="star-rating">
-                    {renderStars(5)} 
+                    {renderStars(5)}
                 </div>
             </div>
         </Link>

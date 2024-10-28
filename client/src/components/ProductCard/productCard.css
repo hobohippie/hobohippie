@@ -1,82 +1,86 @@
-/* Product Card Styles */
-
 .product-card-link {
-  text-decoration: none; /* Remove underline from links */
-  color: inherit; /* Inherit color from parent */
+  text-decoration: none;
+  color: inherit;
 }
 
 .product-card {
-  border: 1px solid #ccc; /* Add a border to the card */
-  border-radius: 8px; /* Round the corners */
-  padding: 15px; /* Add padding inside the card */
-  text-align: center; /* Center the text */
-  margin: 15px; /* Add margin around the card */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-  background-color: #fff; /* Background color of the card */
-  transition: transform 0.2s; /* Smooth transition for hover effect */
-  position: relative; /* For positioning the sparkle effect */
-  overflow: hidden; /* To ensure the sparkle stays within the card */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
 }
 
 .product-card:hover {
-  transform: scale(1.05); /* Scale up the card on hover */
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Sparkle effect */
 .product-card:active::before {
-  content: '';
-  position: absolute; /* Position it relative to the card */
-  top: 10%; /* Adjust the starting position */
-  left: 10%; /* Adjust the starting position */
-  width: 80%; /* Width of the sparkle */
-  height: 80%; /* Height of the sparkle */
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 20%, transparent 20%); /* Radial gradient for sparkle */
-  animation: sparkle 0.5s ease-in-out infinite; /* Animation for the sparkle */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.7) 15%,
+    transparent 30%
+  );
+  animation: sparkle 0.4s ease-out;
 }
 
 @keyframes sparkle {
   0% {
-      transform: scale(0.8); /* Start slightly smaller */
-      opacity: 0.5; /* Start partially visible */
-  }
-  50% {
-      transform: scale(1.2); /* Scale up */
-      opacity: 1; /* Fully visible */
+    opacity: 0.8;
+    transform: scale(1);
   }
   100% {
-      transform: scale(0.8); /* Scale back down */
-      opacity: 0.5; /* Fade out */
+    opacity: 0;
+    transform: scale(1.5);
   }
 }
 
 .product-image {
-  width: 70%; /* Make the image responsive */
-  height: auto; /* Maintain aspect ratio */
-  border-radius: 8px; /* Round the corners of the image */
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
 }
 
 .product-name {
-  font-size: 16px; /* Font size for the product name */
-  font-weight: bold; /* Make the name bold */
-  margin: 10px 0 5px; /* Space around the name */
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 10px 0;
 }
 
 .product-description {
-  font-size: 12px; /* Font size for the description */
-  color: #666; /* Light color for the description */
-  margin-bottom: 10px; /* Space below the description */
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 10px;
 }
 
 .product-price {
-  font-size: 14px; /* Smaller font size for the price */
-  margin: 10px 0; /* Space around the price */
+  font-size: 1rem;
+  color: #333;
+  font-weight: 600;
+  margin: 10px 0;
 }
 
 .star-rating {
-  color: gold; /* Color for the stars */
+  color: gold;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
 }
 
 .star-rating span {
-  font-size: 16px; /* Size for the stars */
-  margin-right: 2px; /* Space between stars */
+  margin-right: 2px;
 }

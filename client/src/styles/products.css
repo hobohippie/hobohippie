@@ -1,73 +1,38 @@
 .product-list {
-  display: flex;
-  flex-wrap: wrap; /* Allows cards to wrap onto the next line */
-  justify-content: center; /* Center the cards */
-  margin: 20px; /* Adds some margin around the product list */
-  gap: 20px; /* Adds space between cards */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.loading-message, 
+@media (max-width: 1024px) {
+  .product-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .product-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .product-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.loading-message,
 .error-message {
-  text-align: center; /* Center the text */
-  font-size: 18px; /* Adjust font size */
-  color: #333; /* Dark gray color for text */
-  margin: 20px; /* Adds margin around the messages */
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  margin: 20px 0;
 }
 
-.loading-message {
-  font-weight: bold; /* Make loading text bold */
-}
-
-.error-message {
-  color: red; /* Red color for error messages */
-}
-
-/* Optionally, you can add styles for the product cards as well */
 .product-card {
-  background-color: #fff; /* White background for product cards */
-  border: 1px solid #ddd; /* Light gray border */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  width: 250px; /* Fixed width for cards */
-  overflow: hidden; /* Prevent overflow */
-  transition: transform 0.2s; /* Animation on hover */
-}
-
-.product-card:hover {
-  transform: scale(1.05); /* Slightly enlarge on hover */
-}
-
-.product-image {
-  width: 100%; /* Full width for images */
-  height: auto; /* Maintain aspect ratio */
-  display: block; /* Prevent extra space */
-}
-
-.product-name {
-  font-size: 18px; /* Size for product names */
-  margin: 10px 0; /* Margin around product names */
-  text-align: center; /* Center the text */
-}
-
-.product-description {
-  font-size: 14px; /* Size for product descriptions */
-  margin: 5px 0; /* Margin around descriptions */
-  text-align: center; /* Center the text */
-}
-
-.product-price {
-  font-size: 16px; /* Size for product prices */
-  color: #28a745; /* Green color for prices */
-  text-align: center; /* Center the text */
-}
-
-.star-rating {
-  display: flex; /* Use flexbox for star rating */
-  justify-content: center; /* Center the stars */
-  margin: 5px 0; /* Margin around star rating */
-}
-
-.star-rating span {
-  color: gold; /* Color for filled stars */
-  font-size: 18px; /* Size for stars */
+  margin: 0;
 }
