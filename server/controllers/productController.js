@@ -9,19 +9,16 @@ module.exports = {
         console.log(res.body)
         try {
             if (!req.body.name || !req.body.price) {
-                return res.status(400).json({ 
-                    message: 'Name and ppppprice are required.', 
-                    response: res
-                });
+                return res.status(400).json({ message: 'Name and ppppprice are required.'});
             }
             if (!req.file) {
                 return res.status(400).json({ message: 'Image file is required.' });
             }
 
-            const newProduct = new Product({
-                ...req.body,
-                image: req.file.path
-            });
+            // const newProduct = new Product({
+            //     ...req.body,
+            //     image: req.file.path
+            // });
 
             const savedProduct = await newProduct.save();
             res.status(201).json({
