@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { API_ROUTES } from '../../api_router'; 
 import './productCard.css'; 
 
 const ProductCard = ({ product }) => {

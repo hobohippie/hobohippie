@@ -50,7 +50,7 @@
 }
 
 .product-image {
-  width: 100%; /* Make the image responsive */
+  width: 70%; /* Make the image responsive */
   height: auto; /* Maintain aspect ratio */
   border-radius: 8px; /* Round the corners of the image */
 }
