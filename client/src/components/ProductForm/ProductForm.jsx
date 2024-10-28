@@ -113,7 +113,6 @@ const CreateProductForm = () => {
         if (imageFile) {
             formData.append('image', imageFile);
         }
-
         try {
             const response = await axios.post(API_ROUTES.CREATE_PRODUCT, formData, {
                 withCredentials: true
@@ -124,6 +123,7 @@ const CreateProductForm = () => {
             console.error("Error creating product:", error.message);
             setFeedback("Error creating product. Please try again.");
         }
+        console.group(formData)
     };
 
     const handleAddTag = async () => {
