@@ -30,13 +30,9 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const uploadsPath = '~/../../hobohippie/server/uploads';
-
-// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-app.use('/uploads', express.static(path.join(uploadsPath)));
+app.use('/images', express.static(path.join('uploads')));
 app.use(express.static(path.join(__dirname, 'client/build')));
-console.log(__dirname);
+
 
 const routes = require('./routes/routes');
 routes(app);

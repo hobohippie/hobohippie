@@ -11,9 +11,7 @@ module.exports = {
             if (!req.file) {
                 return res.status(400).json({ message: 'Image file is required.' });
             }
-    
-
-            const imageUrl = `uploads/${req.file.filename}`;
+            const imageUrl = `images/${req.file.filename}`;
     
             const newProduct = new Product({
                 ...req.body,
