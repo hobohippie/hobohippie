@@ -119,6 +119,7 @@ const CreateProductForm = () => {
         formData.append('discount[endDate]', product.discount.endDate);
         if (imageFile) {
             formData.append('image', imageFile);
+            console.log(imageFile)
         }
         try {
             const response = await axios.post(API_ROUTES.CREATE_PRODUCT, formData, {
@@ -170,7 +171,7 @@ const CreateProductForm = () => {
     return (
         <Form onSubmit={handleSubmit} className="create-product-form">
             {feedback && <div className="feedback">{feedback}</div>}
-            
+
             {/* Product Details */}
             <Form.Group>
                 <Form.Label>Product Name</Form.Label>
