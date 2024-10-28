@@ -165,6 +165,7 @@ const CreateProductForm = () => {
                 tags: [...prev.tags, tag]
             }));
         }
+        console.log(product)
     };
 
     return (
@@ -272,7 +273,7 @@ const CreateProductForm = () => {
                 >
                     <option value="">Select a supplier</option>
                     {suppliers.map(supplier => (
-                        <option key={supplier.id} value={supplier.id}>
+                        <option key={supplier._id} value={supplier._id}>
                             {supplier.name}
                         </option>
                     ))}
@@ -363,6 +364,17 @@ const CreateProductForm = () => {
                     value={product.discount.endDate}
                     onChange={handleChange}
                     className="form-input"
+                />
+            </Form.Group>
+
+            {/* Featured Product Checkbox */}
+            <Form.Group>
+                <Form.Check
+                    type="checkbox"
+                    name="featured"
+                    label="Featured Product"
+                    checked={product.featured}
+                    onChange={handleChange}
                 />
             </Form.Group>
 
