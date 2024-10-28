@@ -15,10 +15,10 @@ module.exports = {
                 return res.status(400).json({ message: 'Image file is required.' });
             }
 
-            // const newProduct = new Product({
-            //     ...req.body,
-            //     image: req.file.path
-            // });
+            const newProduct = new Product({
+                ...req.body,
+                image: req.file.path
+            });
 
             const savedProduct = await newProduct.save();
             res.status(201).json({
