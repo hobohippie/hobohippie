@@ -2,8 +2,7 @@ const accountController = require('../controllers/accountController');
 const productController = require('../controllers/productController');
 const supplierController = require('../controllers/supplierController');
 const tagController = require('../controllers/tagController');
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const upload = require('../config/multer_config')
 
 module.exports = (app) => {
     // Account routes
