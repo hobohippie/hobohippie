@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faTiktok, faPinterest } from '@fortawesome/free-brands-svg-icons';
+import { useAuth } from '../../context/AuthContext';
 import './footer.css';
 
 const Footer = () => {
+  const { isAdmin, logout } = useAuth();
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -74,7 +76,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Footer Stripe */}
       <div className="footer-stripe">
         <div className="footer-links">
@@ -86,6 +88,17 @@ const Footer = () => {
           &copy; HoboHippie 2024, All Rights Reserved, United States
         </p>
       </div>
+
+      {/* Admin Links */}
+      {isAdmin && (
+        <div className="admin-links">
+          <button className="admin-button" onClick={logout}>Logout</button>
+          <ul className="admin-menu">
+            <li><Link to="/create-product">Create Product</Link></li>
+            <li><Link to="/create-supplier">Create Supplier</Link></li>
+          </ul>
+        </div>
+      )}
     </footer>
   );
 };

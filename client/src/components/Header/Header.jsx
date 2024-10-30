@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import { useCart } from '../../context/CartContext';
-import { useAuth } from '../../context/AuthContext';
 import CartModal from '../CartModal/CartModal';
 import logo from '../../assets/images/HoboHippie_logo.png'
 import roundLogo from '../../assets/images/HoboHippie_logo_round.png'
@@ -26,9 +25,7 @@ const NavBar = () => {
     const [isNearTop, setIsNearTop] = useState(true);
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
-
     const { cartItems, openModal } = useCart();
-    const { isAdmin, logout } = useAuth();
     const totalCartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
     const toggleCartModal = () => {
@@ -88,7 +85,7 @@ const NavBar = () => {
                         />
                     </div>
 
-                    
+
 
                     {/* Right: Cart Icon */}
                     <div className="navbar-section">
@@ -138,19 +135,12 @@ const NavBar = () => {
                     </div>
                 )}
 
-                {/* Admin Links */}
-                {isAdmin && (
-                    <div className="admin-links">
-                        <button className="admin-button" onClick={logout}>Logout</button>
-                        <ul className="admin-menu">
-                            <li><Link to="/create-product">Create Product</Link></li>
-                            <li><Link to="/create-supplier">Create Supplier</Link></li>
-                        </ul>
-                    </div>
-                )}
+              
 
                 <CartModal />
             </div>
+
+              
         </>
     );
 };
