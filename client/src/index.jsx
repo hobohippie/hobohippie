@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css';
 
 import Header from './components/Header/Header';
-import Banner from './components/Banner/Banner'
 import LoginBanner from './components/LoginBanner/LoginBanner'
 import Footer from './components/Footer/Footer';
 import Home from './pages/home';
@@ -52,7 +51,6 @@ const App = () => {
           <Router>
             <ScrollToTop />
             <Header />
-            <Banner />
             <LoginBanner/>
             <div className="content-wrap">
               <Routes>
