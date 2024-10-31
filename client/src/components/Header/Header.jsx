@@ -4,7 +4,6 @@ import { FaShoppingCart } from 'react-icons/fa';
 import { useCart } from '../../context/CartContext';
 import CartModal from '../CartModal/CartModal';
 import logo from '../../assets/images/HoboHippie_logo.png'
-import roundLogo from '../../assets/images/HoboHippie_logo_round.png'
 import './header.css';
 import { Container } from 'react-bootstrap';
 
@@ -77,16 +76,7 @@ const NavBar = () => {
                             />
                         </Link>
                     </div>
-
-                    <div className="round-logo">
-                        <img
-                            src={roundLogo}
-                            alt="Hobo Hippie Round Logo"
-                        />
-                    </div>
-
-
-
+                    
                     {/* Right: Cart Icon */}
                     <div className="navbar-section">
                         <div className="cart-icon-container" onClick={toggleCartModal}>
