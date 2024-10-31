@@ -48,7 +48,7 @@ function CheckoutForm() {
 export default CheckoutForm;
 
 
-//----------------------------------------Original-------------------------------------------------
+//--------------------------------------Original----------------------------------------------
 // import React from 'react';
 // import { useCart } from '../context/CartContext'; // Adjust this path if necessary
 
