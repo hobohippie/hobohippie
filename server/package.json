@@ -11,8 +11,6 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@stripe/react-stripe-js": "^2.8.1",
-        "@stripe/stripe-js": "^4.9.0",
         "axios-mock-adapter": "^2.1.0",
         "bcrypt": "^5.1.1",
         "cors": "^2.8.5",
