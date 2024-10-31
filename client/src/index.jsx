@@ -45,8 +45,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
-console.log(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 const App = () => {
   return (
