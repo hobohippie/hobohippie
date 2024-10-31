@@ -2,21 +2,22 @@ const accountController = require('../controllers/accountController');
 const productController = require('../controllers/productController');
 const supplierController = require('../controllers/supplierController');
 const tagController = require('../controllers/tagController');
+const paymentController = require('../controllers/paymentController');
 const upload = require('../config/multer_config')
 
 module.exports = (app) => {
-    // Account routes
+    // Accounts
     app.post('/api/login', accountController.login);
     app.post('/api/create-account', accountController.createAccount);
 
-    // Supplier routes
+    // Suppliers
     app.post('/api/create-supplier', supplierController.createSupplier);
     app.get('/api/suppliers', supplierController.getAllSuppliers);
     app.get('/api/suppliers/:id', supplierController.getSupplierById);
     app.put('/api/suppliers/:id', supplierController.updateSupplier);
     app.delete('/api/suppliers/:id', supplierController.deleteSupplier);
 
-    // Product routes
+    // Products
     app.post('/api/create-product', upload.single('image'), productController.createProduct); 
     app.get('/api/products', productController.getAllProducts);
     app.get('/api/products/:id', productController.getProductById);
@@ -27,4 +28,7 @@ module.exports = (app) => {
     app.get('/api/tags', tagController.getAllTags)
     app.post('/api/tags', tagController.createTag)
     app.delete('/api/tags/:name', tagController.deleteTag)
+
+    // Payments
+    app.post('/create-payment-intent', paymentController.createPayment)
 };
