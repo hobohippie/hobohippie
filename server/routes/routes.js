@@ -30,5 +30,5 @@ module.exports = (app) => {
     app.delete('/api/tags/:name', tagController.deleteTag)
 
     // Payments
-    app.post('/create-payment-intent', paymentController.createPayment)
+    app.post('/api/create-payment-intent', paymentController.createPayment)
 };

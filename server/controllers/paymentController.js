@@ -1,6 +1,6 @@
 require('dotenv').config();
 const Stripe = require("stripe");
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY); // Replace
+const stripe = Stripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 module.exports = {
   async createPayment(req, res) {
