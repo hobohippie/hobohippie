@@ -1,35 +1,86 @@
-import React from 'react';
-import { useCart } from '../context/CartContext'; // Adjust this path if necessary
+import React, { useState, useEffect } from 'react';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-const Checkout = () => {
-  const { cartItems } = useCart(); // Get cart items from context
+function CheckoutForm() {
+  const stripe = useStripe();
+  const elements = useElements();
 
-  const totalAmount = cartItems.reduce((total, item) => {
-    return total + item.price * item.quantity; // Calculate total amount
-  }, 0);
+  const [clientSecret, setClientSecret] = useState(null);
+  const [paymentStatus, setPaymentStatus] = useState('');
+
+  useEffect(() => {
+    const fetchClientSecret = async () => {
+      const response = await fetch('/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: 1000 })
+      });
+      const data = await response.json();
+      setClientSecret(data.clientSecret);
+    };
+
+    fetchClientSecret();
+  }, []); 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!stripe || !elements || !clientSecret) return;
+
+    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: { card: elements.getElement(CardElement) },
+    });
+
+    if (error) {
+      setPaymentStatus('Payment failed');
+    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+      setPaymentStatus('Payment successful!');
+    }
+  };
 
   return (
-    <div className="checkout-container">
-      <h2>Checkout</h2>
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty!</p>
-      ) : (
-        <div>
-          <ul>
-            {cartItems.map((item, index) => (
-              <li key={index}>
-                {item.name} - ${item.price.toFixed(2)} x {item.quantity} = ${(
-                  item.price * item.quantity
-                ).toFixed(2)}
-              </li>
-            ))}
-          </ul>
-          <h3>Total: ${totalAmount.toFixed(2)}</h3>
-          {/* Include any additional checkout logic here, like payment forms */}
-        </div>
-      )}
-    </div>
+    <form onSubmit={handleSubmit}>
+      <CardElement />
+      <button type="submit" disabled={!stripe}>Pay</button>
+      <p>{paymentStatus}</p>
+    </form>
   );
-};
+}
 
-export default Checkout;
+export default CheckoutForm;
+
+
+//----------------------------------------Original-------------------------------------------------
+// import React from 'react';
+// import { useCart } from '../context/CartContext'; // Adjust this path if necessary
+
+// const Checkout = () => {
+//   const { cartItems } = useCart(); // Get cart items from context
+
+//   const totalAmount = cartItems.reduce((total, item) => {
+//     return total + item.price * item.quantity; // Calculate total amount
+//   }, 0);
+
+//   return (
+//     <div className="checkout-container">
+//       <h2>Checkout</h2>
+//       {cartItems.length === 0 ? (
+//         <p>Your cart is empty!</p>
+//       ) : (
+//         <div>
+//           <ul>
+//             {cartItems.map((item, index) => (
+//               <li key={index}>
+//                 {item.name} - ${item.price.toFixed(2)} x {item.quantity} = ${(
+//                   item.price * item.quantity
+//                 ).toFixed(2)}
+//               </li>
+//             ))}
+//           </ul>
+//           <h3>Total: ${totalAmount.toFixed(2)}</h3>
+//           {/* Include any additional checkout logic here, like payment forms */}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Checkout;
