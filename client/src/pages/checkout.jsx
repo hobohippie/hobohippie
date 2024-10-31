@@ -7,30 +7,36 @@ function CheckoutForm() {
 
   const [clientSecret, setClientSecret] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchClientSecret = async () => {
       const response = await fetch('/create-payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: 1000 })
+        body: JSON.stringify({ amount: 1000 }) // Adjust amount as needed
       });
       const data = await response.json();
       setClientSecret(data.clientSecret);
     };
 
     fetchClientSecret();
-  }, []); 
+  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!stripe || !elements || !clientSecret) return;
+
+    setLoading(true); // Set loading state to true
 
     const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
       payment_method: { card: elements.getElement(CardElement) },
     });
 
+    setLoading(false); // Reset loading state
+
     if (error) {
-      setPaymentStatus('Payment failed');
+      setPaymentStatus('Payment failed: ' + error.message);
     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
       setPaymentStatus('Payment successful!');
     }
@@ -39,13 +45,16 @@ function CheckoutForm() {
   return (
     <form onSubmit={handleSubmit}>
       <CardElement />
-      <button type="submit" disabled={!stripe}>Pay</button>
+      <button type="submit" disabled={!stripe || loading}>
+        {loading ? 'Processing...' : 'Pay'}
+      </button>
       <p>{paymentStatus}</p>
     </form>
   );
 }
 
 export default CheckoutForm;
+
 
 
 //--------------------------------------Original-------------------------------------------
