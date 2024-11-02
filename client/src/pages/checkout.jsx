@@ -12,7 +12,7 @@ function CheckoutForm() {
   const { cartItems } = useCart();
 
   const totalAmount = cartItems.reduce((total, item) => {
-    return (total + item.price * item.quantity) * 100;
+    return total + item.price * item.quantity;
   }, 0);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function CheckoutForm() {
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ totalAmount })
+          body: JSON.stringify({ total:(totalAmount * 100).toFixed(0) })
         });
 
         console.log('Response status:', response.status); // Log response status
