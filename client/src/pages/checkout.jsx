@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useCart } from '../context/CartContext';
-import { usePaymentIntent } from '../context/PaymentProvider';
+import { usePayment } from '../context/PaymentProvider';
 
 function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
-  const { clientSecret } = usePaymentIntent();
+  const { clientSecret } = usePayment();
   const { cartItems } = useCart();
   const [paymentStatus, setPaymentStatus] = useState('');
   const [loading, setLoading] = useState(false);
