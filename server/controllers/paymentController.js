@@ -5,14 +5,15 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 module.exports = {
   async createPayment(req, res) {
     const { amount } = req.body; // amount is in the smallest currency unit ($0.01)
+    const amountInCents = parseInt(amount * 100); 
 
-    if (!amount || typeof amount !== 'number') {
+    if (!amountInCents || amountInCents <= 0) {
       return res.status(400).send({ error: 'Invalid amount' });
     }
 
     try {
       const paymentIntent = await stripe.paymentIntents.create({
-        amount,
+        amount: amountInCents,
         currency: "usd",
       });
 
