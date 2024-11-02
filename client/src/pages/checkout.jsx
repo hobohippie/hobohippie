@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { CardElement, useStripe, useElements, Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+
 
 function CheckoutForm() {
   const stripe = useStripe();
@@ -8,7 +11,8 @@ function CheckoutForm() {
   const [clientSecret, setClientSecret] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+  
   useEffect(() => {
     const fetchClientSecret = async () => {
       const response = await fetch('/api/create-payment-intent', {
@@ -44,7 +48,10 @@ function CheckoutForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <CardElement />
+      <Elements stripe={stripePromise}>
+        <CardElement />
+      </Elements>
+
       <button type="submit" disabled={!stripe || loading}>
         {loading ? 'Processing...' : 'Pay'}
       </button>

@@ -1,7 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css';
@@ -45,8 +43,6 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
-
 const App = () => {
   return (
     <div className="app-container">
@@ -85,12 +81,7 @@ const App = () => {
                 <Route path="/create-product" element={<ProtectedRoute element={<CreateProduct />} />} />
                 <Route path="/edit-profile" element={<EditProfile />} />
                 <Route path="/create-supplier" element={<ProtectedRoute element={<CreateSupplier />} />} />
-                <Route path="/checkout" element={
-                  <Elements stripe={stripePromise}>
-                    <Checkout stripe={stripePromise}/>
-                  </Elements>
-                }
-                />
+                <Route path="/checkout" element={<Checkout/>}/>
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
