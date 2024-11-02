@@ -30,7 +30,7 @@ function CheckoutForm() {
     setLoading(true); // Set loading state to true
 
     const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: { card: elements.getElement(CardElement) },
+      payment_method: { card: elements.getElement(PaymentElement) },
     });
 
     setLoading(false); // Reset loading state
