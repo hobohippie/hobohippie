@@ -1,16 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useCart } from '../context/CartContext';
 import { usePayment } from '../context/PaymentProvider';
 
-function CheckoutForm() {
-  const stripe = useStripe();
-  const elements = useElements();
+function CheckoutForm() {  
   const { clientSecret } = usePayment();
   const { cartItems } = useCart();
-  const [paymentStatus, setPaymentStatus] = useState('');
+
+  const stripe = useStripe();
+  const elements = useElements();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [paymentStatus, setPaymentStatus] = useState('');
+
+  const totalAmount = cartItems.reduce((total, item) => {
+    return total + item.price * item.quantity;
+  }, 0);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -39,7 +45,7 @@ function CheckoutForm() {
 
     <div className="checkout-container">
       <h2>Checkout</h2>
-      {!cartItems ? (
+      {cartItems ? (
         <p>Your cart is empty!</p>
       ) : (
         <div>
