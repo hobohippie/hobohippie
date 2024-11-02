@@ -1,37 +1,89 @@
-useEffect(() => {
-  const fetchClientSecret = async () => {
-    try {
-      const response = await fetch('/api/create-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: 1000 }) // Adjust amount as needed
-      });
-      
-      console.log('Response status:', response.status); // Log response status
+import React, { useState, useEffect } from 'react';
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-      if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(`Failed to create payment intent. ${errorMessage}`);
-      }
-      
-      const data = await response.json();
-      
-      console.log('Data received:', data); // Log received data
-      
-      if (data.clientSecret) {
-        setClientSecret(data.clientSecret);
-      } else {
-        throw new Error("Failed to get client secret from server.");
-      }
-    } catch (err) {
-      setError('Error fetching client secret. Please try again.');
-      console.error('Fetch client secret error:', err);
+function CheckoutForm() {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [clientSecret, setClientSecret] = useState(null);
+  const [paymentStatus, setPaymentStatus] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    useEffect(() => {
+      const fetchClientSecret = async () => {
+        try {
+          const response = await fetch('/api/create-payment-intent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amount: 1000 }) // Adjust amount as needed
+          });
+          
+          console.log('Response status:', response.status); // Log response status
+    
+          if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`Failed to create payment intent. ${errorMessage}`);
+          }
+          
+          const data = await response.json();
+          
+          console.log('Data received:', data); // Log received data
+          
+          if (data.clientSecret) {
+            setClientSecret(data.clientSecret);
+          } else {
+            throw new Error("Failed to get client secret from server.");
+          }
+        } catch (err) {
+          setError('Error fetching client secret. Please try again.');
+          console.error('Fetch client secret error:', err);
+        }
+      };
+    
+      fetchClientSecret();
+    }, []);
+    
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!stripe || !elements || !clientSecret) return;
+
+    setLoading(true);
+    setError(null);
+
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: "https://your-website.com/order-status", // adjust to your return URL
+      },
+    });
+
+    setLoading(false);
+
+    if (error) {
+      setError('Payment failed: ' + error.message);
+    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+      setPaymentStatus('Payment successful!');
     }
   };
 
-  fetchClientSecret();
-}, []);
+  return (
+    <form onSubmit={handleSubmit}>
+      {clientSecret ? (
+        <PaymentElement />
+      ) : (
+        <p>Loading payment information...</p>
+      )}
+      <button type="submit" disabled={!stripe || loading || !clientSecret}>
+        {loading ? 'Processing...' : 'Pay'}
+      </button>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {paymentStatus && <p>{paymentStatus}</p>}
+    </form>
+  );
+}
 
+export default CheckoutForm;
 
 
 
