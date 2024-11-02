@@ -1,30 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [clientSecret, setClientSecret] = useState('');
+  const [clientSecret, setClientSecret] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchClientSecret = async () => {
-      const response = await fetch('/api/create-payment-intent', {
+      const response = await fetch('/create-payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: 1000 }) // Adjust amount as needed
       });
-
-      // Check for response status and parse JSON
-      if (!response.ok) {
-        console.error('Failed to create payment intent:', response.statusText);
-        return;
-      }
-
       const data = await response.json();
-      setClientSecret(data.clientSecret); // Set clientSecret in state
+      setClientSecret(data.clientSecret);
     };
 
     fetchClientSecret();
@@ -34,33 +27,69 @@ function CheckoutForm() {
     event.preventDefault();
     if (!stripe || !elements || !clientSecret) return;
 
-    setLoading(true);
+    setLoading(true); // Set loading state to true
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: { return_url: 'https://your-site.com/order-confirmation' }
+    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: { card: elements.getElement(CardElement) },
     });
 
-    setLoading(false);
+    setLoading(false); // Reset loading state
 
     if (error) {
       setPaymentStatus('Payment failed: ' + error.message);
-    } else {
+    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
       setPaymentStatus('Payment successful!');
     }
   };
 
-  return clientSecret ? (
+  return (
     <form onSubmit={handleSubmit}>
-      <PaymentElement />
+      <CardElement />
       <button type="submit" disabled={!stripe || loading}>
         {loading ? 'Processing...' : 'Pay'}
       </button>
       <p>{paymentStatus}</p>
     </form>
-  ) : (
-    <p>Loading...</p>
   );
 }
 
 export default CheckoutForm;
+
+
+
+//--------------------------------------Original-------------------------------------------
+// import React from 'react';
+// import { useCart } from '../context/CartContext'; // Adjust this path if necessary
+
+// const Checkout = () => {
+//   const { cartItems } = useCart(); // Get cart items from context
+
+//   const totalAmount = cartItems.reduce((total, item) => {
+//     return total + item.price * item.quantity; // Calculate total amount
+//   }, 0);
+
+//   return (
+//     <div className="checkout-container">
+//       <h2>Checkout</h2>
+//       {cartItems.length === 0 ? (
+//         <p>Your cart is empty!</p>
+//       ) : (
+//         <div>
+//           <ul>
+//             {cartItems.map((item, index) => (
+//               <li key={index}>
+//                 {item.name} - ${item.price.toFixed(2)} x {item.quantity} = ${(
+//                   item.price * item.quantity
+//                 ).toFixed(2)}
+//               </li>
+//             ))}
+//           </ul>
+//           <h3>Total: ${totalAmount.toFixed(2)}</h3>
+//           {/* Include any additional checkout logic here, like payment forms */}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Checkout;
