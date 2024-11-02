@@ -19,7 +19,7 @@ function CheckoutForm({ totalAmount }) {
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount: totalAmount })
+          body: JSON.stringify({ amount: 1000 })
         });
         
         if (!response.ok) {
