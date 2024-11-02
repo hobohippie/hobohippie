@@ -50,54 +50,51 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 const App = () => {
   return (
     <div className="app-container">
-      <AuthProvider>
-        <CartProvider>
-          <Router>
-            <ScrollToTop />
-            <Header />
-            <LoginBanner />
-            <div className="content-wrap">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/products/:id" element={<ProductDetail />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/create-account" element={<CreateAccount />} />
-                <Route path="/user-profile" element={<UserProfile />} />
-                <Route path="/wishlist" element={<Wishlist />} />
-                <Route path="/order-status" element={<OrderStatus />} />
-                <Route path="/manage-subscriptions" element={<ManageSubscriptions />} />
-                <Route path="/shipping-returns" element={<ShippingReturns />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/social-responsibility" element={<SocialResponsibility />} />
-                <Route path="/the-journey" element={<Blog />} />
-                <Route path="/reviews" element={<Reviews />} />
-                <Route path="/best-sellers" element={<BestSellers />} />
-                <Route path="/new-products" element={<NewProducts />} />
-                <Route path="/gifts-under-50" element={<GiftsUnder50 />} />
-                <Route path="/featured" element={<Featured />} />
-                <Route path="/accessibility" element={<Accessibility />} />
-                <Route path="/terms" element={<Terms />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/account" element={<Account />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/create-product" element={<ProtectedRoute element={<CreateProduct />} />} />
-                <Route path="/edit-profile" element={<EditProfile />} />
-                <Route path="/create-supplier" element={<ProtectedRoute element={<CreateSupplier />} />} />
-                <Route path="/checkout" element={
-                  <Elements stripe={stripePromise}>
-                    <Checkout />
-                  </Elements>
-                }
-                />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </div>
-            <Footer />
-          </Router>
-        </CartProvider>
-      </AuthProvider>
+      <Elements stripe={stripePromise}>
+        <AuthProvider>
+          <CartProvider>
+            <Router>
+              <ScrollToTop />
+              <Header />
+              <LoginBanner />
+              <div className="content-wrap">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/products" element={<Products />} />
+                  <Route path="/products/:id" element={<ProductDetail />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/create-account" element={<CreateAccount />} />
+                  <Route path="/user-profile" element={<UserProfile />} />
+                  <Route path="/wishlist" element={<Wishlist />} />
+                  <Route path="/order-status" element={<OrderStatus />} />
+                  <Route path="/manage-subscriptions" element={<ManageSubscriptions />} />
+                  <Route path="/shipping-returns" element={<ShippingReturns />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/social-responsibility" element={<SocialResponsibility />} />
+                  <Route path="/the-journey" element={<Blog />} />
+                  <Route path="/reviews" element={<Reviews />} />
+                  <Route path="/best-sellers" element={<BestSellers />} />
+                  <Route path="/new-products" element={<NewProducts />} />
+                  <Route path="/gifts-under-50" element={<GiftsUnder50 />} />
+                  <Route path="/featured" element={<Featured />} />
+                  <Route path="/accessibility" element={<Accessibility />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route path="/privacy" element={<Privacy />} />
+                  <Route path="/account" element={<Account />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/create-product" element={<ProtectedRoute element={<CreateProduct />} />} />
+                  <Route path="/edit-profile" element={<EditProfile />} />
+                  <Route path="/create-supplier" element={<ProtectedRoute element={<CreateSupplier />} />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </div>
+              <Footer />
+            </Router>
+          </CartProvider>
+        </AuthProvider>
+      </Elements>
     </div>
   );
 };
