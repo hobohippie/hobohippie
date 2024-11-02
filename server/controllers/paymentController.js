@@ -8,7 +8,7 @@ module.exports = {
     const amountInCents = parseInt(amount * 100); 
 
     if (!amountInCents || amountInCents <= 0) {
-      return res.status(400).send({ error: 'Invalid amount' });
+      return res.status(400).send({ error: 'Invalid amount', amount: amount, amountInCents: amountInCents });
     }
 
     try {
