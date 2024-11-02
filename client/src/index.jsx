@@ -87,7 +87,7 @@ const App = () => {
                 <Route path="/create-supplier" element={<ProtectedRoute element={<CreateSupplier />} />} />
                 <Route path="/checkout" element={
                   <Elements stripe={stripePromise}>
-                    <Checkout />
+                    <Checkout stripe={stripePromise}/>
                   </Elements>
                 }
                 />

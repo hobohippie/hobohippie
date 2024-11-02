@@ -7,41 +7,37 @@ const CheckoutForm = ({ clientSecret }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Handle payment submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!stripe || !elements || !clientSecret) return;
 
-    setLoading(true); // Set loading state to true
-    setError(null); // Reset any previous errors
+    setLoading(true);
+    setError(null);
 
-    // Confirm the payment
     const { error: paymentError, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: 'YOUR_RETURN_URL', // Set your return URL here
+        return_url: 'www.hobohippie.com',
       },
     });
 
     if (paymentError) {
       console.error(paymentError);
-      setError(paymentError.message); // Set error message to display
+      setError(paymentError.message);
     } else {
-      // Payment succeeded
       console.log('Payment succeeded:', paymentIntent);
-      // You can handle successful payment here (e.g., redirect, display a message, etc.)
     }
-    
-    setLoading(false); // Reset loading state
+
+    setLoading(false);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <PaymentElement /> {/* Render the PaymentElement */}
+      <PaymentElement />
       <button type="submit" disabled={!stripe || loading}>
         {loading ? 'Processing...' : 'Pay Now'}
       </button>
-      {error && <div className="error">{error}</div>} {/* Display error if exists */}
+      {error && <div className="error">{error}</div>}
     </form>
   );
 };
