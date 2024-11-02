@@ -39,7 +39,7 @@ function CheckoutForm() {
 
     <div className="checkout-container">
       <h2>Checkout</h2>
-      {cartItems.length === 0 ? (
+      {!cartItems ? (
         <p>Your cart is empty!</p>
       ) : (
         <div>
