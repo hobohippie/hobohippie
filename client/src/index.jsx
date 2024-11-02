@@ -1,8 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css';
 
@@ -16,7 +14,6 @@ import Contact from './pages/contact';
 import UserProfile from './pages/user-profile';
 import NotFound from './pages/not-found';
 import Wishlist from './pages/wishlist';
-import Checkout from './pages/checkout';
 import PaymentSuccess from './pages/payment-success';
 import PaymentError from './pages/payment-error';
 import ProductDetail from './components/ProductDetails/ProductDetails';
@@ -43,12 +40,14 @@ import CreateSupplier from './components/SupplierForm/SupplierForm'
 
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
-import { PaymentProvider } from './context/PaymentProvider';
+import { PaymentProvider, usePayment } from './context/PaymentProvider';
+import CheckoutPayment from './context/CheckoutPayment';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+const { clientSecret } = usePayment();
 
 const App = () => {
   return (
@@ -89,13 +88,7 @@ const App = () => {
                   <Route path="/create-product" element={<ProtectedRoute element={<CreateProduct />} />} />
                   <Route path="/edit-profile" element={<EditProfile />} />
                   <Route path="/create-supplier" element={<ProtectedRoute element={<CreateSupplier />} />} />
-                  <Route path="/checkout" element={
-                    clientSecret ? 
-                    <Elements stripe={ stripePromise } options={ { clientSecret } }>
-                      <Checkout />
-                    </Elements> : <div>Loading...</div>
-                  }
-                  />
+                  <Route path="/checkout" element={<CheckoutPayment />}/>
                   <Route path="/payment-success" element={<PaymentSuccess />} />
                   <Route path="/payment-error" element={<PaymentError />} />
                   <Route path="*" element={<NotFound />} />
