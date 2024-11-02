@@ -4,7 +4,6 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
-
   const [clientSecret, setClientSecret] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState('');
   const [loading, setLoading] = useState(false);
@@ -16,8 +15,8 @@ function CheckoutForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: 1000 }) // Adjust amount as needed
       });
-      console.log(response)
       const data = await response.json();
+      console.log(data.clientSecret);
       setClientSecret(data.clientSecret);
     };
 
