@@ -55,7 +55,7 @@ function CheckoutForm() {
           <h3>Total: ${totalAmount.toFixed(2)}</h3>
           <form onSubmit={handleSubmit}>
             {clientSecret ? (
-              <PaymentElement />
+              <PaymentElement clientSecret={clientSecret} />
             ) : (
               <p>Loading payment information...</p>
             )}
