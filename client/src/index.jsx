@@ -43,7 +43,7 @@ import CreateSupplier from './components/SupplierForm/SupplierForm'
 
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
-import PaymentProvider from './context/PaymentProvider';
+import { PaymentProvider } from './context/PaymentProvider';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
