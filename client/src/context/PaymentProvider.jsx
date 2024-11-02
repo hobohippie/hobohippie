@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useCart } from './context/CartContext'; 
+import { useCart } from '../context/CartContext'; 
 
 const PaymentIntentContext = createContext();
 
