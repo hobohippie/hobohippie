@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 function CheckoutForm() {
   const stripe = useStripe();
@@ -44,7 +44,7 @@ function CheckoutForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <CardElement />
+      <PaymentElement />
       <button type="submit" disabled={!stripe || loading}>
         {loading ? 'Processing...' : 'Pay'}
       </button>
