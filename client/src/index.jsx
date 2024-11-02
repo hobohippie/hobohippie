@@ -94,7 +94,6 @@ const App = () => {
                     <Elements stripe={ stripePromise } options={ { clientSecret } }>
                       <Checkout />
                     </Elements> : <div>Loading...</div>
-    
                   }
                   />
                   <Route path="/payment-success" element={<PaymentSuccess />} />
