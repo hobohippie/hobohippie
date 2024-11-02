@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
-function CheckoutForm({ totalAmount }) {
+function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
   const [clientSecret, setClientSecret] = useState(null);
@@ -19,7 +19,7 @@ function CheckoutForm({ totalAmount }) {
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount: totalAmount })
+          body: JSON.stringify({ amount: 1000 })
         });
         
         if (!response.ok) {
