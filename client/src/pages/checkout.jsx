@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { useCart } from '../context/CartContext';
 
 function CheckoutForm() {
   const stripe = useStripe();
@@ -8,7 +9,7 @@ function CheckoutForm() {
   const [paymentStatus, setPaymentStatus] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { cartItems } = useCart(); // Get cart items from context
+  const { cartItems } = useCart();
 
   const totalAmount = cartItems.reduce((total, item) => {
     return (total + item.price * item.quantity) * 100;
@@ -20,7 +21,7 @@ function CheckoutForm() {
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ totalAmount }) // Adjust amount as needed
+          body: JSON.stringify({ totalAmount })
         });
 
         console.log('Response status:', response.status); // Log response status
@@ -60,7 +61,7 @@ function CheckoutForm() {
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "https://your-website.com/order-status", // adjust to your return URL
+        return_url: "https://hobohippie.com/payment-success",
       },
     });
 
