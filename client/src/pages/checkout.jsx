@@ -36,6 +36,7 @@ function CheckoutForm() {
         console.log('Data received:', data); // Log received data
 
         if (data.clientSecret) {
+          console.log(data.clientSecret)
           setClientSecret(data.clientSecret);
         } else {
           throw new Error("Failed to get client secret from server.");
