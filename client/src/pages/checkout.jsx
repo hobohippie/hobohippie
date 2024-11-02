@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useCart } from '../context/CartContext';
-import { usePaymentIntent } from '../context/PaymentIntentContext';
+import { usePaymentIntent } from '../context/PaymentProvider';
 
 function CheckoutForm() {
   const stripe = useStripe();
