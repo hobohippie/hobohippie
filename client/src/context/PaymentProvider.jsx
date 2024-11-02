@@ -1,27 +1,33 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useCart } from '../context/CartContext'; 
 
-const PaymentIntentContext = createContext();
+const PaymentContext = createContext();
 
-export const usePaymentIntent = () => {
-  return useContext(PaymentIntentContext);
+export const usePayment = () => {
+  return useContext(PaymentContext);
 };
 
-export const PaymentIntentProvider = ({ children }) => {
+export const PaymentProvider = ({ children }) => {
   const { cartItems } = useCart();
   const [clientSecret, setClientSecret] = useState(null);
+  const [error, setError] = useState(null);
 
   const totalAmount = cartItems.reduce((total, item) => {
     return total + item.price * item.quantity;
   }, 0);
 
   useEffect(() => {
+    if (cartItems.length === 0) {
+      setClientSecret(null);
+      return;
+    }
+
     const fetchClientSecret = async () => {
       try {
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount: totalAmount.toFixed(2) })
+          body: JSON.stringify({ amount: totalAmount.toFixed(2) }) // Amount in cents
         });
 
         console.log('Response status:', response.status); // Log response status
@@ -36,7 +42,7 @@ export const PaymentIntentProvider = ({ children }) => {
         console.log('Data received:', data); // Log received data
 
         if (data.clientSecret) {
-          console.log(data.clientS)
+          console.log(data.clientSecret); // Log clientSecret
           setClientSecret(data.clientSecret);
         } else {
           throw new Error("Failed to get client secret from server.");
@@ -48,11 +54,11 @@ export const PaymentIntentProvider = ({ children }) => {
     };
 
     fetchClientSecret();
-  }, [cartItems]);
+  }, [cartItems, totalAmount]);
 
   return (
-    <PaymentIntentContext.Provider value={{ clientSecret }}>
+    <PaymentContext.Provider value={{ clientSecret, error }}>
       {children}
-    </PaymentIntentContext.Provider>
+    </PaymentContext.Provider>
   );
 };
