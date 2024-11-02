@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 
 function CheckoutForm() {
   const stripe = useStripe();
@@ -8,16 +8,28 @@ function CheckoutForm() {
   const [clientSecret, setClientSecret] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchClientSecret = async () => {
-      const response = await fetch('api/create-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: 1000 }) // Adjust amount as needed
-      });
-      const data = await response.json();
-      setClientSecret(data.clientSecret);
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await fetch('/api/create-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: 1000 }) // Adjust amount as needed
+        });
+        if (!response.ok) {
+          throw new Error('Failed to initialize payment.');
+        }
+        const data = await response.json();
+        setClientSecret(data.clientSecret);
+      } catch (err) {
+        setError('Failed to set up payment. Please try again.');
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchClientSecret();
@@ -27,69 +39,44 @@ function CheckoutForm() {
     event.preventDefault();
     if (!stripe || !elements || !clientSecret) return;
 
-    setLoading(true); // Set loading state to true
+    setLoading(true);
+    setError(null);
+    setPaymentStatus('');
 
-    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: { card: elements.getElement(CardElement) },
-    });
+    try {
+      const { error, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: "https://your-site.com/order-confirmation", // Optional redirect
+        },
+      });
 
-    setLoading(false); // Reset loading state
-
-    if (error) {
-      setPaymentStatus('Payment failed: ' + error.message);
-    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-      setPaymentStatus('Payment successful!');
+      if (error) {
+        setError('Payment failed: ' + error.message);
+      } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+        setPaymentStatus('Payment successful! Thank you for your purchase.');
+      } else {
+        setPaymentStatus(`Payment status: ${paymentIntent.status}`);
+      }
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement />
-      <button type="submit" disabled={!stripe || loading}>
+    <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: 'auto' }}>
+      {clientSecret && <PaymentElement />}
+      
+      <button type="submit" disabled={!stripe || loading} style={{ marginTop: '20px', padding: '10px' }}>
         {loading ? 'Processing...' : 'Pay'}
       </button>
-      <p>{paymentStatus}</p>
+
+      {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
+      {paymentStatus && <p style={{ color: 'green', marginTop: '10px' }}>{paymentStatus}</p>}
     </form>
   );
 }
 
 export default CheckoutForm;
-
-
-
-//--------------------------------------Original-------------------------------------------
-// import React from 'react';
-// import { useCart } from '../context/CartContext'; // Adjust this path if necessary
-
-// const Checkout = () => {
-//   const { cartItems } = useCart(); // Get cart items from context
-
-//   const totalAmount = cartItems.reduce((total, item) => {
-//     return total + item.price * item.quantity; // Calculate total amount
-//   }, 0);
-
-//   return (
-//     <div className="checkout-container">
-//       <h2>Checkout</h2>
-//       {cartItems.length === 0 ? (
-//         <p>Your cart is empty!</p>
-//       ) : (
-//         <div>
-//           <ul>
-//             {cartItems.map((item, index) => (
-//               <li key={index}>
-//                 {item.name} - ${item.price.toFixed(2)} x {item.quantity} = ${(
-//                   item.price * item.quantity
-//                 ).toFixed(2)}
-//               </li>
-//             ))}
-//           </ul>
-//           <h3>Total: ${totalAmount.toFixed(2)}</h3>
-//           {/* Include any additional checkout logic here, like payment forms */}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Checkout;
