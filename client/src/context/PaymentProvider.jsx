@@ -54,7 +54,7 @@ export const PaymentProvider = ({ children }) => {
     };
 
     fetchClientSecret();
-  }, [cartItems, totalAmount]);
+  }, [cartItems]);
 
   return (
     <PaymentContext.Provider value={{ clientSecret, error }}>
