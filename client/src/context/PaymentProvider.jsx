@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useCart } from '../context/CartContext'; 
+import { useCart } from '../context/CartContext';
 
 const PaymentContext = createContext();
 
@@ -12,15 +12,15 @@ export const PaymentProvider = ({ children }) => {
   const [clientSecret, setClientSecret] = useState(null);
   const [error, setError] = useState(null);
 
-  const totalAmount = cartItems.reduce((total, item) => {
-    return total + item.price * item.quantity;
-  }, 0);
-
   useEffect(() => {
     if (cartItems.length === 0) {
       setClientSecret(null);
       return;
     }
+
+    const totalAmount = cartItems.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    }, 0);
 
     const fetchClientSecret = async () => {
       try {

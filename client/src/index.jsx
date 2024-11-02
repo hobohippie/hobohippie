@@ -40,14 +40,11 @@ import CreateSupplier from './components/SupplierForm/SupplierForm'
 
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
-import { PaymentProvider, usePayment } from './context/PaymentProvider';
+import { PaymentProvider } from './context/PaymentProvider';
 import CheckoutPayment from './context/CheckoutPayment';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
-
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
-const { clientSecret } = usePayment();
 
 const App = () => {
   return (
