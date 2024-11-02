@@ -21,7 +21,7 @@ function CheckoutForm() {
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ total:(totalAmount * 100).toFixed(0) })
+          body: JSON.stringify({ amount:(totalAmount * 100).toFixed(0) })
         });
 
         console.log('Response status:', response.status); // Log response status
