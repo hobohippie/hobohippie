@@ -16,6 +16,7 @@ function CheckoutForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: 1000 }) // Adjust amount as needed
       });
+      console.log(response)
       const data = await response.json();
       setClientSecret(data.clientSecret);
     };
