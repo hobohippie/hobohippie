@@ -11,10 +11,10 @@ function CheckoutForm() {
 
   useEffect(() => {
     const fetchClientSecret = async () => {
-      if (totalAmount <= 0) {
-        setError("Total amount must be greater than zero.");
-        return;
-      }
+      // if (totalAmount <= 0) {
+      //   setError("Total amount must be greater than zero.");
+      //   return;
+      // }
       try {
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',

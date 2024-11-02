@@ -17,6 +17,8 @@ import UserProfile from './pages/user-profile';
 import NotFound from './pages/not-found';
 import Wishlist from './pages/wishlist';
 import Checkout from './pages/checkout';
+import PaymentSuccess from './pages/payment-success';
+import PaymentError from './pages/payment-error';
 import ProductDetail from './components/ProductDetails/ProductDetails';
 import OrderStatus from './pages/order-status';
 import ManageSubscriptions from './pages/manage-subscriptions';
@@ -91,6 +93,8 @@ const App = () => {
                   </Elements>
                 }
                 />
+                <Route path="/payment-success" element={<PaymentSuccess />} />
+                <Route path="/payment-error" element={<PaymentError />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
