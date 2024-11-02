@@ -1,95 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import React, { useEffect, useState } from 'react';
+import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 
-function CheckoutForm() {
+const CheckoutForm = ({ clientSecret }) => {
   const stripe = useStripe();
   const elements = useElements();
-
-  const [clientSecret, setClientSecret] = useState(null);
-  const [paymentStatus, setPaymentStatus] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchClientSecret = async () => {
-      const response = await fetch('/api/create-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: 1000 }) // Adjust amount as needed
-      });
-      const data = await response.json();
-      setClientSecret(data.clientSecret);
-    };
-
-    fetchClientSecret();
-  }, []);
-
+  // Handle payment submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!stripe || !elements || !clientSecret) return;
 
     setLoading(true); // Set loading state to true
+    setError(null); // Reset any previous errors
 
-    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: { card: elements.getElement(CardElement) },
+    // Confirm the payment
+    const { error: paymentError, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: 'YOUR_RETURN_URL', // Set your return URL here
+      },
     });
 
-    setLoading(false); // Reset loading state
-
-    if (error) {
-      setPaymentStatus('Payment failed: ' + error.message);
-    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-      setPaymentStatus('Payment successful!');
+    if (paymentError) {
+      console.error(paymentError);
+      setError(paymentError.message); // Set error message to display
+    } else {
+      // Payment succeeded
+      console.log('Payment succeeded:', paymentIntent);
+      // You can handle successful payment here (e.g., redirect, display a message, etc.)
     }
+    
+    setLoading(false); // Reset loading state
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <CardElement />
+      <PaymentElement /> {/* Render the PaymentElement */}
       <button type="submit" disabled={!stripe || loading}>
-        {loading ? 'Processing...' : 'Pay'}
+        {loading ? 'Processing...' : 'Pay Now'}
       </button>
-      <p>{paymentStatus}</p>
+      {error && <div className="error">{error}</div>} {/* Display error if exists */}
     </form>
   );
-}
+};
 
 export default CheckoutForm;
-
-
-
-//--------------------------------------Original-------------------------------------------
-// import React from 'react';
-// import { useCart } from '../context/CartContext'; // Adjust this path if necessary
-
-// const Checkout = () => {
-//   const { cartItems } = useCart(); // Get cart items from context
-
-//   const totalAmount = cartItems.reduce((total, item) => {
-//     return total + item.price * item.quantity; // Calculate total amount
-//   }, 0);
-
-//   return (
-//     <div className="checkout-container">
-//       <h2>Checkout</h2>
-//       {cartItems.length === 0 ? (
-//         <p>Your cart is empty!</p>
-//       ) : (
-//         <div>
-//           <ul>
-//             {cartItems.map((item, index) => (
-//               <li key={index}>
-//                 {item.name} - ${item.price.toFixed(2)} x {item.quantity} = ${(
-//                   item.price * item.quantity
-//                 ).toFixed(2)}
-//               </li>
-//             ))}
-//           </ul>
-//           <h3>Total: ${totalAmount.toFixed(2)}</h3>
-//           {/* Include any additional checkout logic here, like payment forms */}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Checkout;
