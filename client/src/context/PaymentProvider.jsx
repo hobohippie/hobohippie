@@ -52,11 +52,13 @@ export const PaymentProvider = ({ children }) => {
       return total + item.price * item.quantity;
     }, 0);
 
-    const parsedAmount = parseFloat(totalAmount.toFixed(2)); // Parse total amount to 2 decimal places
+    const parsedAmount = parseFloat(totalAmount.toFixed(2));
 
     const fetchClientSecret = async () => {
       setLoading(true);
       try {
+        const amountInCents = Math.round(parsedAmount * 100);
+
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 
@@ -64,7 +66,7 @@ export const PaymentProvider = ({ children }) => {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           },
           body: JSON.stringify({ 
-            amount: parsedAmount, 
+            amount: amountInCents,
             customerInfo,
             cartItems: cartItems.map(item => ({
               productId: item._id,

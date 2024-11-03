@@ -10,7 +10,6 @@ module.exports = {
     const { amount, customerInfo, cartItems } = req.body;
     
     try {
-      // Get or create Stripe customer
       let account = await Account.findById(req.userId);
       if (!account.stripeCustomerId) {
         const customer = await stripe.customers.create({
@@ -25,7 +24,7 @@ module.exports = {
       }
 
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: Math.round(amount * 100),
+        amount: amount,
         currency: "usd",
         customer: account.stripeCustomerId,
         metadata: {
