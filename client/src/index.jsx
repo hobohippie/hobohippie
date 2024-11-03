@@ -31,11 +31,13 @@ import Featured from './pages/featured';
 import Accessibility from './pages/accessibility';
 import Terms from './pages/terms';
 import Privacy from './pages/privacy';
-import Account from './pages/create-account';
-import Login from './pages/login';
-import CreateProduct from './pages/create-product';
+
 import CreateAccount from './pages/create-account';
+import Login from './pages/login';
+import Account from './pages/create-account';
 import EditProfile from './components/EditProfile/EditProfile';
+import AdminOrders from './pages/admin/orders';
+import CreateProduct from './pages/create-product';
 import CreateSupplier from './components/SupplierForm/SupplierForm'
 
 import { CartProvider } from './context/CartContext';
