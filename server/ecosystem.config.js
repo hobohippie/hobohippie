@@ -10,12 +10,12 @@ module.exports = {
       env: {
         NODE_ENV: 'development', 
         PORT: 3000, 
-        MONGODB_URI: 'mongodb+srv://free:7130TulipTrail3723542@hobohippie.rdv1r.mongodb.net/?retryWrites=true&w=majority&appName=HoboHippie', // Development MongoDB URI
+        MONGODB_URI: process.env.MONGODB_URI
       },
       env_production: {
         NODE_ENV: 'production',
         PORT: 3000,
-        MONGODB_URI: 'mongodb+srv://free:7130TulipTrail3723542@hobohippie.rdv1r.mongodb.net/?retryWrites=true&w=majority&appName=HoboHippie', // Production MongoDB URI
+        MONGODB_URI: process.env.MONGODB_URI
       },
     },
   ],

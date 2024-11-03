@@ -124,9 +124,6 @@ const NavBar = () => {
                         </div>
                     </div>
                 )}
-
-              
-
                 <CartModal />
             </div>
 

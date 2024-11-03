@@ -1,8 +1,12 @@
+const express = require('express');
 const accountController = require('../controllers/accountController');
 const productController = require('../controllers/productController');
 const supplierController = require('../controllers/supplierController');
 const tagController = require('../controllers/tagController');
 const paymentController = require('../controllers/paymentController');
+const orderController = require('../controllers/orderController');
+const verifyToken = require('../middleware/authMiddleware');
+const verifyAdmin = require('../middleware/adminMiddleware');
 const upload = require('../config/multer_config')
 
 module.exports = (app) => {
@@ -30,5 +34,10 @@ module.exports = (app) => {
     app.delete('/api/tags/:name', tagController.deleteTag)
 
     // Payments
-    app.post('/api/create-payment-intent', paymentController.createPayment)
+    app.post('/api/create-payment-intent', verifyToken, paymentController.createPayment)
+    app.post('/api/webhook', express.raw({type: 'application/json'}), paymentController.handleWebhook);
+
+    // Admin Orders Routes
+    app.get('/api/admin/orders', verifyToken, verifyAdmin, orderController.getAllOrders);
+    app.put('/api/admin/orders/:orderId', verifyToken, verifyAdmin, orderController.updateOrderStatus);
 };

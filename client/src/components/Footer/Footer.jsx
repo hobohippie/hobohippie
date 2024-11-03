@@ -96,6 +96,7 @@ const Footer = () => {
           <ul className="admin-menu">
             <li><Link to="/create-product">Create Product</Link></li>
             <li><Link to="/create-supplier">Create Supplier</Link></li>
+            <li><Link to="/admin/orders">Manage Orders</Link></li>
           </ul>
         </div>
       )}

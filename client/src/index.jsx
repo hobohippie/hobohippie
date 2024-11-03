@@ -88,6 +88,7 @@ const App = () => {
                   <Route path="/checkout" element={<CheckoutPayment />}/>
                   <Route path="/payment-success" element={<PaymentSuccess />} />
                   <Route path="/payment-error" element={<PaymentError />} />
+                  <Route path="/admin/orders" element={<ProtectedRoute element={<AdminOrders />} />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </div>

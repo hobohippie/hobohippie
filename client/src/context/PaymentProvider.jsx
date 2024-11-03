@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/UserAuthContext';
 
 const PaymentContext = createContext();
 
@@ -8,56 +9,90 @@ export const usePayment = () => {
 };
 
 export const PaymentProvider = ({ children }) => {
+  const { user } = useAuth(); 
   const { cartItems } = useCart();
-  const [clientSecret, setClientSecret] = useState(null);
   const [error, setError] = useState(null);
+  const [clientSecret, setClientSecret] = useState(null);
+  const [customerInfo, setCustomerInfo] = useState({
+    name: '',
+    email: '',
+    street: '',
+    city: '',
+    state: '',
+    zip: ''
+  });
+  const [loading, setLoading] = useState(false); // Loading state
 
   useEffect(() => {
     if (cartItems.length === 0) {
       setClientSecret(null);
+      setCustomerInfo({
+        name: '',
+        email: '',
+        street: '',
+        city: '',
+        state: '',
+        zip: ''
+      });
       return;
+    }
+
+    if (user) {
+      setCustomerInfo({
+        name: user.name,
+        email: user.email,
+        street: user.shippingAddress?.street || '',
+        city: user.shippingAddress?.city || '',
+        state: user.shippingAddress?.state || '',
+        zip: user.shippingAddress?.zip || ''
+      });
     }
 
     const totalAmount = cartItems.reduce((total, item) => {
       return total + item.price * item.quantity;
     }, 0);
 
+    const parsedAmount = parseFloat(totalAmount.toFixed(2)); // Parse total amount to 2 decimal places
+
     const fetchClientSecret = async () => {
+      setLoading(true);
       try {
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ amount: totalAmount.toFixed(2) }) // Amount in cents
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify({ 
+            amount: parsedAmount, 
+            customerInfo,
+            cartItems: cartItems.map(item => ({
+              productId: item._id,
+              quantity: item.quantity,
+              price: item.price
+            }))
+          })
         });
 
-        console.log('Response status:', response.status); // Log response status
-
         if (!response.ok) {
-          const errorMessage = await response.text();
-          throw new Error(`Failed to create payment intent. ${errorMessage}`);
+          throw new Error('Payment intent creation failed');
         }
 
         const data = await response.json();
-
-        console.log('Data received:', data); // Log received data
-
-        if (data.clientSecret) {
-          console.log(data.clientSecret); // Log clientSecret
-          setClientSecret(data.clientSecret);
-        } else {
-          throw new Error("Failed to get client secret from server.");
-        }
+        setClientSecret(data.clientSecret);
       } catch (err) {
-        setError('Error fetching client secret. Please try again.');
-        console.error('Fetch client secret error:', err);
+        setError('Error creating payment intent');
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchClientSecret();
-  }, [cartItems]);
+  }, [cartItems, user]);
 
   return (
-    <PaymentContext.Provider value={{ clientSecret, error }}>
+    <PaymentContext.Provider value={{ clientSecret, error, customerInfo, loading }}>
       {children}
     </PaymentContext.Provider>
   );
