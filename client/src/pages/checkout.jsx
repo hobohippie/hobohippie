@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/UserAuthContext';
+import { useAuth } from '../context/AuthContext';
 import { usePayment } from '../context/PaymentProvider';
 
 function CheckoutForm() {  

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/accessibility.css'; // Optional: Create a CSS file for styling.
+import '../styles/accessibility.css';
 
 const Accessibility = () => {
   return (
