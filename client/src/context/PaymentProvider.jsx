@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/UserAuthContext';
+import { useCart } from './CartContext';
+import { useAuth } from './AuthContext';
 
 const PaymentContext = createContext();
 
