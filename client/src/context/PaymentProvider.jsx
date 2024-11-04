@@ -24,7 +24,7 @@ export const PaymentProvider = ({ children }) => {
   const [loading, setLoading] = useState(false); // Loading state
 
   useEffect(() => {
-    if (cartItems.length === 0) {
+    if (cartItems.length === 0 || !user) {
       setClientSecret(null);
       setCustomerInfo({
         name: '',
@@ -35,17 +35,6 @@ export const PaymentProvider = ({ children }) => {
         zip: ''
       });
       return;
-    }
-
-    if (user) {
-      setCustomerInfo({
-        name: user.name,
-        email: user.email,
-        street: user.shippingAddress?.street || '',
-        city: user.shippingAddress?.city || '',
-        state: user.shippingAddress?.state || '',
-        zip: user.shippingAddress?.zip || ''
-      });
     }
 
     const totalAmount = cartItems.reduce((total, item) => {
@@ -59,12 +48,25 @@ export const PaymentProvider = ({ children }) => {
       try {
         const token = localStorage.getItem('token');
         
-        // Check if token exists
-        if (!token) {
-          throw new Error('No authentication token found. Please log in again.');
+        console.log('Token state:', {
+          exists: !!token,
+          user: !!user
+        });
+
+        if (!token || !user) {
+          setLoading(false);
+          setError('Please log in to continue with payment');
+          return;
         }
 
         const amountInCents = Math.round(parsedAmount * 100);
+        
+        console.log('Payment intent request:', {
+          amount: amountInCents,
+          customerInfo,
+          itemCount: cartItems.length
+        });
+
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 
@@ -85,20 +87,13 @@ export const PaymentProvider = ({ children }) => {
         if (!response.ok) {
           const errorData = await response.json().catch(() => null);
           
-          // Handle authentication errors specifically
           if (errorData?.auth === false || response.status === 401 || response.status === 403) {
-            // Clear invalid token and logout user
             localStorage.removeItem('token');
-            logout?.(); // Optional chaining in case logout isn't provided
-            throw new Error('Your session has expired. Please log in again.');
+            setError('Your session has expired. Please log in again.');
+            logout?.();
+            return;
           }
 
-          console.error('Payment Intent Error:', {
-            status: response.status,
-            statusText: response.statusText,
-            errorData
-          });
-          
           throw new Error(
             errorData?.message || 
             `Payment intent creation failed with status ${response.status}`
@@ -107,16 +102,17 @@ export const PaymentProvider = ({ children }) => {
 
         const data = await response.json();
         setClientSecret(data.clientSecret);
+        setError(null);
       } catch (err) {
-        setError(err.message || 'Error creating payment intent');
         console.error('Payment Intent Error Details:', err);
+        setError(err.message || 'Error creating payment intent');
       } finally {
         setLoading(false);
       }
     };
 
     fetchClientSecret();
-  }, [cartItems, user]);
+  }, [cartItems, user, logout]);
 
   return (
     <PaymentContext.Provider value={{ clientSecret, error, customerInfo, loading }}>
