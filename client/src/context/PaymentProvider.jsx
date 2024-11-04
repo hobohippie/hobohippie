@@ -16,36 +16,53 @@ export const PaymentProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!user || cartItems.length === 0) {
-      setClientSecret(null);
-      setError(null);
-      setLoading(false);
-      return;
-    }
-
     const createPaymentIntent = async () => {
+      // Don't proceed if no items in cart
+      if (!cartItems || cartItems.length === 0) {
+        setClientSecret(null);
+        return;
+      }
+
+      // Don't proceed if no user
+      if (!user) {
+        setError('Please log in to continue');
+        return;
+      }
+
       setLoading(true);
       setError(null);
 
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          setError('Authentication required');
-          return;
+          throw new Error('Authentication required');
         }
 
+        // Calculate total amount
         const totalAmount = cartItems.reduce((total, item) => 
-          total + item.price * item.quantity, 0
+          total + (item.price * item.quantity), 0
         );
+
+        // Convert to cents and ensure it's a valid number
         const amountInCents = Math.round(totalAmount * 100);
+        
+        if (amountInCents <= 0) {
+          throw new Error('Invalid cart amount');
+        }
+
+        console.log('Creating payment intent:', {
+          amount: amountInCents,
+          itemCount: cartItems.length,
+          hasToken: !!token
+        });
 
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
-          headers: { 
+          headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify({ 
+          body: JSON.stringify({
             amount: amountInCents,
             cartItems: cartItems.map(item => ({
               productId: item._id,
@@ -55,15 +72,17 @@ export const PaymentProvider = ({ children }) => {
           })
         });
 
-        const data = await response.json();
-
         if (!response.ok) {
-          throw new Error(data.message || 'Payment setup failed');
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Payment setup failed');
         }
 
+        const data = await response.json();
         setClientSecret(data.clientSecret);
       } catch (err) {
+        console.error('Payment Intent Error:', err);
         setError(err.message);
+        setClientSecret(null);
       } finally {
         setLoading(false);
       }
@@ -73,9 +92,9 @@ export const PaymentProvider = ({ children }) => {
   }, [user, cartItems]);
 
   return (
-    <PaymentContext.Provider value={{ 
-      clientSecret, 
-      error, 
+    <PaymentContext.Provider value={{
+      clientSecret,
+      error,
       loading,
       setError
     }}>

@@ -33,7 +33,7 @@ const CartModal = () => {
                       <button 
                         onClick={(e) => {
                           e.stopPropagation(); 
-                          removeFromCart(item.id);
+                          removeFromCart(item._id);
                         }} 
                         className="quantity-btn">-</button>
                       <span className="item-quantity">{item.quantity}</span>

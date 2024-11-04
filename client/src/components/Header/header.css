@@ -43,7 +43,7 @@
 /* Main Navbar */
 .navbar {
     height: 80px;
-    background-color: rgb(52, 79, 228);
+    background-color: transparent;
     display: flex;
     align-items:center;
     justify-content: space-between;
