@@ -77,14 +77,23 @@ export const PaymentProvider = ({ children }) => {
         });
 
         if (!response.ok) {
-          throw new Error('Payment intent creation failed');
+          const errorData = await response.json().catch(() => null);
+          console.error('Payment Intent Error:', {
+            status: response.status,
+            statusText: response.statusText,
+            errorData
+          });
+          throw new Error(
+            errorData?.message || 
+            `Payment intent creation failed with status ${response.status}`
+          );
         }
 
         const data = await response.json();
         setClientSecret(data.clientSecret);
       } catch (err) {
-        setError('Error creating payment intent');
-        console.error(err);
+        setError(err.message || 'Error creating payment intent');
+        console.error('Payment Intent Error Details:', err);
       } finally {
         setLoading(false);
       }
