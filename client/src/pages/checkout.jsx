@@ -15,7 +15,35 @@ function CheckoutForm() {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError] = useState(null);
 
-  // Early returns for different states
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!stripe || !elements || !clientSecret) {
+      setSubmitError('Payment system not ready. Please try again.');
+      return;
+    }
+
+    setSubmitLoading(true);
+    setSubmitError(null);
+
+    try {
+      const { error: stripeError } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/payment-success`,
+        },
+      });
+
+      if (stripeError) {
+        setSubmitError(stripeError.message);
+      }
+    } catch (err) {
+      setSubmitError(err.message);
+    } finally {
+      setSubmitLoading(false);
+    }
+  };
+
   if (!user) {
     return <Navigate to="/login" replace />;
   }
@@ -62,6 +90,7 @@ function CheckoutForm() {
               <button 
                 type="submit" 
                 disabled={!stripe || submitLoading}
+                className="payment-button"
               >
                 {submitLoading ? 'Processing...' : `Pay $${totalAmount.toFixed(2)}`}
               </button>
