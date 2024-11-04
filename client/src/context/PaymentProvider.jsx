@@ -17,15 +17,8 @@ export const PaymentProvider = ({ children }) => {
 
   useEffect(() => {
     const createPaymentIntent = async () => {
-      // Don't proceed if no items in cart
-      if (!cartItems || cartItems.length === 0) {
+      if (!cartItems || cartItems.length === 0 || !user) {
         setClientSecret(null);
-        return;
-      }
-
-      // Don't proceed if no user
-      if (!user) {
-        setError('Please log in to continue');
         return;
       }
 
@@ -33,28 +26,17 @@ export const PaymentProvider = ({ children }) => {
       setError(null);
 
       try {
+        // Get fresh token from localStorage
         const token = localStorage.getItem('token');
         if (!token) {
-          throw new Error('Authentication required');
+          throw new Error('Please log in to continue');
         }
 
-        // Calculate total amount
         const totalAmount = cartItems.reduce((total, item) => 
           total + (item.price * item.quantity), 0
         );
-
-        // Convert to cents and ensure it's a valid number
-        const amountInCents = Math.round(totalAmount * 100);
         
-        if (amountInCents <= 0) {
-          throw new Error('Invalid cart amount');
-        }
-
-        console.log('Creating payment intent:', {
-          amount: amountInCents,
-          itemCount: cartItems.length,
-          hasToken: !!token
-        });
+        const amountInCents = Math.round(totalAmount * 100);
 
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
@@ -64,25 +46,28 @@ export const PaymentProvider = ({ children }) => {
           },
           body: JSON.stringify({
             amount: amountInCents,
-            cartItems: cartItems.map(item => ({
-              productId: item._id,
-              quantity: item.quantity,
-              price: item.price
+            items: cartItems.map(item => ({
+              id: item._id,
+              quantity: item.quantity
             }))
           })
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Payment setup failed');
+          // If token is invalid, clear it and force re-login
+          if (data.message === 'Failed to authenticate token.') {
+            localStorage.removeItem('token');
+            throw new Error('Your session has expired. Please log in again.');
+          }
+          throw new Error(data.message || 'Payment setup failed');
         }
 
-        const data = await response.json();
         setClientSecret(data.clientSecret);
       } catch (err) {
         console.error('Payment Intent Error:', err);
         setError(err.message);
-        setClientSecret(null);
       } finally {
         setLoading(false);
       }
