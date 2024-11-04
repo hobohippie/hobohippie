@@ -9,7 +9,7 @@ export const usePayment = () => {
 };
 
 export const PaymentProvider = ({ children }) => {
-  const { user } = useAuth(); 
+  const { user, logout } = useAuth(); 
   const { cartItems } = useCart();
   const [error, setError] = useState(null);
   const [clientSecret, setClientSecret] = useState(null);
@@ -57,13 +57,19 @@ export const PaymentProvider = ({ children }) => {
     const fetchClientSecret = async () => {
       setLoading(true);
       try {
-        const amountInCents = Math.round(parsedAmount * 100);
+        const token = localStorage.getItem('token');
+        
+        // Check if token exists
+        if (!token) {
+          throw new Error('No authentication token found. Please log in again.');
+        }
 
+        const amountInCents = Math.round(parsedAmount * 100);
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({ 
             amount: amountInCents,
@@ -78,11 +84,21 @@ export const PaymentProvider = ({ children }) => {
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => null);
+          
+          // Handle authentication errors specifically
+          if (errorData?.auth === false || response.status === 401 || response.status === 403) {
+            // Clear invalid token and logout user
+            localStorage.removeItem('token');
+            logout?.(); // Optional chaining in case logout isn't provided
+            throw new Error('Your session has expired. Please log in again.');
+          }
+
           console.error('Payment Intent Error:', {
             status: response.status,
             statusText: response.statusText,
             errorData
           });
+          
           throw new Error(
             errorData?.message || 
             `Payment intent creation failed with status ${response.status}`
