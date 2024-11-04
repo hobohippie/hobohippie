@@ -6,98 +6,75 @@ import { useAuth } from '../context/AuthContext';
 import { usePayment } from '../context/PaymentProvider';
 
 function CheckoutForm() {  
-  const { clientSecret } = usePayment();
+  const { clientSecret, loading: paymentLoading, error: paymentError } = usePayment();
   const { cartItems } = useCart();
   const { user } = useAuth();
-
-
   const stripe = useStripe();
   const elements = useElements();
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [paymentStatus, setPaymentStatus] = useState('');
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
-  const [customerInfo, setCustomerInfo] = useState({});
-
+  // Early returns for different states
   if (!user) {
-    return <Navigate to="/login" />
+    return <Navigate to="/login" replace />;
   }
 
-  const totalAmount = cartItems.reduce((total, item) => {
-    return total + item.price * item.quantity;
-  }, 0);
+  if (cartItems.length === 0) {
+    return <Navigate to="/cart" replace />;
+  }
 
-  const parsedAmount = parseFloat(totalAmount.toFixed(2));
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!stripe || !elements || !clientSecret) return;
-
-    setLoading(true);
-    setError(null);
-
-    const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: "https://hobohippie.com/payment-success",
-        payment_method_data: {
-          billing_details: {
-            name: user.name,
-            email: user.email,
-            address: {
-              line1: user.billingAddress.street,
-              city: user.billingAddress.city,
-              state: user.billingAddress.state,
-              postal_code: user.billingAddress.zip,
-              country: user.billingAddress.country
-            }
-          }
-        }
-      }
-    });
-
-    if (error) {
-      setError('Payment failed: ' + error.message);
-    }
-    setLoading(false);
-  };
+  const totalAmount = cartItems.reduce((total, item) => 
+    total + item.price * item.quantity, 0
+  );
 
   return (
     <div className="checkout-container">
       <h2>Checkout</h2>
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty!</p>
-      ) : (
-        <div>
-          <ul>
-            {cartItems.map((item, index) => (
-              <li key={index}>
-                {item.name} - ${item.price.toFixed(2)} x {item.quantity} = ${(
-                  item.price * item.quantity
-                ).toFixed(2)}
-              </li>
-            ))}
-          </ul>
-          <h3>Total: ${totalAmount.toFixed(2)}</h3>
-          
-          <form onSubmit={handleSubmit}>
-            {clientSecret ? (
-              <PaymentElement clientSecret={clientSecret} />
-            ) : (
-              <p>Loading payment information...</p>
-            )}
-            <button type="submit" disabled={!stripe || loading || !clientSecret}>
-              {loading ? 'Processing...' : `Pay ${totalAmount.toFixed(2)}`}
-            </button>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {paymentStatus && <p>{paymentStatus}</p>}
-          </form>
+      
+      {paymentLoading && (
+        <div>Setting up payment...</div>
+      )}
+
+      {paymentError && (
+        <div className="error-message">
+          {paymentError}
         </div>
       )}
 
-    </div>
+      {!paymentLoading && !paymentError && (
+        <div>
+          <div className="cart-summary">
+            {cartItems.map((item) => (
+              <div key={item._id} className="cart-item">
+                <span>{item.name}</span>
+                <span>${item.price.toFixed(2)} x {item.quantity}</span>
+              </div>
+            ))}
+            <div className="total">
+              <strong>Total: ${totalAmount.toFixed(2)}</strong>
+            </div>
+          </div>
 
+          {clientSecret ? (
+            <form onSubmit={handleSubmit}>
+              <PaymentElement />
+              <button 
+                type="submit" 
+                disabled={!stripe || submitLoading}
+              >
+                {submitLoading ? 'Processing...' : `Pay $${totalAmount.toFixed(2)}`}
+              </button>
+              {submitError && (
+                <div className="error-message">{submitError}</div>
+              )}
+            </form>
+          ) : (
+            <div>Initializing payment form...</div>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 

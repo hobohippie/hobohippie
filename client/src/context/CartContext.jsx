@@ -1,92 +1,39 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, useCallback, useMemo } from 'react';
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]); 
-  const [wishlistItems, setWishlistItems] = useState([]); 
-  const [isModalOpen, setModalOpen] = useState(false); 
-  const [modalClosing, setModalClosing] = useState(false); 
+  const [cartItems, setCartItems] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const addToCart = (item) => {
-    setCartItems((prevItems) => {
-      const existingItem = prevItems.find((i) => i.id === item.id);
+  const addToCart = useCallback((product) => {
+    setCartItems(current => {
+      const existingItem = current.find(item => item._id === product._id);
       if (existingItem) {
-        return prevItems.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+        return current.map(item =>
+          item._id === product._id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
         );
       }
-      return [...prevItems, { ...item, quantity: 1 }];
+      return [...current, { ...product, quantity: 1 }];
     });
-    openModal(); 
-  };
+  }, []);
 
-  const removeFromCart = (itemId) => {
-    setCartItems((prevItems) =>
-      prevItems
-        .map((item) => {
-          if (item.id === itemId) {
-            if (item.quantity > 1) {
-              return { ...item, quantity: item.quantity - 1 }; 
-            }
-            return null;
-          }
-          return item;
-        })
-        .filter(Boolean)
-    );
-  };
+  const toggleCart = useCallback(() => {
+    setIsOpen(prev => !prev);
+  }, []);
 
-  const clearCart = () => {
-    setCartItems([]);
-  };
-
-  const addToWishlist = (item) => {
-    const existingItem = wishlistItems.find((i) => i.id === item.id);
-    if (!existingItem) {
-      setWishlistItems((prevItems) => [...prevItems, item]);
-    }
-  };
-
-  const removeFromWishlist = (itemId) => {
-    setWishlistItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
-  };
-
-  const openModal = () => {
-    setModalClosing(false);
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalClosing(true); 
-    setTimeout(() => {
-      setModalOpen(false);
-    }, 300);
-  };
-
-  useEffect(() => {
-    document.body.style.overflow = isModalOpen ? 'hidden' : 'auto';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isModalOpen]);
+  const value = useMemo(() => ({
+    cartItems,
+    addToCart,
+    isOpen,
+    toggleCart,
+    // ... other cart functions
+  }), [cartItems, addToCart, isOpen, toggleCart]);
 
   return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        removeFromCart,
-        clearCart,
-        wishlistItems,
-        addToWishlist,
-        removeFromWishlist,
-        isModalOpen,
-        modalClosing, 
-        openModal,
-        closeModal, 
-      }}
-    >
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );

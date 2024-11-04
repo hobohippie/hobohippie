@@ -9,63 +9,35 @@ export const usePayment = () => {
 };
 
 export const PaymentProvider = ({ children }) => {
-  const { user, logout } = useAuth(); 
+  const { user } = useAuth();
   const { cartItems } = useCart();
   const [error, setError] = useState(null);
   const [clientSecret, setClientSecret] = useState(null);
-  const [customerInfo, setCustomerInfo] = useState({
-    name: '',
-    email: '',
-    street: '',
-    city: '',
-    state: '',
-    zip: ''
-  });
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (cartItems.length === 0 || !user) {
+    if (!user || cartItems.length === 0) {
       setClientSecret(null);
-      setCustomerInfo({
-        name: '',
-        email: '',
-        street: '',
-        city: '',
-        state: '',
-        zip: ''
-      });
+      setError(null);
+      setLoading(false);
       return;
     }
 
-    const totalAmount = cartItems.reduce((total, item) => {
-      return total + item.price * item.quantity;
-    }, 0);
-
-    const parsedAmount = parseFloat(totalAmount.toFixed(2));
-
-    const fetchClientSecret = async () => {
+    const createPaymentIntent = async () => {
       setLoading(true);
+      setError(null);
+
       try {
         const token = localStorage.getItem('token');
-        
-        console.log('Token state:', {
-          exists: !!token,
-          user: !!user
-        });
-
-        if (!token || !user) {
-          setLoading(false);
-          setError('Please log in to continue with payment');
+        if (!token) {
+          setError('Authentication required');
           return;
         }
 
-        const amountInCents = Math.round(parsedAmount * 100);
-        
-        console.log('Payment intent request:', {
-          amount: amountInCents,
-          customerInfo,
-          itemCount: cartItems.length
-        });
+        const totalAmount = cartItems.reduce((total, item) => 
+          total + item.price * item.quantity, 0
+        );
+        const amountInCents = Math.round(totalAmount * 100);
 
         const response = await fetch('/api/create-payment-intent', {
           method: 'POST',
@@ -75,7 +47,6 @@ export const PaymentProvider = ({ children }) => {
           },
           body: JSON.stringify({ 
             amount: amountInCents,
-            customerInfo,
             cartItems: cartItems.map(item => ({
               productId: item._id,
               quantity: item.quantity,
@@ -84,38 +55,30 @@ export const PaymentProvider = ({ children }) => {
           })
         });
 
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => null);
-          
-          if (errorData?.auth === false || response.status === 401 || response.status === 403) {
-            localStorage.removeItem('token');
-            setError('Your session has expired. Please log in again.');
-            logout?.();
-            return;
-          }
+        const data = await response.json();
 
-          throw new Error(
-            errorData?.message || 
-            `Payment intent creation failed with status ${response.status}`
-          );
+        if (!response.ok) {
+          throw new Error(data.message || 'Payment setup failed');
         }
 
-        const data = await response.json();
         setClientSecret(data.clientSecret);
-        setError(null);
       } catch (err) {
-        console.error('Payment Intent Error Details:', err);
-        setError(err.message || 'Error creating payment intent');
+        setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchClientSecret();
-  }, [cartItems, user, logout]);
+    createPaymentIntent();
+  }, [user, cartItems]);
 
   return (
-    <PaymentContext.Provider value={{ clientSecret, error, customerInfo, loading }}>
+    <PaymentContext.Provider value={{ 
+      clientSecret, 
+      error, 
+      loading,
+      setError
+    }}>
       {children}
     </PaymentContext.Provider>
   );
