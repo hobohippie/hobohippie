@@ -17,7 +17,12 @@ export const PaymentProvider = ({ children }) => {
 
   useEffect(() => {
     const createPaymentIntent = async () => {
-      if (!cartItems || cartItems.length === 0 || !user) {
+      if (!user) {
+        setError('Please log in to continue');
+        return;
+      }
+
+      if (!cartItems || cartItems.length === 0) {
         setClientSecret(null);
         return;
       }
