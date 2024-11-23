@@ -71,28 +71,20 @@ const NavBar = () => {
         </div>
 
         {/* Middle: Logo */}
-        <div className="header-logo">
+        <div className="navbar-logo">
           <Link to="/">
             <img src={logo} alt="Hobo Hippie Logo" />
           </Link>
         </div>
 
-        {/* Right: Icons */}
-        <div className="icons-section">
-          <Link to="/search" className="icon-link">
-            <FaSearch className="nav-icon-size" />
-          </Link>
-
-          <Link to="/account" className="icon-link">
-            <FaUser className="nav-icon-size" />
-          </Link>
-
-          <Link className="icon-link" onClick={toggleCartModal}>
+        {/* Right: Cart Icon */}
+        <div className="navbar-section">
+          <div className="cart-icon-container" onClick={toggleCartModal}>
             <FaShoppingCart className="nav-icon-size" />
             {totalCartQuantity > 0 && (
               <span className="cart-badge">{totalCartQuantity}</span>
             )}
-          </Link>
+          </div>
         </div>
       </header>
 

@@ -1,61 +1,77 @@
-.header-container{
-    position: fixed;
-    display: flex;
-    background-color: black;
-    height: 100px;
-    transition-duration: 1s;
-    align-items: center;
-    justify-content: center;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10000;
+a {
+  color: white;
 }
 
-.near-top{
-    height: 150px;
-    transition-duration: 1s;
-    transition-delay: 0;
+a:hover {
+  color: black;
+}
+
+.header-container {
+  position: fixed;
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  height: 100px;
+  transition-duration: 1s;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+}
+
+.near-top {
+  height: 150px;
+  transition-duration: 1s;
+  transition-delay: 0;
 }
 
 .hc-hide {
-    transform: translateY(-130%); 
+  transform: translateY(-130%);
 }
 
 .hc-show {
-    transition-delay: .25s;
-    transform: translateY(0);
+  transition-delay: 0.25s;
+  transform: translateY(0);
 }
 
 .banner-text {
-    position: absolute;
-    transform: translate(-50%,0);
-    left: 50%;
-    top: 3px;
-    text-align: center;
-    color: white;
-    font-weight: 500;
-    font-size: .8em;
-    letter-spacing: 0.5px;
-
+  position: absolute;
+  transform: translate(-50%, 0);
+  left: 50%;
+  top: 3px;
+  text-align: center;
+  color: rgb(5, 1, 1);
+  font-weight: 500;
+  font-size: 0.8em;
+  letter-spacing: 0.5px;
 }
 
 /* Main Navbar */
 .navbar {
-    height: 80px;
-    background-color: transparent;
-    display: flex;
-    align-items:center;
-    justify-content: space-between;
-    padding: 0 50px;
-    position: fixed;
-    top: 30px; /* Adjust based on the top banner height */
-    left: 0;
-    right: 0;
-    z-index: 999;
-    transition: transform 0.3s ease; /* Smooth transition */
+  height: 80px;
+  background-color: blue;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
+  position: fixed;
+  top: 30px; /* Adjust based on the top banner height */
+  left: 0;
+  right: 0;
+  z-index: 999;
+  transition: transform 0.3s ease; /* Smooth transition */
 }
 
+.nav-icon-size {
+  width: 1.5em;
+  height: 1.5em;
+  padding: 3px;
+}
+
+.icons-section {
+  color: white;
+  width: 10%;
+}
 /* Top Banner 
 .top-banner {
     height: 50px;
@@ -72,23 +88,21 @@
     transition: transform 0.3s ease;
 }*/
 
-@keyframes nameIn{
-    0%{
-      opacity: 0;
-    }
-    100%{
-     opacity: 1;
-     left: 500px;
-    }
+@keyframes nameIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    left: 500px;
+  }
 }
 
-
-
-.navbar-logo {
-   img{
+.header-logo {
+  img {
     position: absolute;
     top: 2px;
-    left : 50%;
+    left: 50%;
     transform: translateX(-50%);
     width: 135px;
     animation: fade 2s ease-in;
@@ -96,234 +110,234 @@
     animation-delay: 1s;
     opacity: 0;
     z-index: 15000;
-   }}
+  }
+}
 
-   @keyframes fade{
-    0%{
-        opacity: 0;
-      }
-    100%{
-        opacity: 1;
-      }
-   }
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 .nav-hide {
-    background-color: blue;
-    transform: translateY(-100%); 
-    top: -80px;
+  background-color: blue;
+  transform: translateY(-100%);
+  top: -80px;
 }
 
 .nav-show {
-    transform: translateY(0);
-    top: 50px;
+  transform: translateY(0);
+  top: 50px;
 }
 
 .shop-button {
-    position:absolute;
-    top: 10px;
-    border: 1px solid black; 
-    border-radius: 20px;
-    padding: 6px 20px;
-    background-color: transparent;
-    color: black;
-    font-size: .7em;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
+  position: absolute;
+  top: 10px;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 6px 20px;
+  background-color: transparent;
+  color: black;
+  font-size: 0.7em;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .shop-button:hover {
-    background-color: black;
-    color: white;
-    transform: scale(1.05);
-}
-
-.cart-icon-container {
-    position:absolute;
-    top: 10px;
-    font-size: 1.5em; 
+  background-color: black;
+  color: white;
+  transform: scale(1.05);
 }
 
 .cart-badge {
-    position: absolute;
-    top: -10px; /* Adjust position for better alignment */
-    right: -10px; /* Adjust position for better alignment */
-    background-color: black;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 12px;
+  position: absolute;
+  top: -10px; /* Adjust position for better alignment */
+  right: -10px; /* Adjust position for better alignment */
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
 }
 
 /* Admin */
 .admin-links {
-    display: flex;
-    align-items: center; 
-    padding: 10px;
-    background-color: #f9f9f9; 
-    border: 1px solid #ccc; 
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0; 
-    z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 .admin-button {
-    border: 2px solid #4CAF50; /* Use success green color for border */
-    border-radius: 20px; /* Rounded edges */
-    padding: 8px 25px; /* Adjust padding for a more balanced look */
-    background-color: #4CAF50; /* Green background for admin button */
-    color: white; /* White text */
-    cursor: pointer; /* Pointer cursor for button */
-    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effect */
-    font-weight: bold; /* Make the button text bold */
+  border: 2px solid #4caf50; /* Use success green color for border */
+  border-radius: 20px; /* Rounded edges */
+  padding: 8px 25px; /* Adjust padding for a more balanced look */
+  background-color: #4caf50; /* Green background for admin button */
+  color: white; /* White text */
+  cursor: pointer; /* Pointer cursor for button */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effect */
+  font-weight: bold; /* Make the button text bold */
 }
 
 .admin-button:hover {
-    background-color: #45a049; /* Darker green on hover */
-    transform: scale(1.05); /* Slightly enlarge button on hover */
+  background-color: #45a049; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly enlarge button on hover */
 }
 
 .admin-menu {
-    margin-left: 15px; /* Space between button and menu */
-    list-style: none; /* Remove default list styling */
-    display: none; /* Initially hidden */
+  margin-left: 15px; /* Space between button and menu */
+  list-style: none; /* Remove default list styling */
+  display: none; /* Initially hidden */
 }
 
 .admin-links:hover .admin-menu {
-    display: block; /* Show menu on hover */
+  display: block; /* Show menu on hover */
 }
 
 .admin-menu li {
-    margin: 5px 0; /* Space between items */
+  margin: 5px 0; /* Space between items */
 }
 
 .admin-menu li a {
-    text-decoration: none; /* Remove underline */
-    color: #4CAF50; /* Link color matches the button */
-    transition: color 0.3s; /* Smooth transition for hover effect */
-    padding: 5px; /* Add padding for a button-like feel */
-    border-radius: 5px; /* Rounded edges for menu items */
+  text-decoration: none; /* Remove underline */
+  color: #4caf50; /* Link color matches the button */
+  transition: color 0.3s; /* Smooth transition for hover effect */
+  padding: 5px; /* Add padding for a button-like feel */
+  border-radius: 5px; /* Rounded edges for menu items */
 }
 
 .admin-menu li a:hover {
-    color: #388E3C; /* Darker green on hover */
-    background-color: rgba(76, 175, 80, 0.1); /* Light green background on hover */
+  color: #388e3c; /* Darker green on hover */
+  background-color: rgba(
+    76,
+    175,
+    80,
+    0.1
+  ); /* Light green background on hover */
 }
 
 .content {
-    padding-top: 110px; /* Add enough space to avoid overlap */
-  }
-  
-  .banner {
-    height: 40px;
-    width: 100%;
-    background-color: black;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    position: absolute;
-    z-index: 100;
-   /* margin-top: 110px; */
-    bottom: 0;
-  }
-  
-  .banner p {
-    margin: 0;
-    padding:0;
-  }
-  
-  .banner-dropdown {
-    width: 100%;
-    height: 215px;
-    background-color: white;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-    position: relative;
-    top: 150px;
-    left: 0;
-    z-index: 200;
-    margin-top: -40px;
-    padding: 60px 180px;
-    border-radius: 15px;
-  }
-  
-  .banner-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-  
-  /* .banner-content p {
+  padding-top: 110px; /* Add enough space to avoid overlap */
+}
+
+.banner {
+  height: 40px;
+  width: 100%;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 100;
+  /* margin-top: 110px; */
+  bottom: 0;
+}
+
+.banner p {
+  margin: 0;
+  padding: 0;
+}
+
+.banner-dropdown {
+  width: 100%;
+  height: 215px;
+  background-color: white;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  top: 150px;
+  left: 0;
+  z-index: 200;
+  margin-top: -40px;
+  padding: 60px 180px;
+  border-radius: 15px;
+}
+
+.banner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* .banner-content p {
       font-size: 14px;
       letter-spacing: 1px;
       margin-bottom: 20px;
       text-align: center;
     } */
-  
-  .close-button {
-    position: absolute; 
-    top: 10px; 
-    right: 10px; 
-    background: none; 
-    border: none; 
-    font-size: 1.5em;
-    cursor: pointer;
-  }
-  
-  .join-box {
-    width: 80%;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .join-now {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .join-text {
-    font-weight: bold;
-  }
-  
-  .join-text small {
-    font-weight: normal;
-  }
-  
-  .arrow {
-    font-size: 24px;
-  }
-  
-  .login-prompt {
-    color: gray;
-    margin-top: 15px;
-    font-size: 14px;
-    letter-spacing: 0.7px;
-  }
-  
-  .login-link {
-    font-weight: bold;
-    text-decoration: underline;
-    color: black;
-  }
-  
-  .login-link:hover {
-    text-decoration: underline;
-  }
-  
-  .join-link {
-    text-decoration: none;
-    color: black;
-  }
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.join-box {
+  width: 80%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.join-now {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.join-text {
+  font-weight: bold;
+}
+
+.join-text small {
+  font-weight: normal;
+}
+
+.arrow {
+  font-size: 24px;
+}
+
+.login-prompt {
+  color: gray;
+  margin-top: 15px;
+  font-size: 14px;
+  letter-spacing: 0.7px;
+}
+
+.login-link {
+  font-weight: bold;
+  text-decoration: underline;
+  color: black;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+.join-link {
+  text-decoration: none;
+  color: black;
+}

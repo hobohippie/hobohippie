@@ -1,9 +1,10 @@
 /* Global Styles */
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   background-color: #ffffff;
 }
 
@@ -39,7 +40,7 @@ a {
 }
 
 a:hover {
-  color: #009900;
+  color: #990000;
   text-decoration: underline;
 }
 
