@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .header-container{
     position: fixed;
     display: flex;
@@ -13,49 +12,14 @@
     z-index: 10000;
 }
 
-=======
-a {
-  color: white;
-}
-
-a:hover {
-  color: black;
-}
-
-.header-container {
-  position: fixed;
-  display: flex;
-  background-color: rgb(255, 255, 255);
-  height: 100px;
-  transition-duration: 1s;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10000;
-}
-
-.near-top {
-  height: 150px;
-  transition-duration: 1s;
-  transition-delay: 0;
-}
-
->>>>>>> d727eb63d72b47791f5380ff4db7da187cacef0e
 .hc-hide {
   transform: translateY(-130%);
 }
 
 .hc-show {
-<<<<<<< HEAD
     transition-duration: 3s;
     transition-delay: .25s;
     transform: translateY(0);
-=======
-  transition-delay: 0.25s;
-  transform: translateY(0);
->>>>>>> d727eb63d72b47791f5380ff4db7da187cacef0e
 }
 
 .banner-text {
@@ -111,7 +75,6 @@ a:hover {
     transition: transform 0.3s ease;
 }*/
 
-<<<<<<< HEAD
 @keyframes nameIn{
     0%{
       opacity: 0;
@@ -123,20 +86,6 @@ a:hover {
 
 .navbar-logo {
    img{
-=======
-@keyframes nameIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-    left: 500px;
-  }
-}
-
-.header-logo {
-  img {
->>>>>>> d727eb63d72b47791f5380ff4db7da187cacef0e
     position: absolute;
     top: 2px;
     left: 50%;

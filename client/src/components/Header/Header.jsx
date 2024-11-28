@@ -42,19 +42,20 @@ const NavBar = () => {
             >
                 <p className="banner-text">FREE SHIPPING ON ALL ORDERS OVER $50*</p>
 
-      {/* Main Navbar */}
+       {/* Main Navbar */}
       <header className="navbar">
-        {/* Left: SHOP button */}
+        
+       {/* Left: SHOP button */}
         <div className="navbar-section">
           <button className="shop-button">SHOP</button>
         </div>
 
-        {/* Middle: Logo */}
+        {/* Middle: Logo 
         <div className="header-logo">
           <Link to="/">
             <img src={logo} alt="Hobo Hippie Logo" />
           </Link>
-        </div>
+        </div>     */}  
 
         {/* Right: Icons */}
         <div className="icons-section">
