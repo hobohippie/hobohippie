@@ -47,7 +47,7 @@ const CreateAccountForm = () => {
             // Update password mismatch check if password fields are changed
             if (name === 'password' || name === 'confirmPassword') {
                 setPasswordMismatch(
-                    name === 'password' ? value !== account.confirmPassword : account.password !== value
+                    name === 'password' ? value !== account.confirmPassword : value !== account.password
                 );
             }
         }
@@ -226,7 +226,7 @@ const CreateAccountForm = () => {
                             className="my-2"
                             type="text"
                             name="shippingAddress.line1"
-                            required
+                            required={isShippingDifferent}
                             value={account.shippingAddress.line1}
                             onChange={handleChange}
                         />
@@ -235,7 +235,7 @@ const CreateAccountForm = () => {
                             className="my-2"
                             type="text"
                             name="shippingAddress.city"
-                            required
+                            required={isShippingDifferent}
                             value={account.shippingAddress.city}
                             onChange={handleChange}
                         />
@@ -244,7 +244,7 @@ const CreateAccountForm = () => {
                             className="my-2"
                             type="text"
                             name="shippingAddress.state"
-                            required
+                            required={isShippingDifferent}
                             value={account.shippingAddress.state}
                             onChange={handleChange}
                         />
@@ -253,7 +253,7 @@ const CreateAccountForm = () => {
                             className="my-2"
                             type="text"
                             name="shippingAddress.postal_code"
-                            required
+                            required={isShippingDifferent}
                             value={account.shippingAddress.postal_code}
                             onChange={handleChange}
                         />
@@ -262,7 +262,7 @@ const CreateAccountForm = () => {
                             className="my-2"
                             type="text"
                             name="shippingAddress.country"
-                            required
+                            required={isShippingDifferent}
                             value={account.shippingAddress.country}
                             onChange={handleChange}
                         />

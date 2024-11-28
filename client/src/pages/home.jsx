@@ -2,6 +2,10 @@ import React from 'react';
 import { Carousel, Card, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import '../styles/home.css'; // Optional: Create a CSS file for custom styles
+import oil from '../assets/images/oil_1.png'
+import laundry from '../assets/images/laundry.png'
+import freshener from '../assets/images/freshener.png'
+
 
 const HomePage = () => {
   return (
@@ -13,11 +17,11 @@ const HomePage = () => {
         <Col md={4}>
           <Link to="/products" className="card-link">
             <Card className="clickable-card">
-              <Card.Img variant="top" src="https://via.placeholder.com/400x250?text=Other+stuff." /> {/* Temporary image */}
+              <Card.Img variant="top" src={oil} /> 
               <Card.Body>
-                <Card.Title>other stuff</Card.Title>
+                <Card.Title>Essential and Aromatic Oils</Card.Title>
                 <Card.Text>
-                  text for other stuff
+                Transform your space with our premium aromatic oils, crafted to elevate your mood and invigorate your senses. Made from natural ingredients, each blend is perfect for diffusers, relaxation, and creating a soothing atmosphere in your home.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -27,11 +31,11 @@ const HomePage = () => {
         <Col md={4}>
           <Link to="/products" className="card-link">
             <Card className="clickable-card">
-              <Card.Img variant="top" src="https://via.placeholder.com/400x250?text=Other+stuff." /> {/* Temporary image */}
+              <Card.Img variant="top" src={laundry} />
               <Card.Body>
-                <Card.Title>other stuff</Card.Title>
+                <Card.Title>Laundry Scent Booster</Card.Title>
                 <Card.Text>
-                  text for other stuff
+                Elevate your laundry with our luxurious scent boosters, designed to infuse every load with long-lasting freshness and captivating aromas. Safe for all fabrics and washing machines, it’s the perfect way to keep your clothes smelling amazing all day.
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -41,11 +45,11 @@ const HomePage = () => {
         <Col md={4}>
           <Link to="/products" className="card-link">
             <Card className="clickable-card">
-              <Card.Img variant="top" src="https://via.placeholder.com/400x250?text=Other+stuff." /> {/* Temporary image */}
+              <Card.Img variant="top" src={freshener}/>
               <Card.Body>
-                <Card.Title>other stuff</Card.Title>
+                <Card.Title>Air Freshener and Deodorizing</Card.Title>
                 <Card.Text>
-                  text for other stuff
+                Refresh your home with our air fresheners and super-scented cleaning products, crafted to leave every room smelling irresistibly fresh. Packed with powerful aromas and natural ingredients, they provide a clean you can see and a scent you’ll love.
                 </Card.Text>
               </Card.Body>
             </Card>

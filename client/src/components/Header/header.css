@@ -1,7 +1,7 @@
 .header-container{
     position: fixed;
     display: flex;
-    background-color: black;
+    background-color: rgb(5, 14, 78);
     height: 100px;
     transition-duration: 1s;
     align-items: center;
@@ -12,17 +12,12 @@
     z-index: 10000;
 }
 
-.near-top{
-    height: 150px;
-    transition-duration: 1s;
-    transition-delay: 0;
-}
-
 .hc-hide {
     transform: translateY(-130%); 
 }
 
 .hc-show {
+    transition-duration: 3s;
     transition-delay: .25s;
     transform: translateY(0);
 }
@@ -78,11 +73,8 @@
     }
     100%{
      opacity: 1;
-     left: 500px;
     }
 }
-
-
 
 .navbar-logo {
    img{
