@@ -1,9 +1,10 @@
 /* Global Styles */
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   background-color: #ffffff;
 }
 
@@ -38,8 +39,13 @@ a {
   transition: color 0.2s ease;
 }
 
+<<<<<<< HEAD
 a:hover .card-text{
   color: #009900;
+=======
+a:hover {
+  color: #990000;
+>>>>>>> d727eb63d72b47791f5380ff4db7da187cacef0e
   text-decoration: underline;
 }
 

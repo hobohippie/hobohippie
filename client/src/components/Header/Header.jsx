@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FaShoppingCart } from 'react-icons/fa';
-import { useCart } from '../../context/CartContext';
-import CartModal from '../CartModal/CartModal';
-import logo from '../../assets/images/HoboHippie_logo.png'
-import './header.css';
-import { Container } from 'react-bootstrap';
-
-
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { FaShoppingCart, FaUser, FaSearch } from "react-icons/fa";
+import { useCart } from "../../context/CartContext";
+import CartModal from "../CartModal/CartModal";
+import logo from "../../assets/images/HoboHippie_logo.png";
+import "./header.css";
 
 const NavBar = () => {
 
@@ -17,9 +14,9 @@ const NavBar = () => {
     const { cartItems, openModal } = useCart();
     const totalCartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-    const toggleCartModal = () => {
-        openModal();
-    };
+  const toggleCartModal = () => {
+    openModal();
+  };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -33,10 +30,9 @@ const NavBar = () => {
        
         };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [lastScrollY]);
-
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
     return (
         <>
@@ -46,36 +42,38 @@ const NavBar = () => {
             >
                 <p className="banner-text">FREE SHIPPING ON ALL ORDERS OVER $50*</p>
 
-                {/* Main Navbar */}
-                <header className="navbar">
+      {/* Main Navbar */}
+      <header className="navbar">
+        {/* Left: SHOP button */}
+        <div className="navbar-section">
+          <button className="shop-button">SHOP</button>
+        </div>
 
-                    {/* Left: SHOP button */}
-                    <div className="navbar-section">
-                        <button className="shop-button">SHOP</button>
-                    </div>
+        {/* Middle: Logo */}
+        <div className="header-logo">
+          <Link to="/">
+            <img src={logo} alt="Hobo Hippie Logo" />
+          </Link>
+        </div>
 
+        {/* Right: Icons */}
+        <div className="icons-section">
+          <Link to="/search" className="icon-link">
+            <FaSearch className="nav-icon-size" />
+          </Link>
 
+          <Link to="/account" className="icon-link">
+            <FaUser className="nav-icon-size" />
+          </Link>
 
-                    {/* Middle: Logo */}
-                    <div className="navbar-logo">
-                        <Link to="/">
-                            <img
-                                src={logo}
-                                alt="Hobo Hippie Logo"
-                            />
-                        </Link>
-                    </div>
-                    
-                    {/* Right: Cart Icon */}
-                    <div className="navbar-section">
-                        <div className="cart-icon-container" onClick={toggleCartModal}>
-                            <FaShoppingCart className="nav-icon-size" />
-                            {totalCartQuantity > 0 && (
-                                <span className="cart-badge">{totalCartQuantity}</span>
-                            )}
-                        </div>
-                    </div>
-                </header>
+          <Link className="icon-link" onClick={toggleCartModal}>
+            <FaShoppingCart className="nav-icon-size" />
+            {totalCartQuantity > 0 && (
+              <span className="cart-badge">{totalCartQuantity}</span>
+            )}
+          </Link>
+        </div>
+      </header>
 
                 
                 <CartModal />
