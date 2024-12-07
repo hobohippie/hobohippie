@@ -1,4 +1,6 @@
 const express = require('express');
+const dotenv = require('dotenv');
+dotenv.config(); 
 const cors = require('cors');
 const path = require('path');
 require('./config/multer_config'); 
@@ -12,6 +14,8 @@ const allowedOrigins = [
     'https://localhost:3000','http://localhost:3000','https://localhost:3001',
     'http://localhost:3001'
 ];
+
+
 const PORT = process.env.PORT;
 
 app.use(cors({
