@@ -12,7 +12,6 @@ logs
 logs/*.log
 pids
 *.pid
-*.seed
 *.pid.lock
 
 # OS generated files

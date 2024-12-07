@@ -1,8 +1,8 @@
-/*const dotenv = require('dotenv');
+const dotenv = require('dotenv');
 dotenv.config(); 
 
 const mongoose = require('mongoose');
-const connectionString = process.env.MONGODB_URI;
+const connectionString = "mongodb+srv://hippie:gJ50vypHELXex52Z@hobohippie.pbtz1.mongodb.net/?retryWrites=true&w=majority&appName=Hobohippie";
 
 mongoose.set('strictQuery', false);
 
@@ -14,4 +14,4 @@ mongoose.connection.on('disconnected', () => {
   console.log('Mongoose disconnected');
 });
 
-module.exports = mongoose;*/
+module.exports = mongoose;
