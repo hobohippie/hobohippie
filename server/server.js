@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-require('dotenv').config();
 require('./config/multer_config'); 
 require('./config/db_connection'); 
 
@@ -13,7 +12,7 @@ const allowedOrigins = [
     'https://localhost:3000','http://localhost:3000','https://localhost:3001',
     'http://localhost:3001'
 ];
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 app.use(cors({
     origin: (origin, callback) => {
