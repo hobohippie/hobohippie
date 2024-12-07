@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+/*const dotenv = require('dotenv');
 dotenv.config(); 
 
 const mongoose = require('mongoose');
@@ -14,4 +14,4 @@ mongoose.connection.on('disconnected', () => {
   console.log('Mongoose disconnected');
 });
 
-module.exports = mongoose;
+module.exports = mongoose;*/
